@@ -33,7 +33,7 @@ jobs:
 
       # 构建模组 - 添加必要的参数
       - name: Build with Gradle Wrapper
-        run: ./gradlew build
+        run: ./gradlew jar
         env:
           # 设置内存限制以防止 OOM
           GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
@@ -45,4 +45,3 @@ jobs:
           name: forge-mod-build
           path: build/libs/
           retention-days: 5
-          compression-level: 0
