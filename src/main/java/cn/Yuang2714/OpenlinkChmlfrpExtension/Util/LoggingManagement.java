@@ -31,4 +31,19 @@ public class LoggingManagement {
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", false);
         OpenlinkChmlfrpExtension.PREFERENCES.remove("token");
     }
+
+    public static boolean userIsInChina() {
+        try {
+            String countryCode = JsonParser.parseString(Network.get(URLs.ipCheck))
+                    .getAsJsonObject()
+                    .get("countryCode")
+                    .getAsString();
+
+            OpenlinkChmlfrpExtension.LOGGER.info("User country code:{}", countryCode);
+            return countryCode.equals("CN") || countryCode.equals("HK");
+        } catch (Exception e) {
+            OpenlinkChmlfrpExtension.LOGGER.error("Failed to get your country. Exception:{}", e.toString());
+            return true;
+        }
+    }
 }
