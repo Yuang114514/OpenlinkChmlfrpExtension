@@ -27,7 +27,7 @@ public class LoggingManagement {
         }
     }
 
-    public static void logOut() {
+    public static void logout() {
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", false);
         OpenlinkChmlfrpExtension.PREFERENCES.remove("token");
     }

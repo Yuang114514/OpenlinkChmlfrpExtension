@@ -1,20 +1,19 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.FrpcManagement;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoginScreen;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.*;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.FrpcImplInfo;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.FrpcManagement;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.LoggingManagement;
 import fun.moystudio.openlink.frpc.Frpc;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 import java.nio.file.Path;
 import java.util.List;
 
 public class ChmlfrpFrpcImpl implements Frpc {
-    Logger logger = OpenlinkChmlfrpExtension.LOGGER;
 
     public boolean isArchive() {
         return true;
@@ -25,7 +24,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public void init() throws Exception {
-        logger.info("Initializing ChmlfrpFrpcImpl");
+        OpenlinkChmlfrpExtension.LOGGER.info("Initializing ChmlfrpFrpcImpl");
         FrpcManagement.initUserEnv();
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
                 LoggingManagement.checkToken(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
@@ -80,7 +79,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public void logOut() {
-        LoggingManagement.logOut();
+        LoggingManagement.logout();
     }
 
     public String getPanelUrl() {

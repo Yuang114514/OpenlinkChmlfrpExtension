@@ -12,8 +12,8 @@ public class LoginScreen extends Screen {
     private final Screen parentScreen;
     private Button doneButton;
     private EditBox tokenBox;
-    private Component loginStatText = Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_1");
     private boolean startDelay = false;
+    private String delayFunction;
     private int delayed = 0;
 
     public LoginScreen(Screen lastScreen) {
@@ -25,20 +25,19 @@ public class LoginScreen extends Screen {
     protected void init() {
         super.init();
         doneButton = Button.builder(
-                loginStatText,
+                Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_1"),
                 button -> {
                     doneButton.active = false;
-                    loginStatText = Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_2");
-                    doneButton.setMessage(loginStatText);
+                    doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_2"));
 
                     if (LoggingManagement.login(tokenBox.getValue())) {
-                        loginStatText = Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_success");
-                        doneButton.setMessage(loginStatText);
+                        doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_success"));
+                        delayFunction = "BACK";
                         startDelay = true;
                     } else {
-                        loginStatText = Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail");
-                        doneButton.setMessage(loginStatText);
-                        doneButton.active = true;
+                        doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                        delayFunction = "RETRY";
+                        startDelay = true;
                     }
                 })
                 .bounds(width / 2 - 100, height / 2 + 12, 200, 20)
@@ -47,9 +46,9 @@ public class LoginScreen extends Screen {
 
         tokenBox = new EditBox(
                 font,
-                width / 2 - 100,
+                width / 2 - 90,
                 height / 2 - 12,
-                200,
+                180,
                 20,
                 Component.translatable("gui.openlink_chmlfrp_extension.login_screen.edit_box.description")
         );
@@ -61,6 +60,13 @@ public class LoginScreen extends Screen {
         renderBackground(graphics);
 
         graphics.drawString(font, title, width / 2 - font.width(title) / 2, 20, 0xFFFFFF);
+        graphics.drawString(
+                font,
+                Component.translatable("gui.openlink_chmlfrp_extension.login_screen.edit_box.description"),
+                width / 2 - font.width(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.edit_box.description")) / 2,
+                height / 2 - 30,
+                0xFFFFFF
+                );
 
         super.render(graphics, mouseX, mouseY, partialTick);
     }
@@ -71,10 +77,22 @@ public class LoginScreen extends Screen {
 
         if (startDelay) {
             delayed++;
-            if (delayed >= 40) {
-                minecraft.setScreen(parentScreen);
-                startDelay = false;
+
+            if (delayed >= 25) {
+                if (delayFunction.equals("BACK")) {
+                    minecraft.setScreen(parentScreen);
+                    startDelay = false;
+                } else if (delayFunction.equals("RETRY")) {
+                    doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_1"));
+                    doneButton.active = true;
+                    startDelay = false;
+                }
             }
         }
+    }
+
+    @Override
+    public void onClose() {
+        minecraft.setScreen(parentScreen);
     }
 }
