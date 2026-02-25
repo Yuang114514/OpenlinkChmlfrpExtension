@@ -14,7 +14,7 @@ public class OpenlinkChmlfrpExtension {
     public static final String MODID = "openlink_chmlfrp_extension";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
-    public Preferences PREFERENCES = Preferences.userNodeForPackage(OpenlinkChmlfrpExtension.class);
+    public static Preferences PREFERENCES = Preferences.userNodeForPackage(OpenlinkChmlfrpExtension.class);
 
     public OpenlinkChmlfrpExtension() {
         LOGGER.info("""

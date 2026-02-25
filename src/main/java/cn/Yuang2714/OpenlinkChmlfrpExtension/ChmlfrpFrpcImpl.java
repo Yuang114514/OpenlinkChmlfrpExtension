@@ -3,6 +3,7 @@ package cn.Yuang2714.OpenlinkChmlfrpExtension;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.FrpcManagement;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoginScreen;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.*;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.LoggingManagement;
 import fun.moystudio.openlink.frpc.Frpc;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +27,8 @@ public class ChmlfrpFrpcImpl implements Frpc {
     public void init() throws Exception {
         logger.info("Initializing ChmlfrpFrpcImpl");
         FrpcManagement.initUserEnv();
+        OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
+                LoggingManagement.checkToken(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
     }
 
     public String id() {
@@ -37,14 +40,16 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public boolean isOutdated(@Nullable Path path) {
-        return !FrpcManagement.comparateFrpcVersion(path);
+        return FrpcManagement.comparateFrpcVersion(path);
     }
 
     public Process createFrpcProcess(Path path, int i, @Nullable String s) throws Exception {
+        //TODO:IMPL
         return null;
     }
 
     public String createProxy(int i, @Nullable String s) throws Exception {
+        //TODO:IMPL
         return "";
     }
 
@@ -53,10 +58,12 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public void stopFrpcProcess(@Nullable Process frpcProcess) {
+        //TODO:IMPL
         Frpc.super.stopFrpcProcess(frpcProcess);
     }
 
     public Screen getNodeSelectionScreen(@Nullable Screen lastScreen) {
+        //TODO:IMPL
         return Frpc.super.getNodeSelectionScreen(lastScreen);
     }
 
@@ -69,11 +76,11 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public boolean isLoggedIn() {
-        return Frpc.super.isLoggedIn();
+        return OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_logged_in", false);
     }
 
     public void logOut() {
-        Frpc.super.logOut();
+        LoggingManagement.logOut();
     }
 
     public String getPanelUrl() {

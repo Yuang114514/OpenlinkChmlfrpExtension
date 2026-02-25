@@ -1,3 +1,8 @@
 {
-  "gui.openlink_chmlfrp_extension.login_screen.title": "Login to Chmlfrp"
+  "gui.openlink_chmlfrp_extension.login_screen.title": "Login to Chmlfrp",
+  "gui.openlink_chmlfrp_extension.login_screen.edit_box.description": "Enter Your Token Here",
+  "gui.openlink_chmlfrp_extension.login_screen.stat_1": "Login",
+  "gui.openlink_chmlfrp_extension.login_screen.stat_2": "Logging in...",
+  "gui.openlink_chmlfrp_extension.login_screen.stat_fail": "Failed to login. Check your token.",
+  "gui.openlink_chmlfrp_extension.login_screen.stat_success": "Login Success"
 }
