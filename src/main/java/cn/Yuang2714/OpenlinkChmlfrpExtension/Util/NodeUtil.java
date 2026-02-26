@@ -34,6 +34,7 @@ public class NodeUtil {
                     JsonObject nodeStat = j.getAsJsonObject();
                     if (
                             nodeInfo.get("id").getAsInt() == nodeStat.get("id").getAsInt() //id要对上
+
                                     && nodeStat.get("state").getAsString().equals("online") //要在线
                                     && nodeStat.get("bandwidth_usage_percent").getAsInt() <= 95 //带宽不满载
                                     && nodeStat.get("cpu_usage").getAsInt() <= 95 //CPU不满
@@ -75,6 +76,11 @@ public class NodeUtil {
 
             if (n1.cpuUsage != n2.cpuUsage) {
                 if (n1.cpuUsage < n2.cpuUsage) return -1;
+                else return 1;
+            }
+
+            if (n1.ipv6 != n2.ipv6) {
+                if (n1.ipv6) return -1;
                 else return 1;
             }
 
