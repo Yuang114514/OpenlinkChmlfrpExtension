@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,9 @@ public class NodeUtil {
                     .get("data")
                     .getAsJsonArray();
 
+//            OpenlinkChmlfrpExtension.LOGGER.info(nodeInfos.getAsJsonObject().getAsString());
+//            OpenlinkChmlfrpExtension.LOGGER.info(nodeStats.getAsJsonObject().getAsString());
+
             for (JsonElement i : nodeInfos) {
                 JsonObject nodeInfo = i.getAsJsonObject();
                 for (JsonElement j : nodeStats) {
@@ -31,8 +35,8 @@ public class NodeUtil {
                     if (
                             nodeInfo.get("id").getAsInt() == nodeStat.get("id").getAsInt() //id要对上
                                     && nodeStat.get("state").getAsString().equals("online") //要在线
-                                    && nodeStat.get("bandwidth_usage_percent").getAsInt() >= 95 //带宽不满载
-                                    && nodeStat.get("cpu_usage").getAsInt() >= 95 //CPU不满
+                                    && nodeStat.get("bandwidth_usage_percent").getAsInt() <= 95 //带宽不满载
+                                    && nodeStat.get("cpu_usage").getAsInt() <= 95 //CPU不满
                     ) {
                         nodeList.add(new Node(
                                 nodeInfo.get("id").getAsInt(), //节点ID
@@ -48,7 +52,9 @@ public class NodeUtil {
                     }
                 }
             }
-            return nodeList;
+
+            if (!nodeList.isEmpty()) return nodeList;
+            else throw new NullPointerException("Unable to get any node???");
         } catch (Exception e) {
             OpenlinkChmlfrpExtension.LOGGER.error("Failed to get node list. Exception:{}", e.toString());
             return null;
@@ -76,7 +82,7 @@ public class NodeUtil {
         });
 
         Node selected = nodeList.get(0);
-        OpenlinkChmlfrpExtension.LOGGER.info("Selected Node: id:{}, name:{}, group:{}, bandwidth usage:{}, CPU usage:{}",
+        OpenlinkChmlfrpExtension.LOGGER.info("Automatically Selected Node: id:{}, name:{}, group:{}, bandwidth usage:{}, CPU usage:{}",
                 selected.id, selected.name, selected.group, selected.bandwidthUsage, selected.cpuUsage);
         return selected;
     }

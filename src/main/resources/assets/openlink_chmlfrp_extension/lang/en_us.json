@@ -4,5 +4,14 @@
   "gui.openlink_chmlfrp_extension.login_screen.stat_1": "Login",
   "gui.openlink_chmlfrp_extension.login_screen.stat_2": "Logging in...",
   "gui.openlink_chmlfrp_extension.login_screen.stat_fail": "Failed to login. Check your token.",
-  "gui.openlink_chmlfrp_extension.login_screen.stat_success": "Login Success"
+  "gui.openlink_chmlfrp_extension.login_screen.stat_success": "Login Success",
+  "gui.openlink_chmlfrp_extension.node_selection.ing": "Verifying Your node input...",
+  "gui.openlink_chmlfrp_extension.node_selection.fail": "Invalid Node ID. Try another node.",
+  "gui.openlink_chmlfrp_extension.node_selection.success": "Successfully received your selection!",
+  "gui.openlink_chmlfrp_extension.node_selection.auto": "Selecting Node Automatically",
+  "gui.openlink_chmlfrp_extension.node_selection.list_exception": "Failed to get node list. Please check your internet connection.",
+  "gui.openlink_chmlfrp_extension.node_selection.tip": "Select a node in the panel and enter its ID below. Auto selection is available.",
+  "gui.openlink_chmlfrp_extension.node_selection.panel_button_text": "Open Panel",
+  "gui.openlink_chmlfrp_extension.node_selection.auto_button_text": "Auto Select",
+  "text.openlink_chmlfrp_extension.none": ""
 }

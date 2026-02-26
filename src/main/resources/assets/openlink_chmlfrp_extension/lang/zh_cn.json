@@ -4,5 +4,14 @@
   "gui.openlink_chmlfrp_extension.login_screen.stat_1": "登录",
   "gui.openlink_chmlfrp_extension.login_screen.stat_2": "正在登录......",
   "gui.openlink_chmlfrp_extension.login_screen.stat_fail": "登录失败。检查Token是否有误",
-  "gui.openlink_chmlfrp_extension.login_screen.stat_success": "登录成功"
+  "gui.openlink_chmlfrp_extension.login_screen.stat_success": "登录成功",
+  "gui.openlink_chmlfrp_extension.node_selection.ing": "正在验证你输入的节点ID......",
+  "gui.openlink_chmlfrp_extension.node_selection.fail": "无效的ID。换个节点试试",
+  "gui.openlink_chmlfrp_extension.node_selection.success": "成功接收了你的选择！",
+  "gui.openlink_chmlfrp_extension.node_selection.auto": "正在自动选择节点",
+  "gui.openlink_chmlfrp_extension.node_selection.list_exception": "获取节点列表失败。请检查你的网络连接",
+  "gui.openlink_chmlfrp_extension.node_selection.tip": "在面板中挑选想要使用的节点，然后把选定节点的ID输入在下方。自动选择节点可用。",
+  "gui.openlink_chmlfrp_extension.node_selection.panel_button_text": "打开面板",
+  "gui.openlink_chmlfrp_extension.node_selection.auto_button_text": "自动选择",
+  "text.openlink_chmlfrp_extension.none": ""
 }

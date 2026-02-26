@@ -1,6 +1,7 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoginScreen;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.NodeSelectionScreen;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.FrpcImplInfo;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.FrpcManagement;
@@ -64,8 +65,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public Screen getNodeSelectionScreen(@Nullable Screen lastScreen) {
-        //TODO:IMPL
-        return Frpc.super.getNodeSelectionScreen(lastScreen);
+        return new NodeSelectionScreen(lastScreen);
     }
 
     public Screen getLoginScreen(@Nullable Screen lastScreen) {

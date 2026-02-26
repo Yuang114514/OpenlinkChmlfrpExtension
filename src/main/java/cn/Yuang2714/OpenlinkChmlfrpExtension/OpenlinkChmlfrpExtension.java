@@ -29,4 +29,55 @@ public class OpenlinkChmlfrpExtension {
                         |_|                                                                                         |_|
                 """);
     }
+
+//    @SubscribeEvent
+//    public static void onRegisterCommands(RegisterCommandsEvent event) {
+//        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+//
+//        // /selectnode <node_id>
+//        dispatcher.register(Commands.literal("selectnode")
+//                .then(Commands.argument("node_id", IntegerArgumentType.integer()))
+//                .executes(context -> {
+//                    int selectedId;
+//                    try {
+//                        selectedId = IntegerArgumentType.getInteger(context, "node_id");
+//                    } catch (IllegalArgumentException e) {
+//                        selectedId = -1;
+//                    }
+//
+//                    if (selectedId == -1) {
+//                        OpenlinkChmlfrpExtension.PREFERENCES.putInt("last_node", -1);
+//                        context.getSource().sendSuccess(() -> Component.translatable("gui.openlink_chmlfrp_extension.node_selection.auto")
+//                                .withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)
+//                                , false);
+//                        return 1;
+//                    }
+//
+//                    context.getSource().sendSystemMessage(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.ing")
+//                            .withStyle(ChatFormatting.AQUA)
+//                            .withStyle(ChatFormatting.ITALIC));
+//
+//                    List<Node> nodeList = NodeUtil.genNodeList();
+//                    if (nodeList == null) {
+//                        context.getSource().sendFailure(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.list_exception")
+//                                .withStyle(ChatFormatting.AQUA)
+//                                .withStyle(ChatFormatting.ITALIC));
+//                        return 0;
+//                    }
+//
+//                    for (Node listNode : nodeList) {
+//                        if (listNode.id == selectedId) {
+//                            OpenlinkChmlfrpExtension.PREFERENCES.putInt("last_node", selectedId);
+//                            context.getSource().sendSuccess(() -> Component.translatable("gui.openlink_chmlfrp_extension.node_selection.success")
+//                                    .withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC), false);
+//                            return 1;
+//                        }
+//                    }
+//
+//                    context.getSource().sendFailure(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.fail")
+//                            .withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+//                    return 0;
+//                })
+//        );
+//    }
 }

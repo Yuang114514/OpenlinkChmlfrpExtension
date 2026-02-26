@@ -33,12 +33,11 @@ public class LoginScreen extends Screen {
                     if (LoggingManagement.login(tokenBox.getValue())) {
                         doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_success"));
                         delayFunction = "BACK";
-                        startDelay = true;
                     } else {
                         doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
                         delayFunction = "RETRY";
-                        startDelay = true;
                     }
+                    startDelay = true;
                 })
                 .bounds(width / 2 - 100, height / 2 + 12, 200, 20)
                 .build();
