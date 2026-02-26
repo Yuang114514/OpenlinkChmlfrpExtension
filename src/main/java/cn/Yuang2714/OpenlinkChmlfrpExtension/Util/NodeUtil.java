@@ -34,7 +34,8 @@ public class NodeUtil {
                     JsonObject nodeStat = j.getAsJsonObject();
                     if (
                             nodeInfo.get("id").getAsInt() == nodeStat.get("id").getAsInt() //id要对上
-
+                                    && (OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("has_real_named", false) || !nodeInfo.get("china").getAsString().equals("yes")) //实名认证要对上
+                                    && (OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_vip", false) || !nodeInfo.get("nodegroup").getAsString().equals("vip")) //VIP要对上
                                     && nodeStat.get("state").getAsString().equals("online") //要在线
                                     && nodeStat.get("bandwidth_usage_percent").getAsInt() <= 95 //带宽不满载
                                     && nodeStat.get("cpu_usage").getAsInt() <= 95 //CPU不满

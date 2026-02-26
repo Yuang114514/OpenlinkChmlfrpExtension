@@ -64,7 +64,6 @@ public class NodeSelectionScreen extends Screen {
                     doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.ing"));
 
                     String selection = idBox.getValue();
-                    OpenlinkChmlfrpExtension.LOGGER.info(selection);
                     if (selection.isBlank()) {
                         doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.fail"));
                         doneButton.active = true;

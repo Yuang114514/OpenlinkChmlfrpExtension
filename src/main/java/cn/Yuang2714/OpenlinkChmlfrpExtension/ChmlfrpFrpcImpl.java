@@ -6,6 +6,7 @@ import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.FrpcImplInfo;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.FrpcManagement;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.LoggingManagement;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.ProxyManagement;
 import fun.moystudio.openlink.frpc.Frpc;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
@@ -55,8 +56,8 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public String createProxy(int i, @Nullable String s) throws Exception {
-        //TODO:IMPL
-        return "";
+        //TODO:DEBUG
+        return ProxyManagement.createProxy(i, s);
     }
 
     public String getFrpcVersion(Path path) {
