@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -148,5 +149,9 @@ public class FrpcManagement {
             }
         }
         return null;
+    }
+
+    public static Process runFrpc(Path path, int proxyId, String token) throws Exception {
+        return Runtime.getRuntime().exec(path + " -u " + token + " -p " + proxyId);
     }
 }
