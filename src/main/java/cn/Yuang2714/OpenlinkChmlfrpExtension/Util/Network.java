@@ -30,7 +30,7 @@ public class Network {
         connection.setDoOutput(true);
 
         try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = body.getAsString().getBytes(StandardCharsets.UTF_8);
+            byte[] input = body.getAsJsonPrimitive().getAsString().getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
 
