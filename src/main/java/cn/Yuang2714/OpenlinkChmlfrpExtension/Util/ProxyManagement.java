@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ProxyManagement {
-    public static String createProxy(int i, @Nullable String s) throws NullPointerException {
+    public static String createProxy(int i, @Nullable String s) throws Exception {
         /*
         {
     "token": "labor ut do lore", DID
@@ -24,7 +24,6 @@ public class ProxyManagement {
     "compression": true          DID
 }
          */
-        try {
             JsonObject postQuery = new JsonObject();
             postQuery.addProperty("tunnelname", "openlink_mc_" + i);
             postQuery.addProperty("localip", "127.0.0.1");
@@ -79,10 +78,5 @@ public class ProxyManagement {
                     .get("dorp")
                     .getAsJsonPrimitive()
                     .getAsString();
-
-        } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to create proxy. Exception:{}", e.toString());
-            throw new RuntimeException(e.toString());
-        }
     }
 }
