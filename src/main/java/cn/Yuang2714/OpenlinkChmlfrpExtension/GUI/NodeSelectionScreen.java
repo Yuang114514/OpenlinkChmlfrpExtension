@@ -33,9 +33,9 @@ public class NodeSelectionScreen extends Screen {
 
         idBox = new EditBox(
                 font,
-                width / 2 + 60,
+                width / 2 + 62,
                 height / 2 - 12,
-                40,
+                38,
                 20,
                 Component.translatable("text.openlink_chmlfrp_extension.none")
         );
@@ -46,14 +46,14 @@ public class NodeSelectionScreen extends Screen {
         Button panelButton = Button.builder(
                         Component.translatable("gui.openlink_chmlfrp_extension.node_selection.panel_button_text"),
                         button -> Util.getPlatform().openUri(URLs.nodes))
-                .bounds(width / 2 - 20, height / 2 - 12, 80, 20)
+                .bounds(width / 2 - 19, height / 2 - 12, 78, 20)
                 .build();
         addRenderableWidget(panelButton);
 
         Button autoSelectButton = Button.builder(
                         Component.translatable("gui.openlink_chmlfrp_extension.node_selection.auto_button_text"),
                         button -> idBox.setValue("-1"))
-                .bounds(width / 2 - 100, height / 2 - 12, 80, 20)
+                .bounds(width / 2 - 100, height / 2 - 12, 78, 20)
                 .build();
         addRenderableWidget(autoSelectButton);
 

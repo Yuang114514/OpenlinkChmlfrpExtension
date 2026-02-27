@@ -3,7 +3,6 @@ package cn.Yuang2714.OpenlinkChmlfrpExtension.Util;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
 import com.google.gson.JsonParser;
-import oshi.software.os.unix.freebsd.FreeBsdOSThread;
 
 public class LoggingManagement {
     public static boolean login(String token) {
