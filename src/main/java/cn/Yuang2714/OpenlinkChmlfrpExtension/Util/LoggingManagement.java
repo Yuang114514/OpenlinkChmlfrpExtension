@@ -11,7 +11,7 @@ public class LoggingManagement {
             OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", true);
             OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_vip", userIsVIP(token));
             OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named", userHasRealnamed(token));
-            OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_in_china", userIsInChina(token));
+            OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_in_china", userIsInChina());
             return true;
         }
         return false;
@@ -35,7 +35,7 @@ public class LoggingManagement {
         OpenlinkChmlfrpExtension.PREFERENCES.remove("token");
     }
 
-    public static boolean userIsInChina(String token) {
+    public static boolean userIsInChina() {
         try {
             String countryCode = JsonParser.parseString(Network.get(URLs.ipCheck))
                     .getAsJsonObject()

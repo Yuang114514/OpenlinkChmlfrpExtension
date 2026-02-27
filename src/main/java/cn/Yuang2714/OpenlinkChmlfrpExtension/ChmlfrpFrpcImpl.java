@@ -31,7 +31,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
                 LoggingManagement.checkToken(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_in_china",
-                LoggingManagement.userIsInChina(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
+                LoggingManagement.userIsInChina());
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_vip",
                 LoggingManagement.userIsVIP(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named",
