@@ -5,7 +5,6 @@ import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.slf4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;

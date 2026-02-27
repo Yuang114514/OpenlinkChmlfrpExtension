@@ -1,6 +1,5 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension.GUI;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.LoggingManagement;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
