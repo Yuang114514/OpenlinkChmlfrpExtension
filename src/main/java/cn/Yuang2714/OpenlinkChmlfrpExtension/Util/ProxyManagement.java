@@ -75,7 +75,7 @@ public class ProxyManagement {
             preferRemotePort = randomer.nextInt(portRange[0], portRange[1]);
         }
 
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5); j++) {
             postQuery.addProperty("remoteport", preferRemotePort);
             try {
                 caughtPort = preferRemotePort;

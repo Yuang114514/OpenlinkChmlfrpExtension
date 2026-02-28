@@ -15,5 +15,9 @@
   "gui.openlink_chmlfrp_extension.node_selection.auto_button_text": "Auto Select",
   "chat.openlink_chmlfrp_extension.creating_proxy.ing": "[Openlink Chmlfrp Extension] Creating Remote Proxy...",
   "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found": "[Openlink Chmlfrp Extension] Cannot find a valid remote port after 5 tries, maybe you should try another node.",
+  "chat.openlink_chmlfrp_extension.command.config_max_retry.success": "Set createProxyMaxRetry to %s",
+  "chat.openlink_chmlfrp_extension.command.config_max_retry.read": "Currently, createProxyMaxRetry is %s",
+  "chat.openlink_chmlfrp_extension.command.reload_user_info.success": "Successfully reloaded your information.",
+  "chat.openlink_chmlfrp_extension.command.reload_user_info.fail": "Failed to reload your information.",
   "text.openlink_chmlfrp_extension.none": ""
 }
