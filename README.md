@@ -7,11 +7,11 @@ An OpenLink addon for Chmlfrp
 
 - Login & Logout
 - Sensitive Information Storage using java's Prefences API, not in game Directory
-- (TODO) Proxy Create and Remove
+- Proxy Create and Remove
 - Frpc Management
 
 ### Download
 
 - Build per Push available at [Actions Page](https://github.com/Yuang114514/OpenlinkChmlfrpExtension/actions)
-- (TODO) Releases available on Modrinth
-- (TODO) mcmod.cn Description
+- Releases available on Modrinth
+- mcmod.cn Description
