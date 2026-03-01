@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "openlink_chmlfrp_extension",
+	"version": "${version}",
+	"name": "Openlink Chmlfrp Extension",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/openlink_chmlfrp_extension/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension"
+		],
+		"client": [
+			"cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionClient"
+		]
+	},
+	"mixins": [
+		"openlink_chmlfrp_extension.mixins.json",
+		{
+			"config": "openlink_chmlfrp_extension.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
