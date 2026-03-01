@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="复制fabric文件">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-    </list>
+    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="加载fabric" />
     <list id="daac3cf2-fab1-4d2f-8c29-1fb1c15b4aa4" name="啊报名写错了" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -505,7 +502,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772359966345</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="加载fabric">
+      <option name="closed" value="true" />
+      <created>1772360465490</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1772360465490</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -532,7 +537,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Where is my Wrapper???" />
     <MESSAGE value="Tring new action pref" />
     <MESSAGE value="Frpc management impl #1" />
     <MESSAGE value="Frpc management impl #2: Login" />
@@ -557,7 +561,8 @@
     <MESSAGE value="以防万一在清理fabric前提交一下" />
     <MESSAGE value="清理fabric" />
     <MESSAGE value="复制fabric文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="复制fabric文件" />
+    <MESSAGE value="加载fabric" />
+    <option name="LAST_COMMIT_MESSAGE" value="加载fabric" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

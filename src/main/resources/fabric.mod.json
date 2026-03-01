@@ -22,13 +22,6 @@
 			"cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionClient"
 		]
 	},
-	"mixins": [
-		"openlink_chmlfrp_extension.mixins.json",
-		{
-			"config": "openlink_chmlfrp_extension.client.mixins.json",
-			"environment": "client"
-		}
-	],
 	"depends": {
 		"fabricloader": ">=0.18.4",
 		"minecraft": "~1.20.1",
