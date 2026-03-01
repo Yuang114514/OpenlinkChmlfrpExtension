@@ -96,3 +96,17 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+// build.gradle 中添加
+sourceSets {
+    main {
+        java {
+            // 告诉 Gradle 和 IDEA：main 的 Java 代码来自 client 目录
+            srcDirs = ['src/client/java']
+        }
+        resources {
+            // 资源文件仍在 main/resources
+            srcDirs = ['src/main/resources']
+        }
+    }
+}

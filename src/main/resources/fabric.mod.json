@@ -3,25 +3,24 @@
 	"id": "openlink_chmlfrp_extension",
 	"version": "${version}",
 	"name": "Openlink Chmlfrp Extension",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "An OpenLink addon for Chmlfrp.",
 	"authors": [
-		"Me!"
+		"Yuang2714(鬝豭鶬鶬)"
 	],
 	"contact": {
 		"sources": "https://github.com/Yuang114514/OpenlinkChmlfrpExtension"
 	},
 	"license": "MIT",
 	"icon": "assets/openlink_chmlfrp_extension/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
-
       "client": [
-			"cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionClient"
+        "cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension"
 		]
 	},
 	"depends": {
 		"fabricloader": ">=0.18.4",
-		"minecraft": "~1.20.1",
+		"minecraft": "1.16.5-1.20.4",
 		"java": ">=17",
 		"fabric-api": "*"
 	}
