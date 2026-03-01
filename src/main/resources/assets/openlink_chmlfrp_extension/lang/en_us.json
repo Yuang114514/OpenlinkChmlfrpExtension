@@ -19,5 +19,8 @@
   "chat.openlink_chmlfrp_extension.command.config_max_retry.read": "Currently, createProxyMaxRetry is %s",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.success": "Successfully reloaded your information.",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.fail": "Failed to reload your information.",
-  "text.openlink_chmlfrp_extension.none": ""
+  "text.openlink_chmlfrp_extension.none": "",
+  "modmenu.nameTranslation.openlink_chmlfrp_extension": "Openlink Chmlfrp Extension",
+  "modmenu.descriptionTranslation.openlink_chmlfrp_extension": "An OpenLink addon for Chmlfrp.Implements Frpc.",
+  "modmenu.summaryTranslation.openlink_chmlfrp_extension": "An OpenLink addon for Chmlfrp."
 }

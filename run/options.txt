@@ -45,7 +45,7 @@ renderClouds:"true"
 resourcePacks:["fabric"]
 incompatibleResourcePacks:[]
 lastServer:
-lang:en_us
+lang:zh_cn
 soundDevice:""
 chatVisibility:0
 chatOpacity:1.0
@@ -118,6 +118,7 @@ key_key.hotbar.6:key.keyboard.6
 key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
+key_key.modmenu.open_menu:key.keyboard.unknown
 soundCategory_master:1.0
 soundCategory_music:1.0
 soundCategory_record:1.0
