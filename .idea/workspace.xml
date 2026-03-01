@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="加载fabric" />
+    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/mixin/client/ExampleClientMixin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/resources/openlink_chmlfrp_extension.client.mixins.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/openlink_chmlfrp_extension/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/openlink_chmlfrp_extension/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fabric.mod.json" afterDir="false" />
+    </list>
     <list id="daac3cf2-fab1-4d2f-8c29-1fb1c15b4aa4" name="啊报名写错了" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -232,6 +239,17 @@
     </configuration>
     <configuration default="true" type="JarApplication">
       <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="OpenlinkChmlfrpExtension.client" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="OpenlinkChmlfrpExtension.client" />
+      <option name="filePath" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="Remote">

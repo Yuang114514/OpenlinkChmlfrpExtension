@@ -8,17 +8,14 @@
 		"Me!"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Yuang114514/OpenlinkChmlfrpExtension"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/openlink_chmlfrp_extension/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": [
-			"cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension"
-		],
-		"client": [
+
+      "client": [
 			"cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionClient"
 		]
 	},
