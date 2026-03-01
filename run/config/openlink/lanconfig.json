@@ -1,0 +1,7 @@
+{
+  "use_frp": true,
+  "allow_pvp": true,
+  "allow_commands": false,
+  "auth_mode": "ONLINE_MODE",
+  "last_port_value": ""
+}

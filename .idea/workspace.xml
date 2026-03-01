@@ -4,25 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="导入公共代码">
-      <change afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/OpenlinkChmlfrpExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="debug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/ChmlfrpFrpcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/ChmlfrpFrpcImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/GUI/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/GUI/LoginScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/GUI/NodeSelectionScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/GUI/NodeSelectionScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/OpenlinkChmlfrpExtension.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/StaticFields/FrpcImplInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/StaticFields/FrpcImplInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/StaticFields/URLs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/StaticFields/URLs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/FrpcManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/FrpcManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/LoggingManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/LoggingManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/Network.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/NodeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/NodeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/ProxyManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/ProxyManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/services/fun.moystudio.openlink.frpc.Frpc" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/services/fun.moystudio.openlink.frpc.Frpc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fabric.mod.json" afterDir="false" />
     </list>
     <list id="daac3cf2-fab1-4d2f-8c29-1fb1c15b4aa4" name="啊报名写错了" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -129,7 +112,8 @@
     "last_opened_file_path": "D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension",
     "project.structure.last.edited": "模块",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -566,7 +550,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772363847560</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="debug">
+      <option name="closed" value="true" />
+      <created>1772365387017</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1772365387017</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -593,7 +585,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Frpc management impl #3: Login" />
     <MESSAGE value="Frpc management impl #4: Proxy" />
     <MESSAGE value="Frpc management impl #5: Node Selection" />
     <MESSAGE value="Frpc impl #5: Procy &amp; README.md" />
@@ -618,7 +609,8 @@
     <MESSAGE value="加载fabric2" />
     <MESSAGE value="加载fabric2.1" />
     <MESSAGE value="导入公共代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="导入公共代码" />
+    <MESSAGE value="debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
