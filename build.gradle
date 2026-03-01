@@ -9,6 +9,31 @@ group = project.maven_group
 base {
 	archivesName = project.archives_base_name
 }
+/*
+sourceSets {
+    client {
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+
+        // 告诉 Gradle 这个源码集的 Java 文件在哪里
+        java {
+            srcDirs = ['src/client/java']
+        }
+        // 如果有 resources，也指定
+        resources {
+            srcDirs = ['src/client/resources']
+        }
+    }
+
+    main {
+        // main 源码集只保留 resources
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+ */
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
@@ -95,18 +120,4 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
-}
-
-// build.gradle 中添加
-sourceSets {
-    main {
-        java {
-            // 告诉 Gradle 和 IDEA：main 的 Java 代码来自 client 目录
-            srcDirs = ['src/client/java']
-        }
-        resources {
-            // 资源文件仍在 main/resources
-            srcDirs = ['src/main/resources']
-        }
-    }
 }

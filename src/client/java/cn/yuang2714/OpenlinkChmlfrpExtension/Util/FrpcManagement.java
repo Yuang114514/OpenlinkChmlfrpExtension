@@ -6,7 +6,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -37,7 +36,7 @@ public class FrpcManagement {
         } else if (osName.contains("Linux")||osName.contains("Unix")) userEnv[0] = "linux";
         else if (osName.contains("FreeBSD")) userEnv[0] = "freebsd";
         else {
-            OpenlinkChmlfrpExtensionClient.LOGGER.error("Unsupported operating system detected!");
+            OpenlinkChmlfrpExtension.LOGGER.error("Unsupported operating system detected!");
             throw new Exception("[OpenLinkChmlfrpExtension] Unsupported operating system detected!");
         }
 

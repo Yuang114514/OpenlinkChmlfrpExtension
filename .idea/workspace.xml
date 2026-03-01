@@ -4,13 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="加载fabric2.1">
-      <change afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/OpenlinkChmlfrpExtension.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/services/fun.moystudio.openlink.frpc.Frpc" afterDir="false" />
+    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="导入公共代码">
+      <change afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/OpenlinkChmlfrpExtension.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/OpenlinkChmlfrpExtensionClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/yuang2714/openlink_chmlfrp_extension/OpenlinkChmlfrpExtension.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/ChmlfrpFrpcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/ChmlfrpFrpcImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/GUI/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/GUI/LoginScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/GUI/NodeSelectionScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/GUI/NodeSelectionScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/OpenlinkChmlfrpExtension.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/StaticFields/FrpcImplInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/StaticFields/FrpcImplInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/StaticFields/URLs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/StaticFields/URLs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/FrpcManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/FrpcManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/LoggingManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/LoggingManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/NodeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/NodeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/java/cn/yuang2714/openlink_chmlfrp_extension/Util/ProxyManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/java/cn/yuang2714/OpenlinkChmlfrpExtension/Util/ProxyManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/services/fun.moystudio.openlink.frpc.Frpc" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/services/fun.moystudio.openlink.frpc.Frpc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fabric.mod.json" afterDir="false" />
     </list>
     <list id="daac3cf2-fab1-4d2f-8c29-1fb1c15b4aa4" name="啊报名写错了" comment="" />
@@ -91,34 +102,36 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension [createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension [wrapper genIntellijRuns].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [:common:tasks].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [:cpw.mods.bootstraplauncher.BootstrapLauncher.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [:prepareRunClientCompile].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [genIntellijRuns].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [init].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [jar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.OpenlinkChmlfrpExtension [wrapper].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.下载源代码.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;C:\\Users\\9b1d_8c6d_9dac_9dac\\AppData\\Roaming\\JetBrains\\IdeaIC2025.2\\plugins\\Shell Script\\shellcheck.exe&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;1.16.5to1.20.4fabric&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Gradle.D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension [createMcpToSrg].executor": "Run",
+    "Gradle.D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension [wrapper genIntellijRuns].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [:common:tasks].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [:cpw.mods.bootstraplauncher.BootstrapLauncher.main()].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [:net.fabricmc.devlaunchinjector.Main.main()].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [:prepareRunClientCompile].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [build].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [clean].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [createMcpToSrg].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [genIntellijRuns].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [init].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [jar].executor": "Run",
+    "Gradle.OpenlinkChmlfrpExtension [wrapper].executor": "Run",
+    "Gradle.下载源代码.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHELLCHECK.PATH": "C:\\Users\\9b1d_8c6d_9dac_9dac\\AppData\\Roaming\\JetBrains\\IdeaIC2025.2\\plugins\\Shell Script\\shellcheck.exe",
+    "git-widget-placeholder": "1.16.5to1.20.4fabric",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\9b1d_8c6d_9dac_9dac\Documents\Codes\OpenlinkChmlfrpExtension" />
@@ -545,7 +558,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772362289430</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="导入公共代码">
+      <option name="closed" value="true" />
+      <created>1772363847560</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1772363847560</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -572,7 +593,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Frpc management impl #2: Login" />
     <MESSAGE value="Frpc management impl #3: Login" />
     <MESSAGE value="Frpc management impl #4: Proxy" />
     <MESSAGE value="Frpc management impl #5: Node Selection" />
@@ -597,7 +617,8 @@
     <MESSAGE value="加载fabric" />
     <MESSAGE value="加载fabric2" />
     <MESSAGE value="加载fabric2.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="加载fabric2.1" />
+    <MESSAGE value="导入公共代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="导入公共代码" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

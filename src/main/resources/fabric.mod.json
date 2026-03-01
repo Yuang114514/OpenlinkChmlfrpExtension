@@ -15,12 +15,12 @@
 	"environment": "client",
 	"entrypoints": {
       "client": [
-        "cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension"
+        "cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension"
 		]
 	},
 	"depends": {
 		"fabricloader": ">=0.18.4",
-		"minecraft": "1.16.5-1.20.4",
+		"minecraft": ">=1.16.5 <=1.20.4",
 		"java": ">=17",
 		"fabric-api": "*"
 	}

@@ -1,4 +1,4 @@
-package cn.yuang2714.openlink_chmlfrp_extension.GUI;
+package cn.Yuang2714.OpenlinkChmlfrpExtension.GUI;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;

@@ -1,7 +1,7 @@
-package cn.yuang2714.openlink_chmlfrp_extension;
+package cn.Yuang2714.OpenlinkChmlfrpExtension;
 
-import cn.yuang2714.openlink_chmlfrp_extension.GUI.LoginScreen;
-import cn.yuang2714.openlink_chmlfrp_extension.GUI.NodeSelectionScreen;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoginScreen;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.NodeSelectionScreen;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.FrpcImplInfo;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.FrpcManagement;

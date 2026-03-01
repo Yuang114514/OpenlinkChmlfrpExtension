@@ -1,4 +1,4 @@
-package cn.yuang2714.openlink_chmlfrp_extension;
+package cn.Yuang2714.OpenlinkChmlfrpExtension;
 
 import net.fabricmc.api.ClientModInitializer;
 import org.slf4j.Logger;
@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.prefs.Preferences;
 
 public class OpenlinkChmlfrpExtension implements ClientModInitializer {
-    public static final String MODID = "openlink_chmlfrp_extension";
+    public static final String MODID = "OpenlinkChmlfrpExtension";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
     public static Preferences PREFERENCES = Preferences.userNodeForPackage(OpenlinkChmlfrpExtension.class);
 	@Override
