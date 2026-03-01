@@ -4,35 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="以防万一在清理fabric前提交一下">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/ChmlfrpFrpcImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/GUI/LoginScreen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/GUI/NodeSelectionScreen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/OpenlinkChmlfrpExtension.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/StaticFields/FrpcImplInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/StaticFields/URLs.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/Util/FrpcManagement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/Util/LoggingManagement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/Util/Network.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/Util/Node.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/Util/NodeUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Yuang2714/OpenlinkChmlfrpExtension/Util/ProxyManagement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/mods.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/services/fun.moystudio.openlink.frpc.Frpc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/openlink_chmlfrp_extension/lang/en_us.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/openlink_chmlfrp_extension/lang/zh_cn.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/openlink_chmlfrp_extension/textures/chmlfrp_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/pack.mcmeta" beforeDir="false" />
+    <list default="true" id="9839e517-a965-4cb1-ab1e-479f47e22bb7" name="更改" comment="复制fabric文件">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <list id="daac3cf2-fab1-4d2f-8c29-1fb1c15b4aa4" name="啊报名写错了" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +35,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="openlink_chmlfrp_extension" type="f1a62948:ProjectNode" />
+                <item name="OpenlinkChmlfrpExtension" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -112,34 +86,34 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension [createMcpToSrg].executor": "Run",
-    "Gradle.D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension [wrapper genIntellijRuns].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [:common:tasks].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [:cpw.mods.bootstraplauncher.BootstrapLauncher.main()].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [:prepareRunClientCompile].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [build].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [clean].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [createMcpToSrg].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [genIntellijRuns].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [init].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [jar].executor": "Run",
-    "Gradle.OpenlinkChmlfrpExtension [wrapper].executor": "Run",
-    "Gradle.下载源代码.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHELLCHECK.PATH": "C:\\Users\\9b1d_8c6d_9dac_9dac\\AppData\\Roaming\\JetBrains\\IdeaIC2025.2\\plugins\\Shell Script\\shellcheck.exe",
-    "git-widget-placeholder": "1.16.5to1.20.4fabric",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension [createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension [wrapper genIntellijRuns].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [:common:tasks].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [:cpw.mods.bootstraplauncher.BootstrapLauncher.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [:prepareRunClientCompile].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [genIntellijRuns].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [init].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [jar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.OpenlinkChmlfrpExtension [wrapper].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.下载源代码.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;C:\\Users\\9b1d_8c6d_9dac_9dac\\AppData\\Roaming\\JetBrains\\IdeaIC2025.2\\plugins\\Shell Script\\shellcheck.exe&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;1.16.5to1.20.4fabric&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/9b1d_8c6d_9dac_9dac/Documents/Codes/OpenlinkChmlfrpExtension&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\9b1d_8c6d_9dac_9dac\Documents\Codes\OpenlinkChmlfrpExtension" />
@@ -148,7 +122,7 @@
       <recent name="D:\9b1d_8c6d_9dac_9dac\Documents\Codes\OpenlinkChmlfrpExtension\src\main\resources\assets\openlink_chmlfrp_extension\textures" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.OpenlinkChmlfrpExtension [build]">
+  <component name="RunManager" selected="应用程序.Minecraft Client">
     <configuration name="OpenlinkChmlfrpExtension [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -507,7 +481,31 @@
       <option name="project" value="LOCAL" />
       <updated>1772358881152</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="清理fabric">
+      <option name="closed" value="true" />
+      <created>1772359774560</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1772359774560</updated>
+    </task>
+    <task id="LOCAL-00029" summary="清理fabric">
+      <option name="closed" value="true" />
+      <created>1772359781634</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1772359781634</updated>
+    </task>
+    <task id="LOCAL-00030" summary="复制fabric文件">
+      <option name="closed" value="true" />
+      <created>1772359966345</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1772359966345</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -521,7 +519,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="1.16.5to1.20.4fabric" />
+                        <option value="1.16.5to1.20.4forge" />
                       </list>
                     </value>
                   </entry>
@@ -534,8 +532,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Impl #2" />
-    <MESSAGE value="Action Setup" />
     <MESSAGE value="Where is my Wrapper???" />
     <MESSAGE value="Tring new action pref" />
     <MESSAGE value="Frpc management impl #1" />
@@ -559,7 +555,9 @@
     <MESSAGE value="Init Architectury again" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="以防万一在清理fabric前提交一下" />
-    <option name="LAST_COMMIT_MESSAGE" value="以防万一在清理fabric前提交一下" />
+    <MESSAGE value="清理fabric" />
+    <MESSAGE value="复制fabric文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="复制fabric文件" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
