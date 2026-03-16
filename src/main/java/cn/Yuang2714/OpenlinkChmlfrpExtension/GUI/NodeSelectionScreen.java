@@ -1,9 +1,9 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension.GUI;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.Node;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.NodeUtil;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.Node;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.NodeUtil;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,6 +21,15 @@ public class NodeSelectionScreen extends Screen {
     private Button doneButton;
     private boolean startDelay;
     private int delayed = 0;
+    private List<Node> nodeList;
+    private Component NodeDescription = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info","","","","","","");
+    private final int TOTAL_HEIGHT = 118; //20 + 4 + (10 * 7) + 4 + 20
+    private final int TOTAL_WIDTH = 200;
+    //第一行：自动选择按钮+面板按钮+节点输入框，40像素一个单位，单独留空
+    //   80-2   4  80-2-2   4  32-2
+    //+--------+  +--------+  +----+
+    //|  Auto  |  |  Panel |  | _  |
+    //+--------+  +--------+  +----+
 
     public NodeSelectionScreen(Screen lastScreen) {
         super(Component.translatable("gui.openlink.nodeselectionscreentitle"));
@@ -30,13 +39,14 @@ public class NodeSelectionScreen extends Screen {
     @Override
     protected void init() {
         super.init();
+        nodeList = NodeUtil.genNodeList();
 
         idBox = new EditBox(
                 font,
-                width / 2 + 62,
-                height / 2 - 12,
-                38,
-                20,
+                width / 2 - TOTAL_WIDTH / 2 + 80+80+(4/2) +2,
+                height / 2 - TOTAL_HEIGHT / 2 +2,
+                40 -4,
+                20 -4,
                 Component.translatable("text.openlink_chmlfrp_extension.none")
         );
         idBox.setValue(String.valueOf(OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1)));
@@ -46,14 +56,20 @@ public class NodeSelectionScreen extends Screen {
         Button panelButton = Button.builder(
                         Component.translatable("gui.openlink_chmlfrp_extension.node_selection.panel_button_text"),
                         button -> Util.getPlatform().openUri(URLs.nodes))
-                .bounds(width / 2 - 19, height / 2 - 12, 78, 20)
+                .bounds(width / 2 - TOTAL_WIDTH / 2 + 80+(4/2),
+                        height / 2 - TOTAL_HEIGHT / 2,
+                        80 -2-2,
+                        20)
                 .build();
         addRenderableWidget(panelButton);
 
         Button autoSelectButton = Button.builder(
                         Component.translatable("gui.openlink_chmlfrp_extension.node_selection.auto_button_text"),
                         button -> idBox.setValue("-1"))
-                .bounds(width / 2 - 100, height / 2 - 12, 78, 20)
+                .bounds(width / 2 - TOTAL_WIDTH / 2,
+                        height / 2 - TOTAL_HEIGHT / 2,
+                        80 -2,
+                        20)
                 .build();
         addRenderableWidget(autoSelectButton);
 
@@ -77,13 +93,6 @@ public class NodeSelectionScreen extends Screen {
                         return;
                     }
 
-                    List<Node> nodeList = NodeUtil.genNodeList();
-                    if (nodeList == null) {
-                        doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.list_exception"));
-                        doneButton.active = true;
-                        return;
-                    }
-
                     for (Node nodeInList : nodeList) {
                         if (nodeInList.id == selectedId) {
                             OpenlinkChmlfrpExtension.PREFERENCES.putInt("last_node", selectedId);
@@ -96,7 +105,10 @@ public class NodeSelectionScreen extends Screen {
                     doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.fail"));
                     doneButton.active = true;
                 })
-                .bounds(width / 2 - 100, height / 2 + 20, 200, 20)
+                .bounds(width / 2 - TOTAL_WIDTH / 2,
+                        height / 2 + TOTAL_HEIGHT / 2,
+                        200,
+                        20)
                 .build();
         addRenderableWidget(doneButton);
     }
@@ -125,15 +137,15 @@ public class NodeSelectionScreen extends Screen {
                 font,
                 Component.translatable("gui.openlink_chmlfrp_extension.node_selection.tip"),
                 width / 2 - font.width(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.tip")) / 2,
-                height / 2 - 45,
+                height / 2 - 75,
                 0xFFFFFF
         );
+        graphics.fill(width / 2 - TOTAL_WIDTH / 2,
+                height / 2 - TOTAL_HEIGHT / 2 +20+4,
+                200,
+                70,
+                0x80_00_00_00);
 
         super.render(graphics, mouseX, mouseY, partialTick);
-    }
-
-    @Override
-    public void renderBackground(@NotNull GuiGraphics graphics) {
-        graphics.fillGradient(0, 0, width, height, 0x70707070,  0x70707070);
     }
 }

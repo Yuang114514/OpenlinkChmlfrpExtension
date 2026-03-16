@@ -1,4 +1,4 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields;
+package cn.Yuang2714.OpenlinkChmlfrpExtension.Statics;
 
 public class FrpcImplInfo {
     public static final String id = "chmlfrp";

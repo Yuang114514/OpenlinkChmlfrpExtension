@@ -1,15 +1,13 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.FrpcManagement;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Util.LoggingManagement;
-import com.mojang.brigadier.CommandDispatcher;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.FrpcManagement;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.LoggingManagement;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.logging.LogUtils;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
@@ -42,7 +40,13 @@ public class OpenlinkChmlfrpExtension {
     }
 
     @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+
+    }
+
+    @SubscribeEvent
     public static void onClientCommandRegistering(RegisterClientCommandsEvent event) {
+
         // /oce <command>
         //   \--\ setProxyCreationMaxRetry
         //   |  \- 无参数 输出当前配置

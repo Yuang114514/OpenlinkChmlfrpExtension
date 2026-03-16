@@ -3,7 +3,7 @@ loaderVersion = "[40,)"
 license = "MIT"
 [[mods]]
 modId = "openlink_chmlfrp_extension"
-version = "1.0.0"
+version = "1.0.1"
 displayName = "OpenLink Chmlfrp Extension"
 logoFile="icon.png"
 authors = "Yuang2714"

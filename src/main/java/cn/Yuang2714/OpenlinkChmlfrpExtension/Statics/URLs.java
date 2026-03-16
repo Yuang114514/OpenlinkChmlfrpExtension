@@ -1,4 +1,4 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields;
+package cn.Yuang2714.OpenlinkChmlfrpExtension.Statics;
 
 public class URLs {
     public static final String panel = "https://panel.chmlfrp.net/home";

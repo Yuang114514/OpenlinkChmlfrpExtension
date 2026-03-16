@@ -1,12 +1,11 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Util;
+package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Arrays;

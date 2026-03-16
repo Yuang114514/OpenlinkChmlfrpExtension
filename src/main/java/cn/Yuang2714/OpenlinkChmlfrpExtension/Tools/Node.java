@@ -1,4 +1,4 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Util;
+package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
 public class Node {
     public int id,group,bandwidthUsage,cpuUsage;
@@ -6,13 +6,13 @@ public class Node {
     public boolean ipv6, inChina;
 
     public Node(int id, int group, int bandwidthUsage, int cpuUsage, String name, String description, String location, boolean ipv6, boolean inChina) {
-        this.id = id;
+        this.id = id;//
         this.group = group;
         this.bandwidthUsage = bandwidthUsage;
         this.cpuUsage = cpuUsage;
-        this.name = name;
-        this.description = description;
-        this.location = location;
+        this.name = name;//
+        this.description = description;//
+        this.location = location;//
         this.ipv6 = ipv6;
         this.inChina = inChina;
     }

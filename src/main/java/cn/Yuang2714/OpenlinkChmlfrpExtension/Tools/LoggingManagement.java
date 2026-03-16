@@ -1,7 +1,7 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Util;
+package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.StaticFields.URLs;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
 import com.google.gson.JsonParser;
 
 public class LoggingManagement {
@@ -19,6 +19,7 @@ public class LoggingManagement {
 
     public static boolean checkToken(String token) {
         try {
+
             String loginState = JsonParser.parseString(Network.get(URLs.api + "userinfo?token=" + token))
                     .getAsJsonObject()
                     .get("state")

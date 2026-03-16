@@ -1,4 +1,4 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Util;
+package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import org.jetbrains.annotations.Nullable;
