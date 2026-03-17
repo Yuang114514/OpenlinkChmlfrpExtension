@@ -13,5 +13,5 @@ An OpenLink addon for Chmlfrp
 ### Download
 
 - Build per Push available at [Actions Page](https://github.com/Yuang114514/OpenlinkChmlfrpExtension/actions)
-- Releases available on Modrinth
+- Releases available on [Modrinth](https://modrinth.com/mod/openlink-chmlfrp-extension/moderation) and [Curseforge](https://www.curseforge.com/minecraft/mc-mods/openlink-chmlfrp-extension)
 - mcmod.cn Description
