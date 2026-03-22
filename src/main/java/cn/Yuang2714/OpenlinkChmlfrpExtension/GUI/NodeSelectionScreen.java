@@ -35,18 +35,18 @@ public class NodeSelectionScreen extends Screen {
     //|  Auto  |  |  Panel |  | _  |
     //+--------+  +--------+  +----+
 
-    public NodeSelectionScreen(Screen lastScreen) {
+    public NodeSelectionScreen(Screen lastScreen, List<Node> nodes) {
         super(Component.translatable("gui.openlink.nodeselectionscreentitle"));
         parentScreen = lastScreen;
+        nodeList = nodes;
     }
 
     @Override
     protected void init() {
         super.init();
-        nodeList = NodeUtil.genNodeList();
 
         START_X = width / 2 - 100; //200 /2
-        START_Y = height / 2 - 64; //64 = 20 + 4 + (10 * 7)+5+5 + 4 + 20，再/2得到居中
+        START_Y = height / 2 - 59; //64 = 20 + 4 + (10 * 6)+5+5 + 4 + 20，再/2得到居中
 
         idBox = new EditBox(
                 font,
@@ -59,16 +59,23 @@ public class NodeSelectionScreen extends Screen {
         idBox.setValue(String.valueOf(OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1)));
         idBox.setFilter(text -> text.matches("-*\\d*"));
         idBox.setResponder(text -> {
-            int enteredId = Integer.parseInt(text);
-            for (Node entered : nodeList) {
-                if (enteredId != -1 && entered.id == enteredId) {
-                    nodeDescription_name = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.name", entered.name);
-                    nodeDescription_description = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.description", entered.description);
-                    nodeDescription_location = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.location", entered.location);
-                    nodeDescription_bandwidthUsage = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage", String.valueOf(entered.bandwidthUsage));
-                    nodeDescription_cpuUsage = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage", String.valueOf(entered.cpuUsage));
-                }
-            }
+            try {
+                nodeDescription_name = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.name","");
+                nodeDescription_description = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.description","");
+                nodeDescription_location = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.location","");
+                nodeDescription_bandwidthUsage = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage","");
+                nodeDescription_cpuUsage = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage","");
+                int enteredId = Integer.parseInt(text);
+                nodeList.forEach(entered -> {
+                    if (enteredId != -1 && entered.id == enteredId) {
+                        nodeDescription_name = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.name", entered.name);
+                        nodeDescription_description = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.description", entered.description);
+                        nodeDescription_location = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.location", entered.location);
+                        nodeDescription_bandwidthUsage = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage", String.valueOf(entered.bandwidthUsage));
+                        nodeDescription_cpuUsage = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage", String.valueOf(entered.cpuUsage));
+                    }
+                });
+            } catch (NumberFormatException ignored) {}
         });
         addRenderableWidget(idBox);
 
@@ -95,8 +102,8 @@ public class NodeSelectionScreen extends Screen {
         doneButton = Button.builder(
                 Component.translatable("gui.done"),
                 button -> {
-                    doneButton.active = false;
                     doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.ing"));
+                    doneButton.active = false;
 
                     String selection = idBox.getValue();
                     if (selection.isBlank()) {
@@ -125,7 +132,7 @@ public class NodeSelectionScreen extends Screen {
                     doneButton.active = true;
                 })
                 .bounds(START_X,
-                        START_Y + 128, //20 + 4 + 80 + 4 + 20
+                        START_Y + 98, //20 + 4 + 70 + 4 + 20
                         200,
                         20)
                 .build();
@@ -160,26 +167,83 @@ public class NodeSelectionScreen extends Screen {
                 0xFFFFFF
         );
 
+        //绘制节点信息
         graphics.drawString(
                 font,
                 Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.title"),
                 START_X + 5,
-                START_Y + 39, //20 + 4 + 5 + 10
+                START_Y + 29, //20 + 4 + 5
                 0xFFFFFF
         );
         graphics.drawString(
                 font,
                 nodeDescription_name,
                 START_X + 5,
+                START_Y + 39, //20 + 4 + 5 + (10*1)
+                0xFFFFFF
+        );
+        graphics.drawString(
+                font,
+                nodeDescription_description,
+                START_X + 5,
                 START_Y + 49, //20 + 4 + 5 + (10*2)
                 0xFFFFFF
         );
+        graphics.drawString(
+                font,
+                nodeDescription_location,
+                START_X + 5,
+                START_Y + 59, //20 + 4 + 5 + (10*3)
+                0xFFFFFF
+        );
+        graphics.drawString(
+                font,
+                nodeDescription_bandwidthUsage,
+                START_X + 5,
+                START_Y + 69, //20 + 4 + 5 + (10*4)
+                0xFFFFFF
+        );
+        graphics.drawString(
+                font,
+                nodeDescription_cpuUsage,
+                START_X + 5,
+                START_Y + 79, //20 + 4 + 5 + (10*5)
+                0xFFFFFF
+        );
 
-        graphics.fill(width / 2 - START_X / 2,
-                height / 2 - START_Y / 2 +20+4,
-                200,
-                70,
-                0x80_00_00_00);
+        //绘制边框
+        //上
+        graphics.fill(
+                START_X + 200,
+                START_Y + 26, //20 + 4再加边框宽度2
+                START_X,
+                START_Y + 24, //20 + 4
+                0xFFFFFFFF
+        );
+        //左
+        graphics.fill(
+                START_X,
+                START_Y + 24, //20 + 4
+                START_X + 2, //宽度2
+                START_Y + 94, //边框大小
+                0xFFFFFFFF
+        );
+        //下
+        graphics.fill(
+                START_X,
+                START_Y + 94, //边框大小
+                START_X + 200,
+                START_Y + 92,
+                0xFFFFFFFF
+        );
+        //右
+        graphics.fill(
+                START_X + 200,
+                START_Y + 94,
+                START_X + 198,
+                START_Y + 24,
+                0xFFFFFFFF
+        );
 
         super.render(graphics, mouseX, mouseY, partialTick);
     }

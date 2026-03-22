@@ -1,5 +1,6 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension;
 
+import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoadingNodeSelectionScreen;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoginScreen;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.NodeSelectionScreen;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.FrpcImplInfo;
@@ -77,7 +78,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public Screen getNodeSelectionScreen(@Nullable Screen lastScreen) {
-        return new NodeSelectionScreen(lastScreen);
+        return new LoadingNodeSelectionScreen(lastScreen);
     }
 
     public Screen getLoginScreen(@Nullable Screen lastScreen) {
@@ -85,7 +86,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public ResourceLocation getIcon() {
-        return new ResourceLocation(OpenlinkChmlfrpExtension.MODID,"textures/chmlfrp_icon.png");
+        return ResourceLocation.fromNamespaceAndPath(OpenlinkChmlfrpExtension.MODID,"textures/chmlfrp_icon.png");
     }
 
     public boolean isLoggedIn() {

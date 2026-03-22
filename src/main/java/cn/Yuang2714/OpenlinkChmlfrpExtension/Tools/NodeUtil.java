@@ -24,9 +24,6 @@ public class NodeUtil {
                     .get("data")
                     .getAsJsonArray();
 
-//            OpenlinkChmlfrpExtension.LOGGER.info(nodeInfos.getAsJsonObject().getAsString());
-//            OpenlinkChmlfrpExtension.LOGGER.info(nodeStats.getAsJsonObject().getAsString());
-
             for (JsonElement i : nodeInfos) {
                 JsonObject nodeInfo = i.getAsJsonObject();
                 for (JsonElement j : nodeStats) {

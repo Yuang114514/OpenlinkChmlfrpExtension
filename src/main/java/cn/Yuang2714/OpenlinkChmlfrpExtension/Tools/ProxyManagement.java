@@ -95,7 +95,7 @@ public class ProxyManagement {
             preferRemotePort = randomer.nextInt(portRange[0], portRange[1]);
         }
 
-        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("chat.openlink_chmlfrp_extension.creating_proxy.port_not_found")
+        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("chat.openlink_chmlfrp_extension.creating_proxy.port_not_found", OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5))
                 .withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
         throw new RuntimeException("Proxy Creation Failed with no possible remote port after 5 tries");
     }
