@@ -69,7 +69,8 @@ public class NodeSelectionScreen extends Screen {
                 nodeList.forEach(entered -> {
                     if (enteredId != -1 && entered.id == enteredId) {
                         nodeDescription_name = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.name", entered.name);
-                        nodeDescription_description = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.description", entered.description);
+                        nodeDescription_description = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.description",
+                                entered.description.length() >= 15 ? entered.description.substring(0,16) + "..." : entered.description);
                         nodeDescription_location = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.location", entered.location);
                         nodeDescription_bandwidthUsage = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage", String.valueOf(entered.bandwidthUsage));
                         nodeDescription_cpuUsage = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage", String.valueOf(entered.cpuUsage));
