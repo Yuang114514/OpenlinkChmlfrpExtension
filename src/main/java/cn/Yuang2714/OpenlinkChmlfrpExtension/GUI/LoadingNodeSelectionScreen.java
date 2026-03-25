@@ -3,11 +3,14 @@ package cn.Yuang2714.OpenlinkChmlfrpExtension.GUI;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.Node;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.NodeUtil;
+import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -15,6 +18,9 @@ public class LoadingNodeSelectionScreen extends Screen {
     private final Screen parentScreen;
     private List<Node> nodes = null;
     private Thread requestThread;
+    private boolean isFailed = false;
+    private Component status = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.loading");
+    private Logger logger = LogUtils.getLogger();
 
     public LoadingNodeSelectionScreen(Screen parentScreen) {
         super(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.loading"));
@@ -25,8 +31,12 @@ public class LoadingNodeSelectionScreen extends Screen {
     protected void init() {
         super.init();
         requestThread = new Thread(() -> {
-            OpenlinkChmlfrpExtension.LOGGER.info("Node List getter thread started.");
-            nodes = NodeUtil.genNodeList();
+            logger.info("Node List getter thread started.");
+            try {
+                nodes = NodeUtil.genNodeList();
+            } catch (Exception e) {
+                isFailed = true;
+            }
         });
         requestThread.start();
     }
@@ -35,8 +45,12 @@ public class LoadingNodeSelectionScreen extends Screen {
     public void tick() {
         super.tick();
         if (!requestThread.isAlive() && nodes != null) {
-            OpenlinkChmlfrpExtension.LOGGER.info("Got generated node list. Starting selection Screen.");
-            Minecraft.getInstance().setScreen(new NodeSelectionScreen(parentScreen, nodes));
+            if (!isFailed) {
+                logger.info("Got generated node list. Starting selection Screen.");
+                Minecraft.getInstance().setScreen(new NodeSelectionScreen(parentScreen, nodes));
+            } else {
+                status = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.list_exception").withStyle(ChatFormatting.RED);
+            }
         }
     }
 
@@ -51,8 +65,8 @@ public class LoadingNodeSelectionScreen extends Screen {
         renderBackground(graphics);
         graphics.drawString(
                 font,
-                Component.translatable("gui.openlink_chmlfrp_extension.node_selection.loading"),
-                width / 2 - font.width(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.loading")) / 2,
+                status,
+                width / 2 - font.width(status) / 2,
                 height / 2 - 5,
                 0xFFFFFF
         );

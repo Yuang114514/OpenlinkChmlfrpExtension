@@ -6,10 +6,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,9 +20,10 @@ import java.util.Random;
 public class ProxyManagement {
     private static int caughtPort = -1;
     private static int caughtProxyId = -1;
+    static Logger logger = LogUtils.getLogger();
 
     public static String createProxy(int localPort, @Nullable String remotePort) throws Exception {
-        OpenlinkChmlfrpExtension.LOGGER.info("Creating proxy...");
+        logger.info("Creating proxy...");
         Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("chat.openlink_chmlfrp_extension.creating_proxy.ing").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
 
         JsonObject postQuery = new JsonObject();
@@ -78,6 +81,7 @@ public class ProxyManagement {
         for (int j = 0; j < OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5); j++) {
             postQuery.addProperty("remoteport", preferRemotePort);
             try {
+                logger.info("Trying to create proxy. Attempt {}, Remote port:{}", j+1, preferRemotePort);
                 caughtPort = preferRemotePort;
                 return preferNodeApiInfo.get("ip")
                         .toString()

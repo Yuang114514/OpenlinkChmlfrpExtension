@@ -1,6 +1,5 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.OutputStream;
@@ -40,7 +39,6 @@ public class Network {
         String response = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
         connection.disconnect();
 
-        OpenlinkChmlfrpExtension.LOGGER.info("Post request: {}", response);
         return response;
     }
 }

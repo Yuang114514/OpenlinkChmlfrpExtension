@@ -3,8 +3,12 @@ package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
 import com.google.gson.JsonParser;
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
 
 public class LoggingManagement {
+    static Logger logger = LogUtils.getLogger();
+    
     public static boolean login(String token) {
         if (checkToken(token)) {
             OpenlinkChmlfrpExtension.PREFERENCES.put("token", token);
@@ -19,14 +23,13 @@ public class LoggingManagement {
 
     public static boolean checkToken(String token) {
         try {
-
             String loginState = JsonParser.parseString(Network.get(URLs.api + "userinfo?token=" + token))
                     .getAsJsonObject()
                     .get("state")
                     .getAsString();
             return loginState.equals("success");
         } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Token check failed with an Exception:{}", e.toString());
+            logger.error("Token check failed with an Exception:{}", e.toString());
             return false;
         }
     }
@@ -43,10 +46,10 @@ public class LoggingManagement {
                     .get("countryCode")
                     .getAsString();
 
-            OpenlinkChmlfrpExtension.LOGGER.info("User country code:{}", countryCode);
+            logger.info("User country code:{}", countryCode);
             return countryCode.equals("CN") || countryCode.equals("HK");
         } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to get your country. Exception:{}", e.toString());
+            logger.error("Failed to get your country. Exception:{}", e.toString());
             return true;
         }
     }
@@ -62,7 +65,7 @@ public class LoggingManagement {
 
             return !userGroup.equals("免费用户");
         } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to check if you are a VIP, running as you aren't. Exception:{}", e.toString());
+            logger.error("Failed to check if you are a VIP, running as you aren't. Exception:{}", e.toString());
             return false;
         }
     }
@@ -79,7 +82,7 @@ public class LoggingManagement {
 
             return realName.equals("已实名");
         } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to check if you are real named, running as you aren't. Exception:{}", e.toString());
+            logger.error("Failed to check if you are real named, running as you aren't. Exception:{}", e.toString());
             return false;
         }
     }

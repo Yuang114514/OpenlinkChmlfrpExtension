@@ -5,6 +5,8 @@ import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -14,6 +16,7 @@ import java.util.List;
 public class FrpcManagement {
     static String[] userEnv = new String[2]; //[0]是系统环境，[1]是架构
     static int[] frpcVersion = new int[3];
+    static Logger logger = LogUtils.getLogger();
 
     public static void initUserEnv() throws Exception {
         //用户信息获取
@@ -25,7 +28,7 @@ public class FrpcManagement {
         else if (osArch.contains("aarch64")) userEnv[1] = "arm64";
         else if (osArch.contains("arm64")) userEnv[1] = "arm64";
         else {
-            OpenlinkChmlfrpExtension.LOGGER.error("Unsupported architecture detected!");
+            logger.error("Unsupported architecture detected!");
             throw new Exception("[OpenLinkChmlfrpExtension] Unsupported architecture detected!");
         }
 
@@ -36,16 +39,16 @@ public class FrpcManagement {
         } else if (osName.contains("Linux")||osName.contains("Unix")) userEnv[0] = "linux";
         else if (osName.contains("FreeBSD")) userEnv[0] = "freebsd";
         else {
-            OpenlinkChmlfrpExtension.LOGGER.error("Unsupported operating system detected!");
+            logger.error("Unsupported operating system detected!");
             throw new Exception("[OpenLinkChmlfrpExtension] Unsupported operating system detected!");
         }
 
-        OpenlinkChmlfrpExtension.LOGGER.info("Got user environment: System:{}, Architecture:{}", userEnv[0], userEnv[1]);
+        logger.info("Got user environment: System:{}, Architecture:{}", userEnv[0], userEnv[1]);
     }
 
     public static String getCurrentFrpcVersion(Path path) {
         if (path == null) {
-            OpenlinkChmlfrpExtension.LOGGER.warn("There is none frpc in storage!");
+            logger.warn("There is none frpc in storage!");
             return "does not exist";
         }
 
@@ -59,12 +62,12 @@ public class FrpcManagement {
                     , StandardCharsets.UTF_8
             ).split("-")[1].split("_")[0];
 
-            OpenlinkChmlfrpExtension.LOGGER.debug("Got local frpc version: {}", version);
+            logger.debug("Got local frpc version: {}", version);
             frpcVersion = stringVersionToIntArray(version);
 
             return version;
         } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to check local frpc version. Exception:{}", e.toString());
+            logger.error("Failed to check local frpc version. Exception:{}", e.toString());
             return "does not exist";
         }
     }
@@ -79,7 +82,7 @@ public class FrpcManagement {
             version[i] = Integer.parseInt(gotVersion[i]);
         }
 
-        OpenlinkChmlfrpExtension.LOGGER.debug("Converting string version number {} to int array...", s);
+        logger.debug("Converting string version number {} to int array...", s);
         return version;
     }
 
@@ -87,10 +90,10 @@ public class FrpcManagement {
         try {
             JsonObject response = JsonParser.parseString(Network.get(URLs.api + "download_info")).getAsJsonObject();
             String version = response.get("data").getAsJsonObject().get("version").getAsString().split("_")[0];
-            OpenlinkChmlfrpExtension.LOGGER.debug("Got remote latest frpc version: {}", version);
+            logger.debug("Got remote latest frpc version: {}", version);
             return stringVersionToIntArray(version);
         } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to check latest frpc version online. Exception:{}", e.toString());
+            logger.error("Failed to check latest frpc version online. Exception:{}", e.toString());
             return null;
         }
     }
@@ -104,7 +107,7 @@ public class FrpcManagement {
         for (int i = 0; i < 3; i++) {
             int c = currentVersion[i], l = latestVersion[i];
             if (l > c) {
-                OpenlinkChmlfrpExtension.LOGGER.info("Found new frpc update! Latest:{}, Current:{}", Arrays.toString(latestVersion), Arrays.toString(currentVersion));
+                logger.info("Found new frpc update! Latest:{}, Current:{}", Arrays.toString(latestVersion), Arrays.toString(currentVersion));
                 return true;
             }
         }
@@ -128,7 +131,7 @@ public class FrpcManagement {
                     String link = data.get("link").getAsString();
                     JsonObject system = data.getAsJsonObject("system");
                     if (!system.has(userEnv[0])) {
-                        OpenlinkChmlfrpExtension.LOGGER.warn("Update file list does not contains your system. Cancelling update.");
+                        logger.warn("Update file list does not contains your system. Cancelling update.");
                         return null;
                     }
 
@@ -142,7 +145,7 @@ public class FrpcManagement {
                         }
                     }
                 } catch (Exception e) {
-                    OpenlinkChmlfrpExtension.LOGGER.error("Failed to fetch download link. Exception:{}", e.toString());
+                    logger.error("Failed to fetch download link. Exception:{}", e.toString());
                     return null;
                 }
             }

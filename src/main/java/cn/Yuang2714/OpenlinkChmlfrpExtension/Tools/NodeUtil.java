@@ -6,12 +6,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NodeUtil {
-    public static List<Node> genNodeList() {
+    static Logger logger = LogUtils.getLogger();
+
+    public static List<Node> genNodeList() throws Exception {
         try {
             List<Node> nodeList = new ArrayList<>();
 
@@ -54,8 +58,8 @@ public class NodeUtil {
             if (!nodeList.isEmpty()) return nodeList;
             else throw new NullPointerException("Unable to get any node???");
         } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to get node list. Exception:{}", e.toString());
-            return null;
+            logger.error("Failed to get node list. Exception:{}", e.toString());
+            throw e;
         }
     }
 
@@ -85,7 +89,7 @@ public class NodeUtil {
         });
 
         Node selected = nodeList.get(0);
-        OpenlinkChmlfrpExtension.LOGGER.info("Automatically Selected Node: id:{}, name:{}, group:{}, bandwidth usage:{}, CPU usage:{}",
+        logger.info("Automatically Selected Node: id:{}, name:{}, group:{}, bandwidth usage:{}, CPU usage:{}",
                 selected.id, selected.name, selected.group, selected.bandwidthUsage, selected.cpuUsage);
         return selected;
     }
