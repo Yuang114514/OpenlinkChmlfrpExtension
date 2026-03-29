@@ -10,8 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Network {
     public static String get(String url) throws Exception {
-        URI address = new URI(url);
-        HttpURLConnection connection = (HttpURLConnection) new URL(address.toASCIIString()).openConnection();
+        HttpURLConnection connection = (HttpURLConnection) new URL(new URI(url).toASCIIString()).openConnection();
         connection.setRequestMethod("GET");
 
         String response = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
@@ -21,9 +20,7 @@ public class Network {
     }
 
     public static String post(String url, @Nullable String body) throws Exception {
-
-        URI address = new URI(url);
-        HttpURLConnection connection = (HttpURLConnection) new URL(address.toASCIIString()).openConnection();
+        HttpURLConnection connection = (HttpURLConnection) new URL(new URI(url).toASCIIString()).openConnection();
         connection.setRequestMethod("POST");
         if (body != null) connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");

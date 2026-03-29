@@ -1,9 +1,10 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
 public class Node {
-    public int id,group,bandwidthUsage,cpuUsage;
-    public String name,description,location;
+    public int id, group, bandwidthUsage, cpuUsage;
+    public String name, description, location, domain="No Response";
     public boolean ipv6, inChina;
+    public double lon=0, lat=0;//lon是经度lat是纬度
 
     public Node(int id, int group, int bandwidthUsage, int cpuUsage, String name, String description, String location, boolean ipv6, boolean inChina) {
         this.id = id;
@@ -15,5 +16,23 @@ public class Node {
         this.location = location;
         this.ipv6 = ipv6;
         this.inChina = inChina;
+    }
+
+    public Node(int id, int bandwidthUsage, int cpuUsage, double lat, double lon, String name, String description, String location, String domain, boolean ipv6, boolean inChina) {
+        this.id = id;
+        this.bandwidthUsage = bandwidthUsage;
+        this.cpuUsage = cpuUsage;
+        this.lat = lat;
+        this.lon = lon;
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.domain = domain;
+        this.ipv6 = ipv6;
+        this.inChina = inChina;
+    }
+
+    boolean isAdvanced() {
+        return lat != 0 && lon != 0 && !domain.equals("No Response");
     }
 }

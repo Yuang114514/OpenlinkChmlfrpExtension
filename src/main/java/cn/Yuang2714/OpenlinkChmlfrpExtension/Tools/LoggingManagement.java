@@ -2,9 +2,12 @@ package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
+
+import java.util.Arrays;
 
 public class LoggingManagement {
     static Logger logger = LogUtils.getLogger();
@@ -84,6 +87,16 @@ public class LoggingManagement {
         } catch (Exception e) {
             logger.error("Failed to check if you are real named, running as you aren't. Exception:{}", e.toString());
             return false;
+        }
+    }
+
+    public static double[] getUserLocation() {
+        try {
+            JsonObject ipCheckResponse = JsonParser.parseString(Network.get(URLs.ipCheck)).getAsJsonObject();
+            return new double[]{ipCheckResponse.get("lon").getAsDouble(), ipCheckResponse.get("lat").getAsDouble()};
+        } catch (Exception e) {
+            logger.error("Failed to get your location. Exception:{}", e.toString());
+            return new double[]{0,0};
         }
     }
 }

@@ -7,7 +7,6 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
@@ -37,11 +36,6 @@ public class OpenlinkChmlfrpExtension {
                         | |                                                                                         | |
                         |_|                                                                                         |_|
                 """);
-    }
-
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-
     }
 
     @SubscribeEvent
