@@ -27,8 +27,8 @@ public class LoginScreen extends Screen {
         doneButton = Button.builder(
                 Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_1"),
                 button -> {
-                    doneButton.active = false;
                     doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_2"));
+                    doneButton.active = false;
 
                     if (LoggingManagement.login(tokenBox.getValue())) {
                         doneButton.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_success"));

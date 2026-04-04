@@ -30,9 +30,12 @@ public class LoggingManagement {
                     .getAsJsonObject()
                     .get("state")
                     .getAsString();
+            logger.info("Logged in.");
             return loginState.equals("success");
         } catch (Exception e) {
             logger.error("Token check failed with an Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
+            logger.error(Arrays.toString(e.getStackTrace()));
             return false;
         }
     }
@@ -53,6 +56,8 @@ public class LoggingManagement {
             return countryCode.equals("CN") || countryCode.equals("HK");
         } catch (Exception e) {
             logger.error("Failed to get your country. Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
+            logger.error(Arrays.toString(e.getStackTrace()));
             return true;
         }
     }
@@ -65,10 +70,13 @@ public class LoggingManagement {
                     .getAsJsonObject()
                     .get("usergroup")
                     .getAsString();
+            logger.info("Checking if you are VIP. API Response:{}", userGroup);
 
             return !userGroup.equals("免费用户");
         } catch (Exception e) {
             logger.error("Failed to check if you are a VIP, running as you aren't. Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
+            logger.error(Arrays.toString(e.getStackTrace()));
             return false;
         }
     }
@@ -86,6 +94,8 @@ public class LoggingManagement {
             return realName.equals("已实名");
         } catch (Exception e) {
             logger.error("Failed to check if you are real named, running as you aren't. Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
+            logger.error(Arrays.toString(e.getStackTrace()));
             return false;
         }
     }
@@ -96,6 +106,8 @@ public class LoggingManagement {
             return new double[]{ipCheckResponse.get("lon").getAsDouble(), ipCheckResponse.get("lat").getAsDouble()};
         } catch (Exception e) {
             logger.error("Failed to get your location. Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
+            logger.error(Arrays.toString(e.getStackTrace()));
             return new double[]{0,0};
         }
     }

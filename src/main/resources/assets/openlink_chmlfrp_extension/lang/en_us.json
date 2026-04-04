@@ -23,6 +23,8 @@
   "gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage":       "    CPU Usage:%s%%",
   "chat.openlink_chmlfrp_extension.creating_proxy.ing": "[Openlink Chmlfrp Extension] Creating Remote Proxy...",
   "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found": "[Openlink Chmlfrp Extension] Cannot find a valid remote port after %s tries, maybe you should try another node.",
+  "chat.openlink_chmlfrp_extension.creating_proxy.got_token": "[Openlink Chmlfrp Extension] Got your token...",
+  "chat.openlink_chmlfrp_extension.creating_proxy.got_node": "[Openlink Chmlfrp Extension] Selecting Node... ID: %s",
   "chat.openlink_chmlfrp_extension.command.config_max_retry.success": "Set createProxyMaxRetry to %s",
   "chat.openlink_chmlfrp_extension.command.config_max_retry.read": "Currently, createProxyMaxRetry is %s",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.success": "Successfully reloaded your information.",

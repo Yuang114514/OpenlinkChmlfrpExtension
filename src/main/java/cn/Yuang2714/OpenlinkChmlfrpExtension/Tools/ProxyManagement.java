@@ -37,12 +37,17 @@ public class ProxyManagement {
         String token = OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken");
         if (token.equals("InvalidToken"))
             throw new NullPointerException("[Openlink Chmlfrp Extension] You have not logged in.");
+        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(""));
         postQuery.addProperty("token", token);
 
         int preferNodeId = OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1);
         String preferNodeName = "Not Selected";
-        List<Node> nodes = NodeUtil.genNodeList();
-        if (nodes == null) throw new NullPointerException("[Openlink Chmlfrp Extension] Unable to get Node List.");
+        List<Node> nodes;
+        try {
+            nodes = NodeUtil.genNodeList();
+        } catch (Exception e) {
+            throw new NullPointerException("[Openlink Chmlfrp Extension] Unable to get Node List.");
+        }
         if (preferNodeId == -1) preferNodeName = NodeUtil.sortNode(nodes).name;
         else {
             for (Node nodeInList : nodes) {

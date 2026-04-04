@@ -1,19 +1,35 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
+import com.mojang.logging.LogUtils;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.io.OutputStream;
+import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class Network {
+    static Logger logger = LogUtils.getLogger();
+    static CookieManager manager;
+
+    public static void setUpCookieManager() {
+        manager = new CookieManager();
+        java.net.CookieHandler.setDefault(manager);
+    }
+
     public static String get(String url) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) new URL(new URI(url).toASCIIString()).openConnection();
         connection.setRequestMethod("GET");
+        connection.setReadTimeout(2000);
 
-        String response = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+        String response = connection.getResponseCode() == 200
+                ? new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8)
+                : new String(connection.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
+        logger.info("Get Request: {}", response);
+
         connection.disconnect();
 
         return response;
@@ -33,7 +49,9 @@ public class Network {
             }
         }
 
-        String response = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+        String response = connection.getResponseCode() == 200
+                ? new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8)
+                : new String(connection.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
         connection.disconnect();
 
         return response;

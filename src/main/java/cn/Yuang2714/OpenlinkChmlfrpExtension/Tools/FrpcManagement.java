@@ -68,6 +68,7 @@ public class FrpcManagement {
             return version;
         } catch (Exception e) {
             logger.error("Failed to check local frpc version. Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
             return "does not exist";
         }
     }
@@ -94,6 +95,7 @@ public class FrpcManagement {
             return stringVersionToIntArray(version);
         } catch (Exception e) {
             logger.error("Failed to check latest frpc version online. Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
             return null;
         }
     }
@@ -146,6 +148,7 @@ public class FrpcManagement {
                     }
                 } catch (Exception e) {
                     logger.error("Failed to fetch download link. Exception:{}", e.toString());
+                    ExceptionPrinter.printExceptionStackTrace(logger, e);
                     return null;
                 }
             }

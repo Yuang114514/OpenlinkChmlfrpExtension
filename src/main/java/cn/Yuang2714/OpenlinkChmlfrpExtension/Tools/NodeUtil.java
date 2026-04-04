@@ -60,46 +60,53 @@ public class NodeUtil {
             else throw new NullPointerException("Unable to get any node???");
         } catch (Exception e) {
             logger.error("Failed to get node list. Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
 
     public static List<Node> genAdvancedNodeList() throws Exception {
-        List<Node> baseList = genNodeList();
-        if (baseList.isEmpty()) throw new NullPointerException("Unable to get any node???");
+        try {
+            List<Node> baseList = genNodeList();
+            if (baseList.isEmpty()) throw new NullPointerException("Unable to get any node???");
 
-        List<Node> advancedList = new ArrayList<>();
-        for (Node n : baseList) {
-            if (n.group == 0 || OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_vip", false)) continue;
-            JsonObject nodeDetail = JsonParser.parseString(Network.get(
-                    URLs.api
-                    + "nodeinfo?token="
-                    + OpenlinkChmlfrpExtension.PREFERENCES.get("token", "Invalid")
-                    + "&node="
-                    + n.name
-            )).getAsJsonObject()
-                    .get("data")
-                    .getAsJsonObject();
+            List<Node> advancedList = new ArrayList<>();
+            for (Node n : baseList) {
+                if (n.group == 0 || OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_vip", false)) continue;
+                JsonObject nodeDetail = JsonParser.parseString(Network.get(
+                        URLs.api
+                        + "nodeinfo?token="
+                        + OpenlinkChmlfrpExtension.PREFERENCES.get("token", "Invalid")
+                        + "&node="
+                        + n.name
+                )).getAsJsonObject()
+                        .get("data")
+                        .getAsJsonObject();
 
-            String[] coordinatesRaw = nodeDetail.get("coordinates").getAsString().split(",",2);
-            double[] coordinates = new double[]{Double.parseDouble(coordinatesRaw[0]), Double.parseDouble(coordinatesRaw[1])};
-            if (Arrays.equals(coordinates, new double[]{0.0, 0.0})) coordinates = URLs.exchangeLocation(n.location);
+                String[] coordinatesRaw = nodeDetail.get("coordinates").getAsString().split(",",2);
+                double[] coordinates = new double[]{Double.parseDouble(coordinatesRaw[0]), Double.parseDouble(coordinatesRaw[1])};
+                if (Arrays.equals(coordinates, new double[]{0.0, 0.0})) coordinates = URLs.exchangeLocation(n.location);
 
-            advancedList.add(new Node(
-                    n.id, //节点ID
-                    n.bandwidthUsage, //节点带宽负载
-                    n.cpuUsage, //节点CPU占用
-                    coordinates[1], //纬度
-                    coordinates[0], //经度
-                    n.name, //节点名称
-                    n.description, //节点简介
-                    n.location, //节点地区
-                    nodeDetail.get("ip").getAsString(), //节点域名
-                    n.ipv6, //节点支持IPv6
-                    n.inChina //节点在内地
-            ));
+                advancedList.add(new Node(
+                        n.id, //节点ID
+                        n.bandwidthUsage, //节点带宽负载
+                        n.cpuUsage, //节点CPU占用
+                        coordinates[1], //纬度
+                        coordinates[0], //经度
+                        n.name, //节点名称
+                        n.description, //节点简介
+                        n.location, //节点地区
+                        nodeDetail.get("ip").getAsString(), //节点域名
+                        n.ipv6, //节点支持IPv6
+                        n.inChina //节点在内地
+                ));
+            }
+            return advancedList;
+        } catch (Exception e) {
+            logger.error("Failed to get advanced node list. Exception:{}", e.toString());
+            ExceptionPrinter.printExceptionStackTrace(logger, e);
+            throw e;
         }
-        return advancedList;
     }
 
     public static Node sortNode(List<Node> nodeList) {
