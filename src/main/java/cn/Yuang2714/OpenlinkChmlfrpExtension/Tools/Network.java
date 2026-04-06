@@ -1,5 +1,6 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
 
+import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import com.mojang.logging.LogUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 public class Network {
     public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
-    public static final String USER_AGENT = "Java HTTP Connection/Openlink Chmlfrp Extension";
+    public static final String USER_AGENT = "Java/Openlink Chmlfrp Extension";
     static Logger logger = LogUtils.getLogger();
     static CookieManager manager;
 
@@ -20,9 +21,17 @@ public class Network {
         CookieHandler.setDefault(manager);
     }
 
-    public static String get(String url) throws Exception {
+    public static String get(String url, boolean isAuthenticated) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) new URL(new URI(url).toASCIIString()).openConnection();
         connection.setRequestMethod("GET");
+
+        if (isAuthenticated) {
+            String accessToken;
+            accessToken = OpenlinkChmlfrpExtension.PREFERENCES.get("access_token", "UNAUTHED");
+            if (accessToken.equals("UNAUTHED")) throw new IllegalArgumentException("Not Authorized");
+            connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+        }
+
         connection.setRequestProperty("User-Agent", USER_AGENT);
         connection.setRequestProperty("Accept", "application/json");
         connection.setReadTimeout(2000);
@@ -37,10 +46,19 @@ public class Network {
         return response;
     }
 
-    public static String post(String url, @Nullable String body, String contentType) throws Exception {
+    public static String post(String url, @Nullable String body, String contentType, boolean isAuthenticated) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) new URL(new URI(url).toASCIIString()).openConnection();
+
         connection.setRequestMethod("POST");
         if (body != null) connection.setRequestProperty("Content-Type", contentType);
+
+        if (isAuthenticated) {
+            String accessToken;
+            accessToken = OpenlinkChmlfrpExtension.PREFERENCES.get("access_token", "UNAUTHED");
+            if (accessToken.equals("UNAUTHED")) throw new IllegalArgumentException("Not Authorized");
+            connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+        }
+
         connection.setRequestProperty("User-Agent", USER_AGENT);
         connection.setRequestProperty("Accept", "application/json");
         connection.setDoOutput(true);

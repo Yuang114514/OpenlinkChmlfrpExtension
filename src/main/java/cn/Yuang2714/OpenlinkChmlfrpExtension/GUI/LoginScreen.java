@@ -1,25 +1,24 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension.GUI;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.LoggingManagement;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.Utils;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
-import org.jline.utils.Log;
 
 public class LoginScreen extends Screen {
     private final Screen parentScreen;
-    private int startedTicks;
     private Button button;
     private Thread getTokenThread;
     private boolean isDelaying = false;
+    private boolean isLoggedIn = false;
     private int delayedTicks = 0;
     private String[] tokens;
+    private String[] deviceCodes;
 
     public LoginScreen(Screen lastScreen) {
         super(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.title"));
@@ -36,7 +35,7 @@ public class LoginScreen extends Screen {
                 )
                 .bounds(
                         width / 2 - 100,
-                        height / 2 - 12,
+                        height / 2 + 12,
                         200,
                         20)
                 .build();
@@ -50,7 +49,7 @@ public class LoginScreen extends Screen {
                 font,
                 Component.translatable("gui.openlink_chmlfrp_extension.login_screen.info"),
                 width / 2 - font.width(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.info")) / 2,
-                height / 2 + 12,
+                height / 2 - 30,
                 0xFFFFFF
         );
 
@@ -60,16 +59,16 @@ public class LoginScreen extends Screen {
     @Override
     public void tick() {
         super.tick();
-        startedTicks++;
         if (isDelaying) {
             delayedTicks++;
             if (delayedTicks >= 30) minecraft.setScreen(parentScreen);
         }
 
-        if (!getTokenThread.isAlive() && tokens.length == 2) {
+        if (getTokenThread != null && !getTokenThread.isAlive() && tokens.length == 3 && !isLoggedIn) {
             button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_success"));
-            OpenlinkChmlfrpExtension.PREFERENCES.put("access_token", tokens[0]);
-            OpenlinkChmlfrpExtension.PREFERENCES.put("refresh_token", tokens[1]);
+            LoggingManagement.login(tokens[0], tokens[1], Integer.parseInt(tokens[2]));
+            isDelaying = true;
+            isLoggedIn = true;
         }
     }
 
@@ -80,8 +79,8 @@ public class LoginScreen extends Screen {
     }
 
     private void onPress(Button button) {
+        button.active = false;
         button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_1"));
-        String[] deviceCodes;
         try {
             deviceCodes = LoggingManagement.fetchDeviceCode();
         } catch (Exception e) {
@@ -93,22 +92,33 @@ public class LoginScreen extends Screen {
         Util.getPlatform().openUri(deviceCodes[1]);
         button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_2"));
 
-        startedTicks = 0;
-        getTokenThread = new Thread(() -> {
-            while (true) {
-                if (startedTicks % 100 == 0) {
-                    try {
-                        tokens = LoggingManagement.intervalToken(deviceCodes[0]);
-                    } catch (Exception e) {
-                        button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
-                        return;
-                    }
+        getTokenThread = new Thread(this::interval);
+        getTokenThread.start();
+    }
 
-                    if (tokens[0].equals("authorization_pending")) continue;
+    private void interval() {
+        while (true) {
+            try {
+                tokens = LoggingManagement.intervalToken(deviceCodes[0]);
+            } catch (Exception e) {
+                button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                isDelaying = true;
+                return;
+            }
+
+            if (tokens[0].equals("authorization_pending")) {
+                tokens = null;
+
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
                     return;
                 }
+                continue;
             }
-        });
-        getTokenThread.start();
+
+            OpenlinkChmlfrpExtension.LOGGER.info("Got Token");
+            return;
+        }
     }
 }

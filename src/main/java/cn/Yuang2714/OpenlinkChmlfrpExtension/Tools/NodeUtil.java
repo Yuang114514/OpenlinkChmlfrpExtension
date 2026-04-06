@@ -20,11 +20,11 @@ public class NodeUtil {
         try {
             List<Node> nodeList = new ArrayList<>();
 
-            JsonArray nodeInfos = JsonParser.parseString(Network.get(URLs.api + "node"))
+            JsonArray nodeInfos = JsonParser.parseString(Network.get(URLs.api + "node", true))
                     .getAsJsonObject()
                     .get("data")
                     .getAsJsonArray();
-            JsonArray nodeStats = JsonParser.parseString(Network.get(URLs.api + "node_stats"))
+            JsonArray nodeStats = JsonParser.parseString(Network.get(URLs.api + "node_stats", true))
                     .getAsJsonObject()
                     .get("data")
                     .getAsJsonArray();
@@ -79,7 +79,7 @@ public class NodeUtil {
                         + OpenlinkChmlfrpExtension.PREFERENCES.get("token", "Invalid")
                         + "&node="
                         + n.name
-                )).getAsJsonObject()
+                , true)).getAsJsonObject()
                         .get("data")
                         .getAsJsonObject();
 

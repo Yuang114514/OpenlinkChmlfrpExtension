@@ -37,7 +37,7 @@ public class ProxyManagement {
         String token = OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken");
         if (token.equals("InvalidToken"))
             throw new NullPointerException("[Openlink Chmlfrp Extension] You have not logged in.");
-        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(""));
+        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(""));//todo: give translation
         postQuery.addProperty("token", token);
 
         int preferNodeId = OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1);
@@ -64,7 +64,8 @@ public class ProxyManagement {
                         "nodeinfo?token=" +
                         token +
                         "&node=" +
-                        preferNodeName))
+                        preferNodeName,
+                        true))
                 .getAsJsonObject()
                 .get("data")
                 .getAsJsonObject();
@@ -92,7 +93,7 @@ public class ProxyManagement {
                         .toString()
                         .replace("\"", "")
                         + ":" +
-                        JsonParser.parseString(Network.post(URLs.api + "create_tunnel", postQuery.toString(), Network.CONTENT_TYPE_JSON))
+                        JsonParser.parseString(Network.post(URLs.api + "create_tunnel", postQuery.toString(), Network.CONTENT_TYPE_JSON, true))
                                 .getAsJsonObject()
                                 .get("data")
                                 .getAsJsonObject()
@@ -110,7 +111,7 @@ public class ProxyManagement {
     }
 
     public static int getProxyIdByPort(@Nullable String localPort, @Nullable String remotePort, String token) throws Exception {
-        JsonArray userProxies = JsonParser.parseString(Network.get(URLs.api + "tunnel?token=" + token))
+        JsonArray userProxies = JsonParser.parseString(Network.get(URLs.api + "tunnel?token=" + token, true))
                 .getAsJsonObject()
                 .get("data")
                 .getAsJsonArray();
@@ -139,8 +140,9 @@ public class ProxyManagement {
                 + "delete_tunnel?token="
                 + token
                 + "&tunnelid="
-                + id
-                , null
-        ,Network.CONTENT_TYPE_JSON);
+                + id,
+                null,
+                Network.CONTENT_TYPE_JSON,
+                true);
     }
 }

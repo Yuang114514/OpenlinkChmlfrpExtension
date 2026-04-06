@@ -8,11 +8,11 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -81,7 +81,7 @@ public class OpenlinkChmlfrpExtension {
                                 try {
                                     FrpcManagement.initUserEnv();
                                     OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
-                                            LoggingManagement.checkToken(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
+                                            OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) > System.currentTimeMillis() / 1000);
                                     OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_in_china",
                                             LoggingManagement.userIsInChina());
                                     OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_vip",
@@ -101,5 +101,10 @@ public class OpenlinkChmlfrpExtension {
                     )
         );
         OpenlinkChmlfrpExtension.LOGGER.info("Registered Command.");
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+
     }
 }

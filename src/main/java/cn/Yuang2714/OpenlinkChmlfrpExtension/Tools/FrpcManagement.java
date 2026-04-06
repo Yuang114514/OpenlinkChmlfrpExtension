@@ -88,7 +88,7 @@ public class FrpcManagement {
 
     private static int[] getLatestFrpcVersion() {
         try {
-            JsonObject response = JsonParser.parseString(Network.get(URLs.api + "download_info")).getAsJsonObject();
+            JsonObject response = JsonParser.parseString(Network.get(URLs.api + "download_info", false)).getAsJsonObject();
             String version = response.get("data").getAsJsonObject().get("version").getAsString().split("_")[0];
             logger.debug("Got remote latest frpc version: {}", version);
             return stringVersionToIntArray(version);
@@ -124,7 +124,7 @@ public class FrpcManagement {
             int c = frpcVersion[i], l = latestVersion[i];
             if (l > c) {
                 try {
-                    JsonObject data = JsonParser.parseString(Network.get(URLs.api + "download_info"))
+                    JsonObject data = JsonParser.parseString(Network.get(URLs.api + "download_info", false))
                             .getAsJsonObject()
                             .get("data")
                             .getAsJsonObject();
