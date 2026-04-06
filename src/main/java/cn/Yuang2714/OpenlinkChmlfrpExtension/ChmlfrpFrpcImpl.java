@@ -4,9 +4,7 @@ import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoadingNodeSelectionScreen;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoginScreen;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.FrpcImplInfo;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.FrpcManagement;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.LoggingManagement;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.ProxyManagement;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.*;
 import fun.moystudio.openlink.frpc.Frpc;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +34,14 @@ public class ChmlfrpFrpcImpl implements Frpc {
                 LoggingManagement.userIsVIP(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named",
                 LoggingManagement.userHasRealnamed(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
+        Network.setUpCookieManager();
+        try {
+            OpenlinkChmlfrpExtension.PREFERENCES.flush();
+        } catch (Exception e) {
+            OpenlinkChmlfrpExtension.LOGGER.error("Failed to save in preferences on initializing. Exception:{}", e.toString());
+            Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
+            throw e;
+        }
     }
 
     public String id() {

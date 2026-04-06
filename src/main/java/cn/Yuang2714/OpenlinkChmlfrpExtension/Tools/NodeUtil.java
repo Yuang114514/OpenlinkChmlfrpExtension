@@ -60,7 +60,7 @@ public class NodeUtil {
             else throw new NullPointerException("Unable to get any node???");
         } catch (Exception e) {
             logger.error("Failed to get node list. Exception:{}", e.toString());
-            ExceptionPrinter.printExceptionStackTrace(logger, e);
+            Utils.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
@@ -104,7 +104,7 @@ public class NodeUtil {
             return advancedList;
         } catch (Exception e) {
             logger.error("Failed to get advanced node list. Exception:{}", e.toString());
-            ExceptionPrinter.printExceptionStackTrace(logger, e);
+            Utils.printExceptionStackTrace(logger, e);
             throw e;
         }
     }

@@ -92,7 +92,7 @@ public class ProxyManagement {
                         .toString()
                         .replace("\"", "")
                         + ":" +
-                        JsonParser.parseString(Network.post(URLs.api + "create_tunnel", postQuery.toString()))
+                        JsonParser.parseString(Network.post(URLs.api + "create_tunnel", postQuery.toString(), Network.CONTENT_TYPE_JSON))
                                 .getAsJsonObject()
                                 .get("data")
                                 .getAsJsonObject()
@@ -141,6 +141,6 @@ public class ProxyManagement {
                 + "&tunnelid="
                 + id
                 , null
-        );
+        ,Network.CONTENT_TYPE_JSON);
     }
 }

@@ -4,7 +4,7 @@ public class Node {
     public int id, group, bandwidthUsage, cpuUsage;
     public String name, description, location, domain="No Response";
     public boolean ipv6, inChina;
-    public double lon=0, lat=0;//lon是经度lat是纬度
+    public double lon=-1, lat=-1;//lon是经度lat是纬度
 
     public Node(int id, int group, int bandwidthUsage, int cpuUsage, String name, String description, String location, boolean ipv6, boolean inChina) {
         this.id = id;
@@ -33,6 +33,6 @@ public class Node {
     }
 
     boolean isAdvanced() {
-        return lat != 0 && lon != 0 && !domain.equals("No Response");
+        return lat != -1 && lon != -1 && !domain.equals("No Response");
     }
 }

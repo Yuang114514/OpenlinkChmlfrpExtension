@@ -9,6 +9,8 @@ public class URLs {
     public static final String api = "https://cf-v2.uapis.cn/";
     public static final String ipCheck = "http://ip-api.com/json/";
     public static final String nodes = "https://panel.chmlfrp.net/tunnel/status";
+    public static final String oauth2 = "https://account-api.qzhua.net/oauth2/";
+    public static final String clientID = "019d57504ef77f9ea3dd50eb07325fdb";
 
     public static double[] exchangeLocation(String loc) throws Exception {
         JsonObject location = JsonParser.parseString(Network.get(

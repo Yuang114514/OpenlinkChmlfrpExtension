@@ -2,6 +2,7 @@ package cn.Yuang2714.OpenlinkChmlfrpExtension;
 
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.FrpcManagement;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.LoggingManagement;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.Utils;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.logging.LogUtils;
 import net.minecraft.commands.Commands;
@@ -11,6 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -51,22 +53,22 @@ public class OpenlinkChmlfrpExtension {
                     .then(Commands.literal("setProxyCreationMaxRetry")
                         .executes(context -> {
                             context.getSource().sendSuccess(() -> Component.translatable("chat.openlink_chmlfrp_extension.command.config_max_retry.read",
-                                OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5)), false);
+                                OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5)), true);
                             return 1;
                             }
                         )
 
                         .then(Commands.argument("value", IntegerArgumentType.integer(1))
-                            .executes(
-                                    context -> {
+                            .executes(context -> {
                                     int value = context.getArgument("value", int.class);
-                                        if (value <= 0) {
+                                    if (value <= 0) {
                                         context.getSource().sendFailure(Component.literal("Not a correct value"));
                                         return 0;
                                     }
                                     OpenlinkChmlfrpExtension.PREFERENCES.putInt("config_max_retry", value);
+                                    Utils.flushPreferences(LOGGER, "changing settings");
 
-                                    context.getSource().sendSuccess(() -> Component.translatable("chat.openlink_chmlfrp_extension.command.config_max_retry.success", value), false);
+                                    context.getSource().sendSuccess(() -> Component.translatable("chat.openlink_chmlfrp_extension.command.config_max_retry.success", value), true);
                                     return 1;
                                 }
                             )
@@ -86,10 +88,11 @@ public class OpenlinkChmlfrpExtension {
                                             LoggingManagement.userIsVIP(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
                                     OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named",
                                             LoggingManagement.userHasRealnamed(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
-                                    context.getSource().sendSuccess(() -> Component.translatable("chat.openlink_chmlfrp_extension.command.reload_user_info.success"), false);
+                                    OpenlinkChmlfrpExtension.PREFERENCES.flush();
+                                    context.getSource().sendSuccess(() -> Component.translatable("chat.openlink_chmlfrp_extension.command.reload_user_info.success"), true);
                                     return 1;
                                 } catch (Exception e) {
-                                    OpenlinkChmlfrpExtension.LOGGER.error("{}", e.toString());
+                                    OpenlinkChmlfrpExtension.LOGGER.error("Failed to reload user info. {}", e.toString());
                                     context.getSource().sendFailure(Component.translatable("chat.openlink_chmlfrp_extension.command.reload_user_info.fail"));
                                     return 0;
                                 }

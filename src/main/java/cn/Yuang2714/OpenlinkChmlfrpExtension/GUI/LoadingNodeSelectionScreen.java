@@ -1,8 +1,8 @@
 package cn.Yuang2714.OpenlinkChmlfrpExtension.GUI;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.Node;
 import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.NodeUtil;
+import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.Utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -32,14 +32,7 @@ public class LoadingNodeSelectionScreen extends Screen {
     @Override
     protected void init() {
         super.init();
-        requestThread = new Thread(() -> {
-            logger.info("Node List getter thread started.");
-            try {
-                nodes = NodeUtil.genNodeList();
-            } catch (Exception e) {
-                isFailed = true;
-            }
-        });
+        requestThread = new Thread(this::run);
         requestThread.start();
     }
 
@@ -79,5 +72,16 @@ public class LoadingNodeSelectionScreen extends Screen {
                 0xFFFFFF
         );
         super.render(graphics, mouseX, mouseY, partialTick);
+    }
+
+    private void run() {
+        logger.info("Node List getter thread started.");
+        try {
+            nodes = NodeUtil.genNodeList();
+        } catch (Exception e) {
+            isFailed = true;
+            logger.error("Failed to get node list. Exception:{}", e.toString());
+            Utils.printExceptionStackTrace(logger, e);
+        }
     }
 }
