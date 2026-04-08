@@ -1,10 +1,10 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension;
+package cn.yuang2714.openlink_chmlfrp_extension;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoadingNodeSelectionScreen;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.GUI.LoginScreen;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.FrpcImplInfo;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.*;
+import cn.yuang2714.openlink_chmlfrp_extension.gui.LoadingNodeSelectionScreen;
+import cn.yuang2714.openlink_chmlfrp_extension.gui.LoginScreen;
+import cn.yuang2714.openlink_chmlfrp_extension.statics.FrpcImplInfo;
+import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.*;
 import fun.moystudio.openlink.frpc.Frpc;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;

@@ -1,8 +1,8 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension;
+package cn.yuang2714.openlink_chmlfrp_extension;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.FrpcManagement;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.LoggingManagement;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Tools.Utils;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.FrpcManagement;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.logging.LogUtils;
 import net.minecraft.commands.Commands;

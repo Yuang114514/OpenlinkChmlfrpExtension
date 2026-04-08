@@ -1,6 +1,6 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
+package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import com.mojang.logging.LogUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;

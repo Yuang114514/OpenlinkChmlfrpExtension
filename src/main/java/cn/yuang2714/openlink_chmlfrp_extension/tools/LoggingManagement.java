@@ -1,7 +1,7 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
+package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
+import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
@@ -51,12 +51,8 @@ public class LoggingManagement {
                         logger.warn("Polling too frequently, slowing down...");
                         return new String[]{"slow_down"};
                     }
-                    case "expired_token" -> {
-                        throw new Exception("Device code expired.");
-                    }
-                    case "access_denied" -> {
-                        throw new Exception("User denied the authorization request.");
-                    }
+                    case "expired_token" -> throw new Exception("Device code expired.");
+                    case "access_denied" -> throw new Exception("User denied the authorization request.");
                     default -> throw new Exception("Unknown Error:" + error);
                 }
             }
@@ -151,6 +147,32 @@ public class LoggingManagement {
             logger.error("Failed to get your location. Exception:{}", e.toString());
             Utils.printExceptionStackTrace(logger, e);
             return new double[]{0,0};
+        }
+    }
+
+    public static void refreshToken() {
+        String refreshToken;
+        refreshToken = OpenlinkChmlfrpExtension.PREFERENCES.get("refresh_token", "UNCHECKED");
+        if (refreshToken.equals("UNCHECKED")) {
+            OpenlinkChmlfrpExtension.PREFERENCES.putInt("expires_in", 0);
+            return;
+        }
+
+        try {
+            JsonObject apiResponse = JsonParser.parseString(
+                    Network.post(
+                            URLs.oauth2 + "token",
+                            "grant_type=refresh_token&client_id=" + URLs.clientID + "&refresh_token=" + refreshToken,
+                            Network.CONTENT_TYPE_FORM,
+                            false
+                    )
+            ).getAsJsonObject();
+            if (
+                    apiResponse.has("error")//todo: fuck mother
+            );
+        } catch (Exception e) {
+            OpenlinkChmlfrpExtension.LOGGER.error("Failed to refresh token. {}", e.toString());
+            Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
         }
     }
 }

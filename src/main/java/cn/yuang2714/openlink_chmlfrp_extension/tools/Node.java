@@ -1,4 +1,4 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
+package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
 public class Node {
     public int id, group, bandwidthUsage, cpuUsage;

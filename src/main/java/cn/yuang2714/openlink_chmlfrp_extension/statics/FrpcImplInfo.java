@@ -1,4 +1,4 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Statics;
+package cn.yuang2714.openlink_chmlfrp_extension.statics;
 
 public class FrpcImplInfo {
     public static final String id = "chmlfrp";

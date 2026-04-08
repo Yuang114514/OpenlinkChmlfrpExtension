@@ -1,7 +1,7 @@
-package cn.Yuang2714.OpenlinkChmlfrpExtension.Tools;
+package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
-import cn.Yuang2714.OpenlinkChmlfrpExtension.OpenlinkChmlfrpExtension;
-import cn.Yuang2714.OpenlinkChmlfrpExtension.Statics.URLs;
+import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
