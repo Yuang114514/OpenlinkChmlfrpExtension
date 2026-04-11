@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-public class FrpcManagement {
+public class FrpcManagement {//todo:debug:无法下载frpc
     static String[] userEnv = new String[2]; //[0]是系统环境，[1]是架构
     static int[] frpcVersion = new int[3];
     static Logger logger = LogUtils.getLogger();
