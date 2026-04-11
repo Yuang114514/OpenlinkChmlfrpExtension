@@ -23,13 +23,17 @@ public class ChmlfrpFrpcImpl implements Frpc {
         return FrpcManagement.getUpdateFileUrls();
     }
 
-    public void init() throws Exception {//todo:rewrite
+    public void init() throws Exception {
         OpenlinkChmlfrpExtension.LOGGER.info("Initializing ChmlfrpFrpcImpl");
         FrpcManagement.initUserEnv();
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
                 OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) > System.currentTimeMillis());
         LoggingManagement.reloadUserAddress();
-        LoggingManagement.refreshUserInfo();
+        try {
+            LoggingManagement.refreshUserInfo();
+        } catch (Exception e) {
+            OpenlinkChmlfrpExtension.LOGGER.error("Failed to reload your info. maybe you haven't logged in.");
+        }
         Network.setUpCookieManager();
         Utils.flushPreferences(OpenlinkChmlfrpExtension.LOGGER, "initialization");
     }
@@ -44,35 +48,34 @@ public class ChmlfrpFrpcImpl implements Frpc {
 
     public boolean isOutdated(@Nullable Path path) {
         return FrpcManagement.comparateFrpcVersion(path);
-    }//todo:rewrite
+    }
 
-    public Process createFrpcProcess(Path path, int i, @Nullable String s) throws Exception {//todo:rewrite
+    public Process createFrpcProcess(Path path, int i, @Nullable String s) throws Exception {
         String token = OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken");
         return FrpcManagement.runFrpc(path, ProxyManagement.getProxyIdByPort(String.valueOf(i), s), token);
     }
 
-    public String createProxy(int i, @Nullable String s) throws Exception {//todo:rewrite
+    public String createProxy(int i, @Nullable String s) throws Exception {
         return ProxyManagement.createProxy(i, s);
     }
 
-    public String getFrpcVersion(Path path) {//todo:rewrite
+    public String getFrpcVersion(Path path) {
         return FrpcManagement.getCurrentFrpcVersion(path);
     }
 
-    public void stopFrpcProcess(@Nullable Process frpcProcess) {//todo:rewrite
+    public void stopFrpcProcess(@Nullable Process frpcProcess) {
         if (frpcProcess != null) {
             frpcProcess.destroy();
-
-            String token = OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken");
+            
             try {
-                ProxyManagement.deleteProxy(ProxyManagement.getProxyIdByPort(null, null), token);
+                ProxyManagement.deleteProxy(ProxyManagement.getProxyIdByPort(null, null));
             } catch (Exception e) {
                 OpenlinkChmlfrpExtension.LOGGER.error("Failed to delete proxy. Exception:{}", e.toString());
             }
         }
     }
 
-    public Screen getNodeSelectionScreen(@Nullable Screen lastScreen) {//todo:rewrite
+    public Screen getNodeSelectionScreen(@Nullable Screen lastScreen) {
         return new LoadingNodeSelectionScreen(lastScreen);
     }
 
@@ -88,7 +91,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
         return OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_logged_in", false);
     }
 
-    public void logOut() {//todo:rewrite
+    public void logOut() {
         LoggingManagement.logout();
     }
 

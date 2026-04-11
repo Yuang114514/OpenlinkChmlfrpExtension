@@ -102,7 +102,10 @@ public class OpenlinkChmlfrpExtension {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) <= System.currentTimeMillis()) {
+        if (
+                OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_logged_in", false)
+                && (OpenlinkChmlfrpExtension.PREFERENCES.getLong("expires_in", 0) <= System.currentTimeMillis())
+        ) {
             if (LoggingManagement.refreshToken()) LOGGER.info("Refreshed access token success.");
             else LOGGER.error("Refreshed access token failed.");
         }

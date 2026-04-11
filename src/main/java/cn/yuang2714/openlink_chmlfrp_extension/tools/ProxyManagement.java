@@ -128,7 +128,7 @@ public class ProxyManagement {
         throw new NullPointerException("Failed to get Proxy by id.");
     }
 
-    public static void deleteProxy(int id, String token) throws Exception {
+    public static void deleteProxy(int id) throws Exception {
         Network.post(
                 URLs.api
                 + "delete_tunnel?tunnelid="

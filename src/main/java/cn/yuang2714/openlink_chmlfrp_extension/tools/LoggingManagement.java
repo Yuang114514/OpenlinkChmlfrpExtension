@@ -73,7 +73,7 @@ public class LoggingManagement {
     public static void login(String accessToken, String refreshToken, int expiresIn) throws Exception {
         OpenlinkChmlfrpExtension.PREFERENCES.put("access_token", accessToken);
         OpenlinkChmlfrpExtension.PREFERENCES.put("refresh_token", refreshToken);
-        OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", System.currentTimeMillis() + expiresIn - 6000);
+        OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", System.currentTimeMillis() + expiresIn);
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", true);
         Utils.flushPreferences(logger, "logging in");
         refreshUserInfo();
@@ -125,7 +125,10 @@ public class LoggingManagement {
                     )
             ).getAsJsonObject();
 
-            if (apiResponse.has("error")) return false;
+            if (apiResponse.has("error")) {
+                logger.error("API returned incorrect message {}.", apiResponse);
+                return false;
+            }
             else if (
                     !apiResponse.has("access_token")
                     || !apiResponse.has("refresh_token")
@@ -134,7 +137,7 @@ public class LoggingManagement {
 
             OpenlinkChmlfrpExtension.PREFERENCES.put("access_token", apiResponse.get("access_token").getAsString());
             OpenlinkChmlfrpExtension.PREFERENCES.put("refresh_token", apiResponse.get("refresh_token").getAsString());
-            OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", apiResponse.get("expires_in").getAsLong() + System.currentTimeMillis() - 6000);
+            OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", System.currentTimeMillis() + (apiResponse.get("expires_in").getAsLong() * 1000L) - 60000L);
             return true;
         } catch (Exception e) {
             logger.error("Failed to refresh token. {}", e.toString());
