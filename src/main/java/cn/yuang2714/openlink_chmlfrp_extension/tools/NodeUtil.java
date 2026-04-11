@@ -1,6 +1,7 @@
 package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -75,9 +76,7 @@ public class NodeUtil {
                 if (n.group == 0 || OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_vip", false)) continue;
                 JsonObject nodeDetail = JsonParser.parseString(Network.get(
                         URLs.api
-                        + "nodeinfo?token="
-                        + OpenlinkChmlfrpExtension.PREFERENCES.get("token", "Invalid")
-                        + "&node="
+                        + "nodeinfo?node="
                         + n.name
                 , true)).getAsJsonObject()
                         .get("data")

@@ -1,4 +1,8 @@
-package cn.yuang2714.openlink_chmlfrp_extension.tools;
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ */
+
+package cn.yuang2714.openlink_chmlfrp_extension.datatypes;
 
 public class Node {
     public int id, group, bandwidthUsage, cpuUsage;

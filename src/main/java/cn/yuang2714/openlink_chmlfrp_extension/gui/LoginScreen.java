@@ -64,8 +64,13 @@ public class LoginScreen extends Screen {
         }
 
         if (getTokenThread != null && !getTokenThread.isAlive() && tokens.length == 3 && !isLoggedIn) {
+            try {
+                LoggingManagement.login(tokens[0], tokens[1], Integer.parseInt(tokens[2]));
+            } catch (Exception e) {
+                button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                return;
+            }
             button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_success"));
-            LoggingManagement.login(tokens[0], tokens[1], Integer.parseInt(tokens[2]));
             isDelaying = true;
             isLoggedIn = true;
         }
@@ -81,6 +86,7 @@ public class LoginScreen extends Screen {
         button.active = false;
         button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_1"));
         try {
+            Thread.sleep(1000);
             deviceCodes = LoggingManagement.fetchDeviceCode();
         } catch (Exception e) {
             button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
@@ -95,7 +101,9 @@ public class LoginScreen extends Screen {
         getTokenThread.start();
     }
 
+    @SuppressWarnings("BusyWait")
     private void interval() {
+        int delay = 5000;
         while (true) {
             try {
                 tokens = LoggingManagement.intervalToken(deviceCodes[0]);
@@ -105,11 +113,13 @@ public class LoginScreen extends Screen {
                 return;
             }
 
+            if (tokens[0].equals("slow_down")) delay += 500;
+
             if (tokens[0].equals("authorization_pending")) {
                 tokens = null;
 
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     return;
                 }

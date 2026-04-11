@@ -70,14 +70,13 @@ public class LoggingManagement {
         }
     }
     
-    public static void login(String accessToken, String refreshToken, int expiresIn) {
+    public static void login(String accessToken, String refreshToken, int expiresIn) throws Exception {
         OpenlinkChmlfrpExtension.PREFERENCES.put("access_token", accessToken);
         OpenlinkChmlfrpExtension.PREFERENCES.put("refresh_token", refreshToken);
-        OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", (System.currentTimeMillis() / 1000) + expiresIn - 60);
+        OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", System.currentTimeMillis() + expiresIn - 6000);
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", true);
-        OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_vip", userIsVIP(accessToken));
-        OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named", userHasRealnamed(accessToken));
         Utils.flushPreferences(logger, "logging in");
+        refreshUserInfo();
     }
 
     public static void logout() {
@@ -86,76 +85,34 @@ public class LoggingManagement {
         OpenlinkChmlfrpExtension.PREFERENCES.remove("refresh_token");
         Utils.flushPreferences(logger, "logging out");
     }
-
-    public static boolean userIsInChina() {
-        try {
-            String countryCode = JsonParser.parseString(Network.get(URLs.ipCheck, false))
-                    .getAsJsonObject()
-                    .get("countryCode")
-                    .getAsString();
-
-            logger.info("User country code:{}", countryCode);
-            return countryCode.equals("CN") || countryCode.equals("HK");
-        } catch (Exception e) {
-            logger.error("Failed to get your country. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
-            return true;
-        }
+    
+    public static void refreshUserInfo() throws Exception {
+         JsonObject apiResponseJsonData = JsonParser.parseString(Network.get(
+                 URLs.api + "userinfo",
+                 true
+         )).getAsJsonObject().get("data").getAsJsonObject();
+         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named", apiResponseJsonData.get("realname").getAsString().equals("已实名"));
+         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_vip", !apiResponseJsonData.get("usergroup").getAsString().equals("免费用户"));
+         Utils.flushPreferences(logger, "refreshing user info");
+    }
+    
+    public static void reloadUserAddress() throws Exception {
+        JsonObject ipCheckResponse = JsonParser.parseString(Network.get(URLs.ipCheck, false)).getAsJsonObject();
+        
+        String countryCode = ipCheckResponse.get("countryCode").getAsString();
+        logger.info("User country code:{}", countryCode);
+        OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_in_china", countryCode.equals("CN") || countryCode.equals("HK"));
+        
+        OpenlinkChmlfrpExtension.PREFERENCES.putDouble("lon", ipCheckResponse.get("lon").getAsDouble());
+        OpenlinkChmlfrpExtension.PREFERENCES.putDouble("lat", ipCheckResponse.get("lat").getAsDouble());
     }
 
-    public static boolean userIsVIP(String token) {
-        try {
-            String userGroup = JsonParser.parseString(Network.get(URLs.api + "userinfo?token=" + token, true))
-                    .getAsJsonObject()
-                    .get("data")
-                    .getAsJsonObject()
-                    .get("usergroup")
-                    .getAsString();
-            logger.info("Checking if you are VIP. API Response:{}", userGroup);
-
-            return !userGroup.equals("免费用户");
-        } catch (Exception e) {
-            logger.error("Failed to check if you are a VIP, running as you aren't. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
-            return false;
-        }
-    }
-
-
-    public static boolean userHasRealnamed(String token) {
-        try {
-            String realName = JsonParser.parseString(Network.get(URLs.api + "userinfo?token=" + token, false))
-                    .getAsJsonObject()
-                    .get("data")
-                    .getAsJsonObject()
-                    .get("realname")
-                    .getAsString();
-
-            return realName.equals("已实名");
-        } catch (Exception e) {
-            logger.error("Failed to check if you are real named, running as you aren't. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
-            return false;
-        }
-    }
-
-    public static double[] getUserLocation() {
-        try {
-            JsonObject ipCheckResponse = JsonParser.parseString(Network.get(URLs.ipCheck, false)).getAsJsonObject();
-            return new double[]{ipCheckResponse.get("lon").getAsDouble(), ipCheckResponse.get("lat").getAsDouble()};
-        } catch (Exception e) {
-            logger.error("Failed to get your location. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
-            return new double[]{0,0};
-        }
-    }
-
-    public static void refreshToken() {
+    public static boolean refreshToken() {
         String refreshToken;
         refreshToken = OpenlinkChmlfrpExtension.PREFERENCES.get("refresh_token", "UNCHECKED");
         if (refreshToken.equals("UNCHECKED")) {
-            OpenlinkChmlfrpExtension.PREFERENCES.putInt("expires_in", 0);
-            return;
+            logger.error("Failed to get token in preferences.");
+            return false;
         }
 
         try {
@@ -167,12 +124,22 @@ public class LoggingManagement {
                             false
                     )
             ).getAsJsonObject();
-            if (
-                    apiResponse.has("error")//todo: fuck mother
-            );
+
+            if (apiResponse.has("error")) return false;
+            else if (
+                    !apiResponse.has("access_token")
+                    || !apiResponse.has("refresh_token")
+                    || !apiResponse.has("expires_in")
+            ) return false;
+
+            OpenlinkChmlfrpExtension.PREFERENCES.put("access_token", apiResponse.get("access_token").getAsString());
+            OpenlinkChmlfrpExtension.PREFERENCES.put("refresh_token", apiResponse.get("refresh_token").getAsString());
+            OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", apiResponse.get("expires_in").getAsLong() + System.currentTimeMillis() - 6000);
+            return true;
         } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to refresh token. {}", e.toString());
+            logger.error("Failed to refresh token. {}", e.toString());
             Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
+            return false;
         }
     }
 }

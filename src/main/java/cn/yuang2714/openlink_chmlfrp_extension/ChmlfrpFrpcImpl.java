@@ -23,25 +23,15 @@ public class ChmlfrpFrpcImpl implements Frpc {
         return FrpcManagement.getUpdateFileUrls();
     }
 
-    public void init() throws Exception {
+    public void init() throws Exception {//todo:rewrite
         OpenlinkChmlfrpExtension.LOGGER.info("Initializing ChmlfrpFrpcImpl");
         FrpcManagement.initUserEnv();
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
-                OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) > System.currentTimeMillis() / 1000);
-        OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_in_china",
-                LoggingManagement.userIsInChina());
-        OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_vip",
-                LoggingManagement.userIsVIP(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
-        OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named",
-                LoggingManagement.userHasRealnamed(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
+                OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) > System.currentTimeMillis());
+        LoggingManagement.reloadUserAddress();
+        LoggingManagement.refreshUserInfo();
         Network.setUpCookieManager();
-        try {
-            OpenlinkChmlfrpExtension.PREFERENCES.flush();
-        } catch (Exception e) {
-            OpenlinkChmlfrpExtension.LOGGER.error("Failed to save in preferences on initializing. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
-            throw e;
-        }
+        Utils.flushPreferences(OpenlinkChmlfrpExtension.LOGGER, "initialization");
     }
 
     public String id() {
@@ -54,35 +44,35 @@ public class ChmlfrpFrpcImpl implements Frpc {
 
     public boolean isOutdated(@Nullable Path path) {
         return FrpcManagement.comparateFrpcVersion(path);
-    }
+    }//todo:rewrite
 
-    public Process createFrpcProcess(Path path, int i, @Nullable String s) throws Exception {
+    public Process createFrpcProcess(Path path, int i, @Nullable String s) throws Exception {//todo:rewrite
         String token = OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken");
-        return FrpcManagement.runFrpc(path, ProxyManagement.getProxyIdByPort(String.valueOf(i), s, token), token);
+        return FrpcManagement.runFrpc(path, ProxyManagement.getProxyIdByPort(String.valueOf(i), s), token);
     }
 
-    public String createProxy(int i, @Nullable String s) throws Exception {
+    public String createProxy(int i, @Nullable String s) throws Exception {//todo:rewrite
         return ProxyManagement.createProxy(i, s);
     }
 
-    public String getFrpcVersion(Path path) {
+    public String getFrpcVersion(Path path) {//todo:rewrite
         return FrpcManagement.getCurrentFrpcVersion(path);
     }
 
-    public void stopFrpcProcess(@Nullable Process frpcProcess) {
+    public void stopFrpcProcess(@Nullable Process frpcProcess) {//todo:rewrite
         if (frpcProcess != null) {
             frpcProcess.destroy();
 
             String token = OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken");
             try {
-                ProxyManagement.deleteProxy(ProxyManagement.getProxyIdByPort(null, null, token), token);
+                ProxyManagement.deleteProxy(ProxyManagement.getProxyIdByPort(null, null), token);
             } catch (Exception e) {
                 OpenlinkChmlfrpExtension.LOGGER.error("Failed to delete proxy. Exception:{}", e.toString());
             }
         }
     }
 
-    public Screen getNodeSelectionScreen(@Nullable Screen lastScreen) {
+    public Screen getNodeSelectionScreen(@Nullable Screen lastScreen) {//todo:rewrite
         return new LoadingNodeSelectionScreen(lastScreen);
     }
 
@@ -98,7 +88,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
         return OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_logged_in", false);
     }
 
-    public void logOut() {
+    public void logOut() {//todo:rewrite
         LoggingManagement.logout();
     }
 

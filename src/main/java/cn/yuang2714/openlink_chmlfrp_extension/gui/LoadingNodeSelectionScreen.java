@@ -1,6 +1,6 @@
 package cn.yuang2714.openlink_chmlfrp_extension.gui;
 
-import cn.yuang2714.openlink_chmlfrp_extension.tools.Node;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.NodeUtil;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
 import com.mojang.logging.LogUtils;

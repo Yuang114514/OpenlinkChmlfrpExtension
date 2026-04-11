@@ -1,9 +1,7 @@
 package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
-import com.mojang.logging.LogUtils;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 import java.io.OutputStream;
 import java.net.*;
@@ -12,8 +10,7 @@ import java.nio.charset.StandardCharsets;
 public class Network {
     public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
-    public static final String USER_AGENT = "Java/Openlink Chmlfrp Extension";
-    static Logger logger = LogUtils.getLogger();
+    public static final String USER_AGENT = "Java/Openlink Chmlfrp Extension/1.0.1";
     static CookieManager manager;
 
     public static void setUpCookieManager() {
@@ -35,11 +32,11 @@ public class Network {
         connection.setRequestProperty("User-Agent", USER_AGENT);
         connection.setRequestProperty("Accept", "application/json");
         connection.setReadTimeout(2000);
-
+        
         String response = connection.getResponseCode() == 200
                 ? new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8)
                 : new String(connection.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
-        logger.info("Get Request: {}", response);
+        //logger.info("Get Request: {}", response);
 
         connection.disconnect();
 

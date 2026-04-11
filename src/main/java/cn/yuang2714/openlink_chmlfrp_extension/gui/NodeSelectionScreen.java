@@ -1,8 +1,8 @@
 package cn.yuang2714.openlink_chmlfrp_extension.gui;
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
-import cn.yuang2714.openlink_chmlfrp_extension.tools.Node;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,7 +20,7 @@ public class NodeSelectionScreen extends Screen {
     private Button doneButton;
     private boolean startDelay;
     private int delayed = 0;
-    private List<Node> nodeList;
+    private final List<Node> nodeList;
     private Component nodeDescription_name = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.name","");
     private Component nodeDescription_description = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.description","");
     private Component nodeDescription_location = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.node_info.location","");

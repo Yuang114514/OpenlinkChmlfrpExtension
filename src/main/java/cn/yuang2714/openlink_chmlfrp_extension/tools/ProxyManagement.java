@@ -1,6 +1,7 @@
 package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -33,13 +34,7 @@ public class ProxyManagement {
         postQuery.addProperty("porttype", "tcp");
         postQuery.addProperty("encryption", true);
         postQuery.addProperty("compression", true);
-
-        String token = OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken");
-        if (token.equals("InvalidToken"))
-            throw new NullPointerException("[Openlink Chmlfrp Extension] You have not logged in.");
-        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(""));//todo: give translation
-        postQuery.addProperty("token", token);
-
+        
         int preferNodeId = OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1);
         String preferNodeName = "Not Selected";
         List<Node> nodes;
@@ -58,13 +53,12 @@ public class ProxyManagement {
         }
         if (preferNodeName.equals("Not Selected"))
             throw new NullPointerException("[Openlink Chmlfrp Extension] Node not found in got node list.");
+        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("chat.openlink_chmlfrp_extension.creating_proxy.got_node", preferNodeId));
         postQuery.addProperty("node", preferNodeName);
 
         JsonObject preferNodeApiInfo = JsonParser.parseString(Network.get(URLs.api +
-                        "nodeinfo?token=" +
-                        token +
-                        "&node=" +
-                        preferNodeName,
+                        "nodeinfo?node="
+                        + preferNodeName,
                         true))
                 .getAsJsonObject()
                 .get("data")
@@ -107,11 +101,11 @@ public class ProxyManagement {
 
         Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("chat.openlink_chmlfrp_extension.creating_proxy.port_not_found", OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5))
                 .withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
-        throw new RuntimeException("Proxy Creation Failed with no possible remote port after 5 tries");
+        throw new Exception("Proxy Creation Failed with no possible remote port after some tries");
     }
 
-    public static int getProxyIdByPort(@Nullable String localPort, @Nullable String remotePort, String token) throws Exception {
-        JsonArray userProxies = JsonParser.parseString(Network.get(URLs.api + "tunnel?token=" + token, true))
+    public static int getProxyIdByPort(@Nullable String localPort, @Nullable String remotePort) throws Exception {
+        JsonArray userProxies = JsonParser.parseString(Network.get(URLs.api + "tunnel", true))
                 .getAsJsonObject()
                 .get("data")
                 .getAsJsonArray();
@@ -137,9 +131,7 @@ public class ProxyManagement {
     public static void deleteProxy(int id, String token) throws Exception {
         Network.post(
                 URLs.api
-                + "delete_tunnel?token="
-                + token
-                + "&tunnelid="
+                + "delete_tunnel?tunnelid="
                 + id,
                 null,
                 Network.CONTENT_TYPE_JSON,

@@ -81,14 +81,11 @@ public class OpenlinkChmlfrpExtension {
                                 try {
                                     FrpcManagement.initUserEnv();
                                     OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
-                                            OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) > System.currentTimeMillis() / 1000);
-                                    OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_in_china",
-                                            LoggingManagement.userIsInChina());
-                                    OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_vip",
-                                            LoggingManagement.userIsVIP(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
-                                    OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named",
-                                            LoggingManagement.userHasRealnamed(OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken")));
+                                            OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) > System.currentTimeMillis());
+                                    LoggingManagement.reloadUserAddress();
+                                    LoggingManagement.refreshUserInfo();
                                     OpenlinkChmlfrpExtension.PREFERENCES.flush();
+                                    
                                     context.getSource().sendSuccess(() -> Component.translatable("chat.openlink_chmlfrp_extension.command.reload_user_info.success"), true);
                                     return 1;
                                 } catch (Exception e) {
@@ -105,6 +102,9 @@ public class OpenlinkChmlfrpExtension {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-
+        if (OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) <= System.currentTimeMillis()) {
+            if (LoggingManagement.refreshToken()) LOGGER.info("Refreshed access token success.");
+            else LOGGER.error("Refreshed access token failed.");
+        }
     }
 }
