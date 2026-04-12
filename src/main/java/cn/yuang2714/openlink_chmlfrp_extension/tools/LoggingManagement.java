@@ -88,6 +88,7 @@ public class LoggingManagement {
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", false);
         OpenlinkChmlfrpExtension.PREFERENCES.remove("access_token");
         OpenlinkChmlfrpExtension.PREFERENCES.remove("refresh_token");
+        OpenlinkChmlfrpExtension.PREFERENCES.remove("short_token");
         Utils.flushPreferences(logger, "logging out");
     }
     
@@ -98,6 +99,9 @@ public class LoggingManagement {
          )).getAsJsonObject().get("data").getAsJsonObject();
          OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("has_real_named", apiResponseJsonData.get("realname").getAsString().equals("已实名"));
          OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_vip", !apiResponseJsonData.get("usergroup").getAsString().equals("免费用户"));
+         OpenlinkChmlfrpExtension.PREFERENCES.put("short_token", apiResponseJsonData.get("usertoken").getAsString());
+         OpenlinkChmlfrpExtension.PREFERENCES.putInt("max_tunnel_count", apiResponseJsonData.get("tunnel").getAsInt());
+         OpenlinkChmlfrpExtension.PREFERENCES.putInt("current_tunnel_count", apiResponseJsonData.get("tunnelCount").getAsInt());
          Utils.flushPreferences(logger, "refreshing user info");
     }
     

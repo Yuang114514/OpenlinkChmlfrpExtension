@@ -103,6 +103,7 @@ public class LoginScreen extends Screen {
         button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_2"));
 
         getTokenThread = new Thread(this::interval);
+        getTokenThread.setName("Token Interval Thread");
         getTokenThread.start();
     }
 

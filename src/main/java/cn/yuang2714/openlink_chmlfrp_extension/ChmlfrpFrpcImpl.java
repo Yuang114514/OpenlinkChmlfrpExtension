@@ -7,7 +7,8 @@ package cn.yuang2714.openlink_chmlfrp_extension;
 
 import cn.yuang2714.openlink_chmlfrp_extension.gui.LoadingNodeSelectionScreen;
 import cn.yuang2714.openlink_chmlfrp_extension.gui.LoginScreen;
-import cn.yuang2714.openlink_chmlfrp_extension.statics.*;
+import cn.yuang2714.openlink_chmlfrp_extension.statics.FrpcImplInfo;
+import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.*;
 import fun.moystudio.openlink.frpc.Frpc;
 import net.minecraft.client.gui.screens.Screen;
@@ -28,10 +29,11 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public void init() throws Exception {
-        OpenlinkChmlfrpExtension.LOGGER.info("Initializing ChmlfrpFrpcImpl");
+        OpenlinkChmlfrpExtension.LOGGER.info("Initializing ChmlfrpFrpcImpl...");
         FrpcManagement.initUserEnv();
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
-                OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) > System.currentTimeMillis());
+                LoggingManagement.refreshToken()
+        );
         LoggingManagement.reloadUserAddress();
         try {
             LoggingManagement.refreshUserInfo();
@@ -51,11 +53,11 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public boolean isOutdated(@Nullable Path path) {
-        return FrpcManagement.comparateFrpcVersion(path);
+        return FrpcManagement.comparateFrpcVersionOnline(path);
     }
 
     public Process createFrpcProcess(Path path, int i, @Nullable String s) throws Exception {
-        String token = OpenlinkChmlfrpExtension.PREFERENCES.get("token", "InvalidToken");
+        String token = OpenlinkChmlfrpExtension.PREFERENCES.get("short_token", "InvalidToken");
         return FrpcManagement.runFrpc(path, ProxyManagement.getProxyIdByPort(String.valueOf(i), s), token);
     }
 

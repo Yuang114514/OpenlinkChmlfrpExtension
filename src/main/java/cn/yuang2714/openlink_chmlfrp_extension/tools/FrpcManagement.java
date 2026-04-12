@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -95,7 +96,7 @@ public class FrpcManagement {//todo:debug:无法下载frpc
         try {
             JsonObject response = JsonParser.parseString(Network.get(URLs.api + "download_info", false)).getAsJsonObject();
             String version = response.get("data").getAsJsonObject().get("version").getAsString().split("_")[0];
-            logger.debug("Got remote latest frpc version: {}", version);
+            logger.info("Got remote latest frpc version: {}", version);
             return stringVersionToIntArray(version);
         } catch (Exception e) {
             logger.error("Failed to check latest frpc version online. Exception:{}", e.toString());
@@ -104,60 +105,64 @@ public class FrpcManagement {//todo:debug:无法下载frpc
         }
     }
 
-    public static boolean comparateFrpcVersion(Path path) {
+    public static boolean comparateFrpcVersionOnline(Path path) {
         int[] currentVersion = stringVersionToIntArray(getCurrentFrpcVersion(path));
 
         if (getLatestFrpcVersion() == null) return false;
         int[] latestVersion = getLatestFrpcVersion();
-
-        for (int i = 0; i < 3; i++) {
-            int c = currentVersion[i], l = latestVersion[i];
-            if (l > c) {
-                logger.info("Found new frpc update! Latest:{}, Current:{}", Arrays.toString(latestVersion), Arrays.toString(currentVersion));
-                return true;
-            }
+        
+        if (comparateFrpcVersion(latestVersion, currentVersion) == 1) {
+            logger.info("Found new frpc update! Latest: {}, Current: {}", Arrays.toString(latestVersion), Arrays.toString(currentVersion));
+            return true;
         }
 
         return false;
     }
+    
+    public static int comparateFrpcVersion(int[] a, int[] b) {
+        for (int i = 0; i < 3; i++) {
+            int cellInA = a[i], cellInB = b[i];
+            if (cellInA == cellInB) continue;
+            return cellInA > cellInB ? 1 : -1;
+        }
+        
+        return 0;
+    }
 
     public static List<String> getUpdateFileUrls() {
-        int[] latestVersion = getLatestFrpcVersion();
-        if (latestVersion == null) return null;
-
-        for (int i = 0; i < 3; i++) {
-            int c = frpcVersion[i], l = latestVersion[i];
-            if (l > c) {
-                try {
-                    JsonObject data = JsonParser.parseString(Network.get(URLs.api + "download_info", false))
-                            .getAsJsonObject()
-                            .get("data")
-                            .getAsJsonObject();
-
-                    String link = data.get("link").getAsString();
-                    JsonObject system = data.getAsJsonObject("system");
-                    if (!system.has(userEnv[0])) {
-                        logger.warn("Update file list does not contains your system. Cancelling update.");
-                        return null;
-                    }
-
-                    JsonArray fileList = system.getAsJsonArray(userEnv[0]);
-                    for (int j = 0; j < fileList.size(); j++) {
-                        JsonObject fileInfo = fileList.get(j).getAsJsonObject();
-
-                        String forArch = fileInfo.get("architecture").getAsString();
-                        if (forArch.equalsIgnoreCase(userEnv[1])) {
-                            return List.of(link + fileInfo.get("route").getAsString());
-                        }
-                    }
-                } catch (Exception e) {
-                    logger.error("Failed to fetch download link. Exception:{}", e.toString());
-                    Utils.printExceptionStackTrace(logger, e);
-                    return null;
+        List<String> urls = new ArrayList<>();
+        
+        try {
+            JsonObject data = JsonParser.parseString(Network.get(URLs.api + "download_info", false))
+                    .getAsJsonObject()
+                    .get("data")
+                    .getAsJsonObject();
+            
+            String link = data.get("link").getAsString();
+            
+            JsonObject system = data.getAsJsonObject("system");
+            if (!system.has(userEnv[0])) {
+                logger.error("Update file list does not contains your system. Cancelling update.");
+                return null;
+            }
+            
+            JsonArray fileList = system.getAsJsonArray(userEnv[0]);
+            for (int i = 0; i < fileList.size(); i++) {
+                JsonObject fileInfo = fileList.get(i).getAsJsonObject();
+                
+                String forArch = fileInfo.get("architecture").getAsString();
+                if (forArch.equalsIgnoreCase(userEnv[1])) {
+                    urls.add(link + fileInfo.get("route").getAsString());
                 }
             }
+            
+            logger.info("Got update files: {}", Arrays.toString(urls.toArray()));
+            return urls;
+        } catch (Exception e) {
+            logger.error("Failed to fetch download link. Exception:{}", e.toString());
+            Utils.printExceptionStackTrace(logger, e);
+            return null;
         }
-        return null;
     }
 
     public static Process runFrpc(Path path, int proxyId, String token) throws Exception {

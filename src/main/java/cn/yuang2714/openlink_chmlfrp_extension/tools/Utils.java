@@ -13,9 +13,19 @@ import java.util.prefs.BackingStoreException;
 public class Utils {
     public static void printExceptionStackTrace(Logger logger, Exception e) {
         StringBuilder builder = new StringBuilder("Stack trace caught!");
-        for (StackTraceElement s : e.getStackTrace()) {
-            builder.append("\n        ").append(s.toString());
+        StackTraceElement[] stackTraceElements = e.getStackTrace();
+        
+        builder.append("\n").append(e);
+        for (int i = 0; i < 15; i++) {
+            try {
+                builder.append("\n        ").append(stackTraceElements[i].toString());
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                logger.error(builder.toString());
+                return;
+            }
         }
+        builder.append("... ").append(stackTraceElements.length - 15).append(" More");
+        
         logger.error(builder.toString());
     }
 

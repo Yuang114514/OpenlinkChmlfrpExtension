@@ -38,6 +38,7 @@ public class LoadingNodeSelectionScreen extends Screen {
     protected void init() {
         super.init();
         requestThread = new Thread(this::run);
+        requestThread.setName("Node List Getter");
         requestThread.start();
     }
 

@@ -86,7 +86,8 @@ public class OpenlinkChmlfrpExtension {
                                 try {
                                     FrpcManagement.initUserEnv();
                                     OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in",
-                                            OpenlinkChmlfrpExtension.PREFERENCES.getInt("expires_in", 0) > System.currentTimeMillis());
+                                            LoggingManagement.refreshToken()
+                                    );
                                     LoggingManagement.reloadUserAddress();
                                     LoggingManagement.refreshUserInfo();
                                     OpenlinkChmlfrpExtension.PREFERENCES.flush();
@@ -107,10 +108,15 @@ public class OpenlinkChmlfrpExtension {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (PREFERENCES.getBoolean("is_logged_in", false)) {
+        
+        }
+        
         if (
-                OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_logged_in", false)
-                && (OpenlinkChmlfrpExtension.PREFERENCES.getLong("expires_in", 0) <= System.currentTimeMillis())
+                PREFERENCES.getBoolean("is_logged_in", false)
+                && (PREFERENCES.getLong("expires_in", 0) <= System.currentTimeMillis())
         ) {
+            PREFERENCES.putLong("expires_in", PREFERENCES.getLong("expires_in", 0) + 5000);
             if (LoggingManagement.refreshToken()) LOGGER.info("Refreshed access token success.");
             else LOGGER.error("Refreshed access token failed.");
         }
