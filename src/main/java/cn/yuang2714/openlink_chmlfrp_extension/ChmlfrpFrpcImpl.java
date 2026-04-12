@@ -1,9 +1,13 @@
 package cn.yuang2714.openlink_chmlfrp_extension;
 
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ * Open source with MIT licence
+ */
+
 import cn.yuang2714.openlink_chmlfrp_extension.gui.LoadingNodeSelectionScreen;
 import cn.yuang2714.openlink_chmlfrp_extension.gui.LoginScreen;
-import cn.yuang2714.openlink_chmlfrp_extension.statics.FrpcImplInfo;
-import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
+import cn.yuang2714.openlink_chmlfrp_extension.statics.*;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.*;
 import fun.moystudio.openlink.frpc.Frpc;
 import net.minecraft.client.gui.screens.Screen;

@@ -1,5 +1,10 @@
 package cn.yuang2714.openlink_chmlfrp_extension;
 
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ * Open source with MIT licence
+ */
+
 import cn.yuang2714.openlink_chmlfrp_extension.tools.FrpcManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;

@@ -1,5 +1,10 @@
 package cn.yuang2714.openlink_chmlfrp_extension.statics;
 
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ * Open source with MIT licence
+ */
+
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Network;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

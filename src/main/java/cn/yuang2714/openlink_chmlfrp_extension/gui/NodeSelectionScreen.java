@@ -1,5 +1,10 @@
 package cn.yuang2714.openlink_chmlfrp_extension.gui;
 
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ * Open source with MIT licence
+ */
+
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
