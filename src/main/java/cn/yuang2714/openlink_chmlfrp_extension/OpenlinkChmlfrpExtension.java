@@ -108,10 +108,6 @@ public class OpenlinkChmlfrpExtension {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (PREFERENCES.getBoolean("is_logged_in", false)) {
-        
-        }
-        
         if (
                 PREFERENCES.getBoolean("is_logged_in", false)
                 && (PREFERENCES.getLong("expires_in", 0) <= System.currentTimeMillis())
