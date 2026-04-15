@@ -9,11 +9,10 @@ import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 
 public class LoggingManagement {
-    static Logger logger = LogUtils.getLogger();
+    static Logger logger = Utils.genLogger();
 
     public static String[] fetchDeviceCode() throws Exception {
         try {

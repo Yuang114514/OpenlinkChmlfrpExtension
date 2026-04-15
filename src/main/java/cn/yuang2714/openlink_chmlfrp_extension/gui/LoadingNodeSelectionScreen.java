@@ -8,7 +8,6 @@ package cn.yuang2714.openlink_chmlfrp_extension.gui;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.NodeUtil;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
-import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -25,7 +24,7 @@ public class LoadingNodeSelectionScreen extends Screen {
     private Thread requestThread;
     private boolean isFailed = false;
     private Component status = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.loading");
-    private final Logger logger = LogUtils.getLogger();
+    private final Logger logger = Utils.genLogger();
     private boolean isDelaying = false;
     private int delayed = 0;
 

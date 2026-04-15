@@ -6,21 +6,25 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
  */
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.AdvancedNode;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Location;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class NodeUtil {
-    static Logger logger = LogUtils.getLogger();
+    static Logger logger = Utils.genLogger();
 
     public static List<Node> genNodeList() throws Exception {
         try {
@@ -71,40 +75,71 @@ public class NodeUtil {
         }
     }
 
-    public static List<Node> genAdvancedNodeList() throws Exception {
+    public static List<AdvancedNode> toAdvancedNodeList(List<Node> baseList) throws Exception {
         try {
-            List<Node> baseList = genNodeList();
-            if (baseList.isEmpty()) throw new NullPointerException("Unable to get any node???");
-
-            List<Node> advancedList = new ArrayList<>();
-            for (Node n : baseList) {
-                if (n.group == 0 || OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_vip", false)) continue;
-                JsonObject nodeDetail = JsonParser.parseString(Network.get(
-                        URLs.api
-                        + "nodeinfo?node="
-                        + n.name
-                , true)).getAsJsonObject()
-                        .get("data")
-                        .getAsJsonObject();
-
-                String[] coordinatesRaw = nodeDetail.get("coordinates").getAsString().split(",",2);
-                double[] coordinates = new double[]{Double.parseDouble(coordinatesRaw[0]), Double.parseDouble(coordinatesRaw[1])};
-                if (Arrays.equals(coordinates, new double[]{0.0, 0.0})) coordinates = URLs.exchangeLocation(n.location);
-
-                advancedList.add(new Node(
-                        n.id, //节点ID
-                        n.bandwidthUsage, //节点带宽负载
-                        n.cpuUsage, //节点CPU占用
-                        coordinates[1], //纬度
-                        coordinates[0], //经度
-                        n.name, //节点名称
-                        n.description, //节点简介
-                        n.location, //节点地区
-                        nodeDetail.get("ip").getAsString(), //节点域名
-                        n.ipv6, //节点支持IPv6
-                        n.inChina //节点在内地
-                ));
+            CountDownLatch latch = new CountDownLatch(baseList.size());
+            ExecutorService pool = Executors.newFixedThreadPool(5);
+            List<AdvancedNode> advancedList = new CopyOnWriteArrayList<>();
+            
+            for (Node node : baseList) {
+                pool.execute(() -> {
+                    try {
+                        JsonObject apiInfo = JsonParser.parseString(Network.get(URLs.api + "nodeinfo?node=" + node.id, true))
+                                .getAsJsonObject()
+                                .get("data")
+                                .getAsJsonObject();
+                        
+                        String coordinatesStr = apiInfo.get("coordinates").getAsString();
+                        Location coordinates;
+                        if (coordinatesStr.equals("0,0") || coordinatesStr.isEmpty()) {
+                            try {
+                                coordinates = URLs.exchangeLocation(node.location);
+                            } catch (Exception e) {
+                                coordinates = Location.impossible();
+                                logger.warn("Failed to exchange location for node {} (id:{}), using impossible coordinates. Exception:{}", node.name, node.id, e.toString());
+                                Utils.printExceptionStackTrace(logger, e);
+                            }
+                        } else {
+                            coordinates = new Location(
+                                    Double.parseDouble(coordinatesStr.split(",",2)[0]),
+                                    Double.parseDouble(coordinatesStr.split(",",2)[1])
+                            );
+                        }
+                        
+                        String domain = apiInfo.get("ip").getAsString();
+                        int delay = Network.ping(domain);
+                        advancedList.add(
+                                new AdvancedNode(
+                                        node.id,
+                                        node.bandwidthUsage,
+                                        node.cpuUsage,
+                                        delay,
+                                        node.name,
+                                        node.description,
+                                        node.location,
+                                        domain,
+                                        node.ipv6,
+                                        node.inChina,
+                                        coordinates
+                                )
+                        );
+                        logger.info("Got details for node {} (id:{}): delay {}ms, coordinates {}, domain {}",
+                                node.name, node.id, delay, coordinates, domain);
+                    } catch (Exception e) {
+                        logger.error("Failed to get details for node {} (id:{}), Skipping. Exception:{}", node.name, node.id, e.toString());
+                        Utils.printExceptionStackTrace(logger, e);
+                    } finally {
+                        latch.countDown();
+                    }
+                });
             }
+            
+            try {
+                latch.await();
+            } finally {
+                pool.shutdown();
+            }
+            
             return advancedList;
         } catch (Exception e) {
             logger.error("Failed to get advanced node list. Exception:{}", e.toString());
@@ -112,10 +147,10 @@ public class NodeUtil {
             throw e;
         }
     }
-
+    
     public static Node sortNode(List<Node> nodeList) {
         nodeList.sort((n1, n2) -> {
-            if (n1.inChina == n2.inChina) {
+            if (n1.inChina != n2.inChina) {
                 if (n1.inChina == OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_in_china", true)) return -1;
                 else return 1;
             }
@@ -137,10 +172,67 @@ public class NodeUtil {
 
             return 0;
         });
+        
+        /*
+        logger.info("Sorted Node List:");
+        for (Node n : nodeList) {
+            logger.info(n.toString());
+        }
+        */
 
         Node selected = nodeList.get(0);
         logger.info("Automatically Selected Node: id:{}, name:{}, group:{}, bandwidth usage:{}, CPU usage:{}",
                 selected.id, selected.name, selected.group, selected.bandwidthUsage, selected.cpuUsage);
+        return selected;
+    }
+    
+    public static AdvancedNode sortAdvancedNode(List<AdvancedNode> nodeList) {
+        nodeList.sort((n1, n2) -> {
+            if (n1.delayMillis != n2.delayMillis) {
+                if (n1.delayMillis < n2.delayMillis) return -1;
+                else return 1;
+            }
+            
+            if (!n1.coordinates.equals(n2.coordinates)) {
+                Location userLocation = new Location(
+                        OpenlinkChmlfrpExtension.PREFERENCES.getDouble("lon", 0),
+                        OpenlinkChmlfrpExtension.PREFERENCES.getDouble("lat", 0)
+                );
+                if (Utils.calculateDistance(n1.coordinates, userLocation) < Utils.calculateDistance(n2.coordinates, userLocation)) return -1;
+                else return 1;
+            }
+            
+            if (n1.inChina != n2.inChina) {
+                if (n1.inChina == OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("is_in_china", true)) return -1;
+                else return 1;
+            }
+
+            if (n1.bandwidthUsage != n2.bandwidthUsage) {
+                if (n1.bandwidthUsage < n2.bandwidthUsage) return -1;
+                else return 1;
+            }
+
+            if (n1.cpuUsage != n2.cpuUsage) {
+                if (n1.cpuUsage < n2.cpuUsage) return -1;
+                else return 1;
+            }
+
+            if (n1.ipv6 != n2.ipv6) {
+                if (n1.ipv6) return -1;
+                else return 1;
+            }
+
+            return 0;
+        });
+        
+        logger.info("Sorted Advanced Node List:");
+        for (AdvancedNode n : nodeList) {
+            logger.info(n.toString());
+        }
+
+        AdvancedNode selected = nodeList.get(0);
+        logger.info("Automatically Selected Node: id:{}, name:{}, group:{}, delay:{}ms, bandwidth usage:{}, CPU usage:{}",
+                selected.id, selected.name, selected.group, selected.delayMillis, selected.bandwidthUsage, selected.cpuUsage);
         return selected;
     }
 }

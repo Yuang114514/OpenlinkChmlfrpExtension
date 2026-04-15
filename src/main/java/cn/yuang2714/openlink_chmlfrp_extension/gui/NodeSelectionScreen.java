@@ -94,6 +94,8 @@ public class NodeSelectionScreen extends Screen {
                         20)
                 .build();
         addRenderableWidget(doneButton);
+        
+        idBoxResponder(String.valueOf(OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1)));
     }
 
     @Override

@@ -4,6 +4,8 @@
   "chat.openlink_chmlfrp_extension.command.config_max_retry.success": "成功将 创建隧道最大重试次数 修改为 %s",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.fail": "重载信息失败",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.success": "成功重载了你的信息",
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read": "当前的 启用高级节点排序方式 为 %s",
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "成功将 启用高级节点排序方式 修改为 %s",
   "chat.openlink_chmlfrp_extension.creating_proxy.got_node": "[Openlink Chmlfrp Extension] 正在选择节点...... ID: %s",
   "chat.openlink_chmlfrp_extension.creating_proxy.ing": "[Openlink Chmlfrp Extension] 正在创建远程隧道......",
   "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found": "[Openlink Chmlfrp Extension] 在%s次尝试后仍无法找到合适的远程端口，也许你应该换个节点......",

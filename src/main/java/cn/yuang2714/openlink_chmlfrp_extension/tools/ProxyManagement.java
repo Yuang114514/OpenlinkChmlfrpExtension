@@ -12,7 +12,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -25,13 +24,14 @@ import java.util.Random;
 public class ProxyManagement {
     private static int caughtPort = -1;
     private static int caughtProxyId = -1;
-    static Logger logger = LogUtils.getLogger();
+    static Logger logger = Utils.genLogger();
     
     @SuppressWarnings("BusyWait")
     public static String createProxy(int localPort, @Nullable String remotePort) throws Exception {
         logger.info("Creating proxy...");
         Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("chat.openlink_chmlfrp_extension.creating_proxy.ing").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
         
+        LoggingManagement.refreshUserInfo();
         if (
                 OpenlinkChmlfrpExtension.PREFERENCES.getInt("current_tunnel_count", 0) + 1 >
                 OpenlinkChmlfrpExtension.PREFERENCES.getInt("max_tunnel_count", 0)
@@ -53,13 +53,15 @@ public class ProxyManagement {
         int preferNodeId = OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1);
         String preferNodeName = "Not Selected";
         List<Node> nodes;
+        boolean isAdvanced = OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("advanced_node_sort", false);
         try {
             nodes = NodeUtil.genNodeList();
         } catch (Exception e) {
             throw new NullPointerException("[Openlink Chmlfrp Extension] Unable to get Node List.");
         }
+        //
         if (preferNodeId == -1) {
-            Node autoNode = NodeUtil.sortNode(nodes);
+            Node autoNode = isAdvanced ? NodeUtil.sortAdvancedNode(NodeUtil.toAdvancedNodeList(nodes)) : NodeUtil.sortNode(nodes);//todo:debug: add advanced node sorting
             preferNodeName = autoNode.name;
             preferNodeId = autoNode.id;
         }
@@ -103,6 +105,7 @@ public class ProxyManagement {
         
         for (int j = 0; j < OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5); j++) {
             postQuery.addProperty("remoteport", preferRemotePort);
+            caughtPort = preferRemotePort;
             try {
                 logger.info("Trying to create proxy. Attempt {}, Remote port:{}", j+1, preferRemotePort);
                 Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(
@@ -111,12 +114,14 @@ public class ProxyManagement {
                         OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5),
                         preferRemotePort
                 ).withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
-                caughtPort = preferRemotePort;
+                
+                String apiResponse = Network.post(URLs.api + "create_tunnel", postQuery.toString(), Network.CONTENT_TYPE_JSON, true);
+                logger.debug("API Response: {}", apiResponse);
                 return preferNodeApiInfo.get("ip")
                         .toString()
                         .replace("\"", "")
                         + ":" +
-                        JsonParser.parseString(Network.post(URLs.api + "create_tunnel", postQuery.toString(), Network.CONTENT_TYPE_JSON, true))
+                        JsonParser.parseString(apiResponse)
                                 .getAsJsonObject()
                                 .get("data")
                                 .getAsJsonObject()

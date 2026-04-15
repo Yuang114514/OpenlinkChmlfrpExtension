@@ -4,6 +4,8 @@
   "chat.openlink_chmlfrp_extension.command.config_max_retry.success": "Set createProxyMaxRetry to %s",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.fail": "Failed to reload your information.",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.success": "Successfully reloaded your information.",
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read": "Currently, advancedNodeSort is %s",
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "Set advancedNodeSort to %s",
   "chat.openlink_chmlfrp_extension.creating_proxy.got_node": "[Openlink Chmlfrp Extension] Selecting Node... ID: %s, Name: %s.",
   "chat.openlink_chmlfrp_extension.creating_proxy.ing": "[Openlink Chmlfrp Extension] Creating Remote Proxy...",
   "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found": "[Openlink Chmlfrp Extension] Cannot find a valid remote port after %s tries, maybe you should try another node.",

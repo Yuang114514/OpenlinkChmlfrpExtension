@@ -8,8 +8,8 @@ package cn.yuang2714.openlink_chmlfrp_extension;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.FrpcManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.logging.LogUtils;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
@@ -28,7 +28,7 @@ public class OpenlinkChmlfrpExtension {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "openlink_chmlfrp_extension";
     // Directly reference a slf4j logger
-    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = Utils.genLogger();
     public static Preferences PREFERENCES = Preferences.userNodeForPackage(OpenlinkChmlfrpExtension.class);
 
     public OpenlinkChmlfrpExtension() {
@@ -53,6 +53,9 @@ public class OpenlinkChmlfrpExtension {
         //   |  \- 无参数 输出当前配置
         //   |  \- <value> 设置为value
         //   \- reloadUserInfo 重新加载用户信息
+        //   \--\ setDoAdvancedNodeSort
+        //   |  \- 无参数 输出当前配置
+        //   |  \- <value> 设置为value
         event.getDispatcher().register(
                 Commands.literal("oce")
                     .then(Commands.literal("setProxyCreationMaxRetry")
@@ -100,6 +103,30 @@ public class OpenlinkChmlfrpExtension {
                                     return 0;
                                 }
                             }
+                        )
+                    )
+                
+                    .then(Commands.literal("setDoAdvancedNodeSort")
+                        .executes(context -> {
+                            context.getSource().sendSuccess(() -> Component.translatable(
+                                    "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read",
+                                    OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("advanced_node_sort", false)
+                            ), true);
+                            return 1;
+                        })
+                        .then(Commands.argument("value", BoolArgumentType.bool())
+                            .executes(
+                                context -> {
+                                    boolean value = context.getArgument("value", boolean.class);
+                                    OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("advanced_node_sort", value);
+                                    Utils.flushPreferences(LOGGER, "changing settings");
+                                    
+                                    context.getSource().sendSuccess(() -> Component.translatable(
+                                            "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success", value),
+                                            true);
+                                    return 1;
+                                }
+                            )
                         )
                     )
         );

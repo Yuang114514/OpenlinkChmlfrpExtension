@@ -5,6 +5,7 @@ package cn.yuang2714.openlink_chmlfrp_extension.statics;
  * Open source with MIT licence
  */
 
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Location;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Network;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -17,7 +18,7 @@ public class URLs {
     public static final String oauth2 = "https://account-api.qzhua.net/oauth2/";
     public static final String clientID = "019d57504ef77f9ea3dd50eb07325fdb";
 
-    public static double[] exchangeLocation(String loc) throws Exception {
+    public static Location exchangeLocation(String loc) throws Exception {
         JsonObject location = JsonParser.parseString(Network.get(
                 "http://api.tianditu.gov.cn/geocoder?tk=837963e070323c0fd804f0ac51c142b4&ds={\"keyWord\":\""
                 + loc
@@ -26,6 +27,6 @@ public class URLs {
         )).getAsJsonObject()
                 .get("location")
                 .getAsJsonObject();
-        return new double[]{location.get("lon").getAsDouble(), location.get("lat").getAsDouble()};
+        return new Location(location.get("lon").getAsDouble(), location.get("lat").getAsDouble());
     }
 }

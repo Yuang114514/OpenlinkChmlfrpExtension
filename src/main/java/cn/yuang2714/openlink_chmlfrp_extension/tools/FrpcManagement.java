@@ -9,7 +9,6 @@ import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 
 import java.nio.charset.StandardCharsets;
@@ -18,10 +17,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FrpcManagement {//todo:debug:无法下载frpc
+public class FrpcManagement {
     static String[] userEnv = new String[2]; //[0]是系统环境，[1]是架构
     static int[] frpcVersion = new int[3];
-    static Logger logger = LogUtils.getLogger();
+    static Logger logger = Utils.genLogger();
 
     public static void initUserEnv() throws Exception {
         //用户信息获取
