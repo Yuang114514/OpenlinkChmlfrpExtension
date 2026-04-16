@@ -49,6 +49,8 @@ public class Utils {
     }
     
     public static double calculateDistance(Location a, Location b) {
+        if (a.isImpossible() || b.isImpossible()) return Double.MAX_VALUE;
+        
         double latDistance = a.lat - b.lat;
         double lonDistance = a.lon - b.lon;
         return Math.sqrt((latDistance * latDistance) + (lonDistance * lonDistance));

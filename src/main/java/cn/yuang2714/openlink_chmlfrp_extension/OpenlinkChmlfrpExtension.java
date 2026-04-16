@@ -30,10 +30,9 @@ public class OpenlinkChmlfrpExtension {
     // Directly reference a slf4j logger
     public static final Logger LOGGER = Utils.genLogger();
     public static Preferences PREFERENCES = Preferences.userNodeForPackage(OpenlinkChmlfrpExtension.class);
-
+    
     public OpenlinkChmlfrpExtension() {
         LOGGER.info("""
-                
                   ____                       _       _         _        ____   _                  _    ______                 ______           _                       _
                  / __ \\                     | |     (_)       | |      / __ \\ | |                | |  | _____|               |  ____|        _| |_                    (_)
                 | |  | | _ __    ___  _ __  | |      _  _ __  | | __  | |  \\_|| |___   _ ___ __  | |  | |____  _ __  _ __    | |____  _   _ |_   _|  ___  _ __   ____  _   ____   _ __ \s

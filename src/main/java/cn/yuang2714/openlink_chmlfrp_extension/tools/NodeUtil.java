@@ -84,7 +84,7 @@ public class NodeUtil {
             for (Node node : baseList) {
                 pool.execute(() -> {
                     try {
-                        JsonObject apiInfo = JsonParser.parseString(Network.get(URLs.api + "nodeinfo?node=" + node.id, true))
+                        JsonObject apiInfo = JsonParser.parseString(Network.get(URLs.api + "nodeinfo?node=" + node.name, true))
                                 .getAsJsonObject()
                                 .get("data")
                                 .getAsJsonObject();
@@ -194,10 +194,14 @@ public class NodeUtil {
             }
             
             if (!n1.coordinates.equals(n2.coordinates)) {
+                if (n1.coordinates.isImpossible()) return 1;
+                if (n2.coordinates.isImpossible()) return -1;
+                
                 Location userLocation = new Location(
                         OpenlinkChmlfrpExtension.PREFERENCES.getDouble("lon", 0),
                         OpenlinkChmlfrpExtension.PREFERENCES.getDouble("lat", 0)
                 );
+                
                 if (Utils.calculateDistance(n1.coordinates, userLocation) < Utils.calculateDistance(n2.coordinates, userLocation)) return -1;
                 else return 1;
             }

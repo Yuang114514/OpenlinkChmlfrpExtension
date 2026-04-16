@@ -29,7 +29,7 @@ public class Location {
         return new Location(200,200);
     }
     
-    public static boolean isImpossible(Location location) {
-        return location.equals(impossible());
+    public boolean isImpossible() {
+        return this.equals(impossible());
     }
 }

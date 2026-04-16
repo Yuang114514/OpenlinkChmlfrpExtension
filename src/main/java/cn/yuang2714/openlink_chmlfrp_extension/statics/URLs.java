@@ -20,9 +20,10 @@ public class URLs {
 
     public static Location exchangeLocation(String loc) throws Exception {
         JsonObject location = JsonParser.parseString(Network.get(
-                "http://api.tianditu.gov.cn/geocoder?tk=837963e070323c0fd804f0ac51c142b4&ds={\"keyWord\":\""
+                //%7B%22keyWord%22%3A%22《loc》%22%7D
+                "http://api.tianditu.gov.cn/geocoder?tk=a0692da9a024ae2f5187a6bd9d4443dc&ds=%7B%22keyWord%22%3A%22"
                 + loc
-                + "\"}",
+                + "%22%7D",
                 false
         )).getAsJsonObject()
                 .get("location")
