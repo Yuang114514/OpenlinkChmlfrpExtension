@@ -61,7 +61,7 @@ public class ProxyManagement {
         }
         //
         if (preferNodeId == -1) {
-            Node autoNode = isAdvanced ? NodeUtil.sortAdvancedNode(NodeUtil.toAdvancedNodeList(nodes)) : NodeUtil.sortNode(nodes);//todo:debug: add advanced node sorting
+            Node autoNode = isAdvanced ? NodeUtil.sortAdvancedNode(NodeUtil.toAdvancedNodeList(nodes)) : NodeUtil.sortNode(nodes);
             preferNodeName = autoNode.name;
             preferNodeId = autoNode.id;
         }
