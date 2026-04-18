@@ -77,6 +77,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
                 ProxyManagement.deleteProxy(ProxyManagement.getProxyIdByPort(null, null));
             } catch (Exception e) {
                 OpenlinkChmlfrpExtension.LOGGER.error("Failed to delete proxy. Exception:{}", e.toString());
+                Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
             }
         }
     }
@@ -89,8 +90,9 @@ public class ChmlfrpFrpcImpl implements Frpc {
         return new LoginScreen(lastScreen);
     }
 
+    @SuppressWarnings("removal")
     public ResourceLocation getIcon() {
-        return ResourceLocation.fromNamespaceAndPath(OpenlinkChmlfrpExtension.MODID,"textures/chmlfrp_icon.png");
+        return new ResourceLocation(OpenlinkChmlfrpExtension.MODID,"textures/chmlfrp_icon.png");
     }
 
     public boolean isLoggedIn() {

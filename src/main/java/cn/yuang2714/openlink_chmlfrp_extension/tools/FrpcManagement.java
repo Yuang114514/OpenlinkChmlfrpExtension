@@ -58,9 +58,7 @@ public class FrpcManagement {
 
         try {
             String version = new String(
-                    Runtime.getRuntime().exec(
-                            path + " --version"
-                            )
+                    new ProcessBuilder(path.toFile().getAbsolutePath(), "--version").start()
                             .getInputStream()
                             .readAllBytes()
                     , StandardCharsets.UTF_8
@@ -165,6 +163,8 @@ public class FrpcManagement {
     }
 
     public static Process runFrpc(Path path, int proxyId, String token) throws Exception {
-        return Runtime.getRuntime().exec(path + " -u " + token + " -p " + proxyId);
+        Process frpcProcess = new ProcessBuilder(path.toFile().getAbsolutePath(), "-u", token, "-p", String.valueOf(proxyId)).redirectErrorStream(true).directory(path.toFile().getParentFile()).start();
+        logger.info("Running frpc with command: {} -u {} -p {}. Pid: {}", path.toFile().getAbsolutePath(), token, proxyId, frpcProcess.pid());
+        return frpcProcess;
     }
 }

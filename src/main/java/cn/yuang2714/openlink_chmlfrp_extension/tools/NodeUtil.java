@@ -188,7 +188,7 @@ public class NodeUtil {
     
     public static AdvancedNode sortAdvancedNode(List<AdvancedNode> nodeList) {
         nodeList.sort((n1, n2) -> {
-            if (n1.delayMillis != n2.delayMillis) {
+            if (n1.delayMillis != n2.delayMillis && n1.delayMillis != -1 && n2.delayMillis != -1) {
                 if (n1.delayMillis < n2.delayMillis) return -1;
                 else return 1;
             }

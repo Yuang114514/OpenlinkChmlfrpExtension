@@ -11,6 +11,7 @@ import net.minecraftforge.versions.forge.ForgeVersion;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -110,7 +111,11 @@ public class Network {
         
         long startTime = System.currentTimeMillis();
         
-        connection.getResponseCode();
+        try {
+            connection.getResponseCode();
+        } catch (IOException ignored) {
+            return -1;
+        }
         
         long endTime = System.currentTimeMillis();
         connection.disconnect();
