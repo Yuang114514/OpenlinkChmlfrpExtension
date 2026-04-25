@@ -1,4 +1,9 @@
-package com.example.examplemod.platform.services;
+package cn.yuang2714.openlink_chmlfrp_extension.platform.services;
+
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ * Open source with MIT licence
+ */
 
 public interface IPlatformHelper {
 

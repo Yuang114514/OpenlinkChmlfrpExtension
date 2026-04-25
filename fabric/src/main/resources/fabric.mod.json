@@ -16,7 +16,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.example.examplemod.ExampleMod"
+          "cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionFabric"
         ]
     },
     "mixins": [

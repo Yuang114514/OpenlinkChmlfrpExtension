@@ -1,6 +1,11 @@
-package com.example.examplemod.platform;
+package cn.yuang2714.openlink_chmlfrp_extension.platform;
 
-import com.example.examplemod.platform.services.IPlatformHelper;
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ * Open source with MIT licence
+ */
+
+import cn.yuang2714.openlink_chmlfrp_extension.platform.services.IPlatformHelper;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 

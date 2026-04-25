@@ -8,21 +8,16 @@ package cn.yuang2714.openlink_chmlfrp_extension;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.FrpcManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
+import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.client.event.RegisterClientCommandsEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
 import java.util.prefs.Preferences;
 
-// The value here should match an entry in the META-INF/mods.toml file
-@Mod.EventBusSubscriber
-@Mod(OpenlinkChmlfrpExtension.MODID)
 public class OpenlinkChmlfrpExtension {
 
     // Define mod id in a common place for everything to reference
@@ -31,7 +26,7 @@ public class OpenlinkChmlfrpExtension {
     public static final Logger LOGGER = Utils.genLogger();
     public static Preferences PREFERENCES = Preferences.userNodeForPackage(OpenlinkChmlfrpExtension.class);
     
-    public OpenlinkChmlfrpExtension() {
+    public static void init() {
         LOGGER.info("""
                 
                 
@@ -46,8 +41,7 @@ public class OpenlinkChmlfrpExtension {
                 """);
     }
 
-    @SubscribeEvent
-    public static void onClientCommandRegistering(RegisterClientCommandsEvent event) {
+    public static void registerOCECommand(CommandDispatcher<CommandSourceStack> dispatcher) {
 
         // /oce <command>
         //   \--\ setProxyCreationMaxRetry
@@ -57,7 +51,7 @@ public class OpenlinkChmlfrpExtension {
         //   \--\ setDoAdvancedNodeSort
         //   |  \- 无参数 输出当前配置
         //   |  \- <value> 设置为value
-        event.getDispatcher().register(
+        dispatcher.register(
                 Commands.literal("oce")
                     .then(Commands.literal("setProxyCreationMaxRetry")
                         .executes(context -> {
@@ -134,8 +128,7 @@ public class OpenlinkChmlfrpExtension {
         OpenlinkChmlfrpExtension.LOGGER.info("Registered Command.");
     }
 
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
+    public static void clientTickCallback() {
         if (
                 PREFERENCES.getBoolean("is_logged_in", false)
                 && (PREFERENCES.getLong("expires_in", 0) <= System.currentTimeMillis())
