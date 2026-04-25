@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Mian" pattern="src[OpenlinkChmlfrpExtension.main]:cn.yuang2714.openlink_chmlfrp_extension..*" />
+</component>
