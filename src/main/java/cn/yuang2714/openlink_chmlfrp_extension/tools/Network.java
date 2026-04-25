@@ -11,7 +11,9 @@ import net.minecraftforge.versions.forge.ForgeVersion;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -103,22 +105,31 @@ public class Network {
     }
     
     public static int ping(String domain) throws Exception {
-        HttpURLConnection connection = (HttpURLConnection) new URL(new URI("http://" + domain).toASCIIString()).openConnection();
-        connection.setRequestMethod("HEAD");
-        connection.setRequestProperty("User-Agent", USER_AGENT);
-        connection.setReadTimeout(10000);
-        connection.setConnectTimeout(10000);
+        Process process = Runtime.getRuntime().exec("ping " + (FrpcManagement.userEnv[0].contains("windows") ? "-n" : "-c") + " 1 " + domain);
         
-        long startTime = System.currentTimeMillis();
-        
-        try {
-            connection.getResponseCode();
-        } catch (IOException ignored) {
-            return -1;
+        String line;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            while ((line = reader.readLine()) != null) {
+                logger.debug("Ping stdout: {}", line);
+                
+                int msIndex = line.indexOf("ms");
+                if (msIndex == -1) continue;
+                
+                StringBuilder builder = new StringBuilder();
+                for (int i = msIndex - 1; i >= 0; i--) {
+                    char cell = line.charAt(i);
+                    
+                    if (cell == ' ') continue;
+                    
+                    if (Character.isDigit(cell) || cell == '.') builder.insert(0, cell);
+                    else break;
+                }
+                
+                int value = Math.toIntExact(Math.round(Double.parseDouble(builder.toString())));
+                logger.debug("Found ms. Parsed to {}", value);
+                return value;
+            }
         }
-        
-        long endTime = System.currentTimeMillis();
-        connection.disconnect();
-        return Math.toIntExact(endTime - startTime);
+        return -1;
     }
 }

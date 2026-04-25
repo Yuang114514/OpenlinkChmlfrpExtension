@@ -78,7 +78,7 @@ public class NodeUtil {
     public static List<AdvancedNode> toAdvancedNodeList(List<Node> baseList) throws Exception {
         try {
             CountDownLatch latch = new CountDownLatch(baseList.size());
-            ExecutorService pool = Executors.newFixedThreadPool(5);
+            ExecutorService pool = Executors.newFixedThreadPool(10);
             List<AdvancedNode> advancedList = new CopyOnWriteArrayList<>();
             
             for (Node node : baseList) {
@@ -96,7 +96,7 @@ public class NodeUtil {
                                 coordinates = URLs.exchangeLocation(node.location);
                             } catch (Exception e) {
                                 coordinates = Location.impossible();
-                                logger.warn("Failed to exchange location for node {} (id:{}), using impossible coordinates. Exception:{}", node.name, node.id, e.toString());
+                                logger.warn("Failed to exchange location for node {} ({}), using impossible coordinates. Exception:{}", node.name, node.id, e.toString());
                                 Utils.printExceptionStackTrace(logger, e);
                             }
                         } else {
@@ -123,7 +123,7 @@ public class NodeUtil {
                                         coordinates
                                 )
                         );
-                        logger.info("Got details for node {} (id:{}): delay {}ms, coordinates {}, domain {}",
+                        logger.debug("Got details for node {} (id:{}): delay {}ms, coordinates {}, domain {}",
                                 node.name, node.id, delay, coordinates, domain);
                     } catch (Exception e) {
                         logger.error("Failed to get details for node {} (id:{}), Skipping. Exception:{}", node.name, node.id, e.toString());
@@ -173,12 +173,10 @@ public class NodeUtil {
             return 0;
         });
         
-        /*
-        logger.info("Sorted Node List:");
+        logger.debug("Sorted Node List:");
         for (Node n : nodeList) {
-            logger.info(n.toString());
+            logger.debug(n.toString());
         }
-        */
 
         Node selected = nodeList.get(0);
         logger.info("Automatically Selected Node: id:{}, name:{}, group:{}, bandwidth usage:{}, CPU usage:{}",
@@ -229,9 +227,9 @@ public class NodeUtil {
             return 0;
         });
         
-        logger.info("Sorted Advanced Node List:");
+        logger.debug("Sorted Advanced Node List:");
         for (AdvancedNode n : nodeList) {
-            logger.info(n.toString());
+            logger.debug(n.toString());
         }
 
         AdvancedNode selected = nodeList.get(0);
