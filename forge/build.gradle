@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ * Open source with MIT licence
+ */
+
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev.legacyforge'
@@ -12,10 +17,13 @@ legacyForge {
     if (at.exists()) {
         accessTransformers = ["src/main/resources/META-INF/accesstransformer.cfg"]
     }
+    /*
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version
     }
+
+     */
     runs {
         client {
             client()
@@ -39,6 +47,7 @@ legacyForge {
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
 repositories {
+    mavenCentral()
     maven {
         url "https://api.modrinth.com/maven"
         content {
@@ -49,14 +58,14 @@ repositories {
 
 dependencies {
     compileOnly project(":common")
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    compileOnly "org.jetbrains:annotations:24.0.0"
+    annotationProcessor "org.spongepowered:mixin:0.8.5-SNAPSHOT:processor"
 
     implementation "maven.modrinth:openlink-frpc-api:1.0.0-forge"
+
+    compileOnly files("run/mods/openlink-forge-1.20.1-1.1.1.jar")
 }
 
 jar {
     finalizedBy('reobfJar')
-    manifest.attributes([
-            "MixinConfigs": "${mod_id}.mixins.json,${mod_id}.forge.mixins.json"
-    ])
 }

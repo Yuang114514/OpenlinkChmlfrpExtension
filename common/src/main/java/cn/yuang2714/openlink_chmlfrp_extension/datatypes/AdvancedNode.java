@@ -6,7 +6,7 @@ package cn.yuang2714.openlink_chmlfrp_extension.datatypes;
  */
 
 public class AdvancedNode extends Node {
-    public volatile Location coordinates; //lon是经度lat是纬度
+    public Location coordinates;
     public String domain;
     public volatile int delayMillis;
     

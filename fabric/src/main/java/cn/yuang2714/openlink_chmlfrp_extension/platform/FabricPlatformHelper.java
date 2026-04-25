@@ -5,25 +5,14 @@ package cn.yuang2714.openlink_chmlfrp_extension.platform;
  * Open source with MIT licence
  */
 
-import cn.yuang2714.openlink_chmlfrp_extension.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class FabricPlatformHelper implements IPlatformHelper {
-
     @Override
-    public String getPlatformName() {
-        return "Fabric";
-    }
-
-    @Override
-    public boolean isModLoaded(String modId) {
-
-        return FabricLoader.getInstance().isModLoaded(modId);
-    }
-
-    @Override
-    public boolean isDevelopmentEnvironment() {
-
-        return FabricLoader.getInstance().isDevelopmentEnvironment();
+    public String genUA() {
+        return String.format("OpenLinkChmlfrpExtension/%s (Fabric %s; Minecraft %s)",
+                FabricLoader.getInstance().getModContainer("openlink_chmlfrp_extension").map(mod -> mod.getMetadata().getVersion().toString()).orElse("unknown"),
+                FabricLoader.getInstance().getModContainer("fabricloader").map(container -> container.getMetadata().getVersion().toString()).orElse("unknown"),
+                FabricLoader.getInstance().getModContainer("minecraft").map(container -> container.getMetadata().getVersion().toString()).orElse("unknown"));
     }
 }

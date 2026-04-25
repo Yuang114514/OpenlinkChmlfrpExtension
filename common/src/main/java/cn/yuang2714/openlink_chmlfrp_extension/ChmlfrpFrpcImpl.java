@@ -90,7 +90,6 @@ public class ChmlfrpFrpcImpl implements Frpc {
         return new LoginScreen(lastScreen);
     }
 
-    @SuppressWarnings("removal")
     public ResourceLocation getIcon() {
         return new ResourceLocation(OpenlinkChmlfrpExtension.MODID,"textures/chmlfrp_icon.png");
     }

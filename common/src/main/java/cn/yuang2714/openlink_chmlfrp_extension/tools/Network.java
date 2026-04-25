@@ -6,8 +6,7 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
  */
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.versions.forge.ForgeVersion;
+import cn.yuang2714.openlink_chmlfrp_extension.platform.PlatformServices;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -25,15 +24,7 @@ public class Network {
     private static final Logger logger = Utils.genLogger();
 
     public static void setUpCookieManager() {
-        USER_AGENT =
-                "OpenLinkChmlfrpExtension/" +
-                        ModList.get().getModFileById(OpenlinkChmlfrpExtension.MODID).versionString() +
-                        " (Forge " + ForgeVersion.getVersion() +
-                        "; Minecraft " + ModList.get()
-                        .getModContainerById("minecraft")
-                        .map(container -> container.getModInfo().getVersion().toString())
-                        .orElse("unknown") + ")"
-        ;
+        USER_AGENT = PlatformServices.PLATFORM.genUA();
         manager = new CookieManager();
         CookieHandler.setDefault(manager);
         logger.info("Cookie Manager Set Up. User Agent: {}", USER_AGENT);

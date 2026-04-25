@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
+ * Open source with MIT licence
+ */
+
 plugins {
     id 'multiloader-common'
     id 'net.neoforged.moddev.legacyforge'
@@ -15,6 +20,7 @@ legacyForge {
 }
 
 repositories {
+    mavenCentral()
     maven {
         url "https://api.modrinth.com/maven"
         content {
@@ -25,6 +31,7 @@ repositories {
 
 dependencies {
     compileOnly "maven.modrinth:openlink-frpc-api:1.0.0-forge"
+    compileOnly "org.jetbrains:annotations:24.0.0"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 }
 

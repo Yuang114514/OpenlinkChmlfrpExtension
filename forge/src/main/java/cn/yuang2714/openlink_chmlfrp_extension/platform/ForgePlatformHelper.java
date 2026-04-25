@@ -5,27 +5,17 @@ package cn.yuang2714.openlink_chmlfrp_extension.platform;
  * Open source with MIT licence
  */
 
-import cn.yuang2714.openlink_chmlfrp_extension.platform.services.IPlatformHelper;
+import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.versions.forge.ForgeVersion;
 
 public class ForgePlatformHelper implements IPlatformHelper {
-
     @Override
-    public String getPlatformName() {
-
-        return "Forge";
-    }
-
-    @Override
-    public boolean isModLoaded(String modId) {
-
-        return ModList.get().isLoaded(modId);
-    }
-
-    @Override
-    public boolean isDevelopmentEnvironment() {
-
-        return !FMLLoader.isProduction();
+    public String genUA() {
+        return String.format("OpenLinkChmlfrpExtension/%s (Forge %s, Minecraft %s)",
+                ModList.get().getModFileById(OpenlinkChmlfrpExtension.MODID).versionString(),
+                ForgeVersion.getVersion(),
+                ModList.get().getModContainerById("minecraft").map(container -> container.getModInfo().getVersion().toString()).orElse("unknown")
+        );
     }
 }
