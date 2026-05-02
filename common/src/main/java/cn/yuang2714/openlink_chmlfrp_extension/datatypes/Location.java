@@ -9,8 +9,13 @@ public class Location {
     public double lon, lat;
     
     public Location(double lon, double lat) {
-        this.lon = lon;
-        this.lat = lat;
+        if (lon < -180 || lon > 180 || lat < -90 || lat > 90) {
+            this.lon = 200;
+            this.lat = 200;
+        } else {
+            this.lon = lon;
+            this.lat = lat;
+        }
     }
     
     @Override
@@ -30,6 +35,6 @@ public class Location {
     }
     
     public boolean isImpossible() {
-        return this.equals(impossible());
+        return this.lon == 200 && this.lat == 200;
     }
 }
