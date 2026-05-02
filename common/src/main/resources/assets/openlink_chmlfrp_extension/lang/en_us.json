@@ -2,15 +2,21 @@
   "chat.openlink_chmlfrp_extension.command.config_max_retry.fail": "Failed to set createProxyMaxRetry.",
   "chat.openlink_chmlfrp_extension.command.config_max_retry.read": "Currently, createProxyMaxRetry is %s",
   "chat.openlink_chmlfrp_extension.command.config_max_retry.success": "Set createProxyMaxRetry to %s",
+
   "chat.openlink_chmlfrp_extension.command.reload_user_info.fail": "Failed to reload your information.",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.success": "Successfully reloaded your information.",
-  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read": "Currently, advancedNodeSort is %s",
-  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "Set advancedNodeSort to %s",
+
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read": "Currently, doAdvancedNodeSort is %s",
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "Set doAdvancedNodeSort to %s",
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.fail": "Failed to set doAdvancedNodeSort.",
+
   "chat.openlink_chmlfrp_extension.creating_proxy.got_node": "[Openlink Chmlfrp Extension] Selecting Node... ID: %s, Name: %s.",
   "chat.openlink_chmlfrp_extension.creating_proxy.ing": "[Openlink Chmlfrp Extension] Creating Remote Proxy...",
-  "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found": "[Openlink Chmlfrp Extension] Cannot find a valid remote port after %s tries, maybe you should try another node.",
   "chat.openlink_chmlfrp_extension.creating_proxy.trying": "[Openlink Chmlfrp Extension] Trying remote port... Attempt %s/%s, Remote Port: %s",
+
+  "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found": "[Openlink Chmlfrp Extension] Cannot find a valid remote port after %s tries, maybe you should try another node.",
   "chat.openlink_chmlfrp_extension.creating_proxy.maximum_tunnel_count_reached": "[Openlink Chmlfrp Extension] You have reached the maximum tunnel count allowed by your account. Please delete some tunnels and try again.",
+
   "gui.openlink_chmlfrp_extension.login_screen.info": "Click the button below to open the login panel. After you logged in, return back.",
   "gui.openlink_chmlfrp_extension.login_screen.stat_0": "Login",
   "gui.openlink_chmlfrp_extension.login_screen.stat_1": "Preparing...",
@@ -18,12 +24,17 @@
   "gui.openlink_chmlfrp_extension.login_screen.stat_fail": "Failed to login. Try again.",
   "gui.openlink_chmlfrp_extension.login_screen.stat_success": "Login Success",
   "gui.openlink_chmlfrp_extension.login_screen.title": "Login to Chmlfrp",
-  "gui.openlink_chmlfrp_extension.node_selection.auto": "Selecting Node Automatically",
+
   "gui.openlink_chmlfrp_extension.node_selection.auto_button_text": "Auto Select",
+  "gui.openlink_chmlfrp_extension.node_selection.panel_button_text": "Open Panel",
+  "gui.openlink_chmlfrp_extension.node_selection.auto": "Selecting Node Automatically",
   "gui.openlink_chmlfrp_extension.node_selection.fail": "Invalid Node ID. Try another node.",
   "gui.openlink_chmlfrp_extension.node_selection.ing": "Verifying Your node input...",
   "gui.openlink_chmlfrp_extension.node_selection.list_exception": "Failed to get node list. Please check your internet connection.",
   "gui.openlink_chmlfrp_extension.node_selection.loading": "Loading Node List...",
+  "gui.openlink_chmlfrp_extension.node_selection.success": "Successfully received your selection!",
+  "gui.openlink_chmlfrp_extension.node_selection.tip": "Select a node in the panel and enter its ID below. Auto selection is available.",
+
   "gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage": "    Bandwidth Usage:%s%%",
   "gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage": "    CPU Usage:%s%%",
   "gui.openlink_chmlfrp_extension.node_selection.node_info.description": "    Description:%s",
@@ -31,11 +42,10 @@
   "gui.openlink_chmlfrp_extension.node_selection.node_info.location": "    Location:%s",
   "gui.openlink_chmlfrp_extension.node_selection.node_info.name": "    Name:%s",
   "gui.openlink_chmlfrp_extension.node_selection.node_info.title": "Node Info:",
-  "gui.openlink_chmlfrp_extension.node_selection.panel_button_text": "Open Panel",
-  "gui.openlink_chmlfrp_extension.node_selection.success": "Successfully received your selection!",
-  "gui.openlink_chmlfrp_extension.node_selection.tip": "Select a node in the panel and enter its ID below. Auto selection is available.",
+
   "text.openlink_chmlfrp_extension.none": "",
-  "modmenu.nameTranslation.modmenu": "OpenLink Chmlfrp Extension",
-  "modmenu.descriptionTranslation.modmenu": "An OpenLink addon for Chmlfrp. Allows you to create frp tunnels in Minecraft and link them to your Chmlfrp account.",
-  "modmenu.summaryTranslation.modmenu": "An OpenLink addon for Chmlfrp."
+
+  "modmenu.nameTranslation.openlink_chmlfrp_extension": "OpenLink Chmlfrp Extension",
+  "modmenu.descriptionTranslation.openlink_chmlfrp_extension": "An OpenLink addon for Chmlfrp. Allows you to create frp tunnels in Minecraft and link them to Chmlfrp.",
+  "modmenu.summaryTranslation.openlink_chmlfrp_extension": "An OpenLink addon for Chmlfrp."
 }

@@ -23,7 +23,8 @@
       "openlink": ">=1.1.0"
   },
   "suggests": {
-      "modmenu-badges-lib": "*"
+    "modmenu": "*",
+    "modmenu-badges-lib": "*"
   },
 
   "custom": {

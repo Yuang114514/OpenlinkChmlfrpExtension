@@ -2,15 +2,20 @@
   "chat.openlink_chmlfrp_extension.command.config_max_retry.fail": "修改 创建隧道最大重试次数 失败",
   "chat.openlink_chmlfrp_extension.command.config_max_retry.read": "当前的 创建隧道最大重试次数 为 %s",
   "chat.openlink_chmlfrp_extension.command.config_max_retry.success": "成功将 创建隧道最大重试次数 修改为 %s",
+
   "chat.openlink_chmlfrp_extension.command.reload_user_info.fail": "重载信息失败",
   "chat.openlink_chmlfrp_extension.command.reload_user_info.success": "成功重载了你的信息",
-  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read": "当前的 启用高级节点排序方式 为 %s",
-  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "成功将 启用高级节点排序方式 修改为 %s",
+
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read": "当前的 启用增强节点排序方式 为 %s",
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "成功将 启用增强节点排序方式 修改为 %s",
+
   "chat.openlink_chmlfrp_extension.creating_proxy.got_node": "[Openlink Chmlfrp Extension] 正在选择节点...... ID: %s",
   "chat.openlink_chmlfrp_extension.creating_proxy.ing": "[Openlink Chmlfrp Extension] 正在创建远程隧道......",
-  "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found": "[Openlink Chmlfrp Extension] 在%s次尝试后仍无法找到合适的远程端口，也许你应该换个节点......",
   "chat.openlink_chmlfrp_extension.creating_proxy.trying": "[Openlink Chmlfrp Extension] 正在尝试远程端口...... 第 %s/%s 次, 远程端口: %s",
+
+  "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found": "[Openlink Chmlfrp Extension] 在%s次尝试后仍无法找到合适的远程端口，也许你应该换个节点......",
   "chat.openlink_chmlfrp_extension.creating_proxy.maximum_tunnel_count_reached": "[Openlink Chmlfrp Extension] 你已经达到了账号允许的最大隧道数。请删除一些隧道后再试。",
+
   "gui.openlink_chmlfrp_extension.login_screen.info": "点击下方的按钮打开登录面板。登录完成后返回此界面。",
   "gui.openlink_chmlfrp_extension.login_screen.stat_0": "登录",
   "gui.openlink_chmlfrp_extension.login_screen.stat_1": "准备中......",
@@ -18,12 +23,17 @@
   "gui.openlink_chmlfrp_extension.login_screen.stat_fail": "登录失败。再试一次。",
   "gui.openlink_chmlfrp_extension.login_screen.stat_success": "登录成功",
   "gui.openlink_chmlfrp_extension.login_screen.title": "登录到Chmlfrp",
-  "gui.openlink_chmlfrp_extension.node_selection.auto": "自动选择节点",
+
   "gui.openlink_chmlfrp_extension.node_selection.auto_button_text": "自动选择",
+  "gui.openlink_chmlfrp_extension.node_selection.panel_button_text": "打开面板",
+  "gui.openlink_chmlfrp_extension.node_selection.auto": "自动选择节点",
   "gui.openlink_chmlfrp_extension.node_selection.fail": "无效的ID。换个节点试试",
   "gui.openlink_chmlfrp_extension.node_selection.ing": "正在验证你输入的节点ID......",
   "gui.openlink_chmlfrp_extension.node_selection.list_exception": "获取节点列表失败。请检查你的网络连接",
   "gui.openlink_chmlfrp_extension.node_selection.loading": "正在加载节点列表......",
+  "gui.openlink_chmlfrp_extension.node_selection.success": "成功接收了你的选择！",
+  "gui.openlink_chmlfrp_extension.node_selection.tip": "在面板中挑选想要使用的节点，然后把选定节点的ID输入在下方。自动选择节点可用。",
+
   "gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage": "  带宽负载:%s%%",
   "gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage": "  CPU负载:%s%%",
   "gui.openlink_chmlfrp_extension.node_selection.node_info.description": "  简介:%s",
@@ -31,11 +41,10 @@
   "gui.openlink_chmlfrp_extension.node_selection.node_info.location": "  位置:%s",
   "gui.openlink_chmlfrp_extension.node_selection.node_info.name": "  名称:%s",
   "gui.openlink_chmlfrp_extension.node_selection.node_info.title": "节点信息:",
-  "gui.openlink_chmlfrp_extension.node_selection.panel_button_text": "打开面板",
-  "gui.openlink_chmlfrp_extension.node_selection.success": "成功接收了你的选择！",
-  "gui.openlink_chmlfrp_extension.node_selection.tip": "在面板中挑选想要使用的节点，然后把选定节点的ID输入在下方。自动选择节点可用。",
-  "text.openlink_chmlfrp_extension.none": "",
-  "modmenu.nameTranslation.modmenu": "OpenLink: Chmlfrp扩展",
-  "modmenu.descriptionTranslation.modmenu": "为OpenLink开发的Chmlfrp客户端。允许你在Minecraft中创建frp隧道，并将它们链接到你的Chmlfrp账号。",
-  "modmenu.summaryTranslation.modmenu": "OpenLink的Chmlfrp扩展。"
+
+  "text.openlink_chmlfrp_extension.none": "棍木",
+
+  "modmenu.nameTranslation.openlink_chmlfrp_extension": "OpenLink: Chmlfrp扩展",
+  "modmenu.descriptionTranslation.openlink_chmlfrp_extension": "为OpenLink开发的Chmlfrp客户端。允许你在Minecraft中创建frp隧道，并将它们链接到Chmlfrp。",
+  "modmenu.summaryTranslation.openlink_chmlfrp_extension": "OpenLink的Chmlfrp扩展。"
 }

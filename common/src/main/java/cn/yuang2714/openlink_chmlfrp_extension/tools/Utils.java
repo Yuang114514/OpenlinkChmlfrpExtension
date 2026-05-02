@@ -13,11 +13,12 @@ import org.slf4j.LoggerFactory;
 import java.util.prefs.BackingStoreException;
 
 public class Utils {
+    private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+    
     public static void printExceptionStackTrace(Logger logger, Exception e) {
-        StringBuilder builder = new StringBuilder("Stack trace caught!");
-        StackTraceElement[] stackTraceElements = e.getStackTrace();
+        StringBuilder builder = new StringBuilder("Stack trace caught! \n").append(e);
         
-        builder.append("\n").append(e);
+        StackTraceElement[] stackTraceElements = e.getStackTrace();
         for (int i = 0; i < 15; i++) {
             try {
                 builder.append("\n        at ").append(stackTraceElements[i].toString());
@@ -26,17 +27,19 @@ public class Utils {
                 return;
             }
         }
-        builder.append("\n").append("... ").append(stackTraceElements.length - 15).append(" More");
+        builder.append("\n").append("        ... ").append(stackTraceElements.length - 15).append(" More");
         
         logger.error(builder.toString());
     }
 
-    public static void flushPreferences(Logger logger, String step) {
+    public static boolean flushPreferences(Logger logger, String step) {
         try {
             OpenlinkChmlfrpExtension.PREFERENCES.flush();
+            return true;
         } catch (BackingStoreException e) {
             logger.error("Failed to save in preferences on {} . Exception:{}", step.trim(), e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            printExceptionStackTrace(logger, e);
+            return false;
         }
     }
     
@@ -44,7 +47,7 @@ public class Utils {
         return LoggerFactory.getLogger(
                 OpenlinkChmlfrpExtension.class.getSimpleName() +
                         "/" +
-                        StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE).getCallerClass().getSimpleName()
+                        walker.getCallerClass().getSimpleName()
         );
     }
     
