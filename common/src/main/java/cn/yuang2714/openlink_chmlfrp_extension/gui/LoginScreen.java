@@ -120,6 +120,12 @@ public class LoginScreen extends Screen {
             }
 
             if (tokens[0].equals("slow_down")) delay += 500;
+            
+            if (tokens[0].equals("expired_token") || tokens[0].equals("access_denied")) {
+                button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                isDelaying = true;
+                return;
+            }
 
             if (tokens[0].equals("authorization_pending")) {
                 tokens = null;

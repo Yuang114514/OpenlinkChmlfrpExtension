@@ -18,4 +18,9 @@ public class ForgePlatformHelper implements IPlatformHelper {
                 ModList.get().getModContainerById("minecraft").map(container -> container.getModInfo().getVersion().toString()).orElse("unknown")
         );
     }
+    
+    @Override
+    public String getPlatform() {
+        return "Forge " + ForgeVersion.getVersion();
+    }
 }

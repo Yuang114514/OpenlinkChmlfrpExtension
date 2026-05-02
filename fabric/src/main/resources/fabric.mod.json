@@ -1,33 +1,46 @@
 {
-    "schemaVersion": 1,
-    "id": "openlink_chmlfrp_extension",
-    "version": "${version}",
-    "name": "${mod_name}",
-    "description": "${description}",
-    "authors": [
-        "${mod_author}"
-    ],
-    "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+  "schemaVersion": 1,
+  "id": "openlink_chmlfrp_extension",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${description}",
+  "authors": [
+      "${mod_author}"
+  ],
+  "license": "${license}",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+      "client": [
+        "cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionFabric"
+      ]
+  },
+  "depends": {
+      "fabricloader": ">=0.14",
+      "fabric": "*",
+      "minecraft": "${minecraft_version}",
+      "java": ">=17",
+      "openlink": ">=1.1.0"
+  },
+  "suggests": {
+      "modmenu-badges-lib": "*"
+  },
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.modrinth": "https://modrinth.com/mod/openlink-chmlfrp-extension"
+      },
+      "parent": "openlink",
+      "update_checker": true
     },
-    "license": "${license}",
-    "icon": "icon.png",
-    "environment": "*",
-    "entrypoints": {
-        "main": [
-          "cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionFabric"
-        ]
-    },
-    "depends": {
-        "fabricloader": ">=0.14",
-        "fabric": "*",
-        "minecraft": "${minecraft_version}",
-        "java": ">=17",
-        "openlink": ">=1.1.0"
-    },
-    "suggests": {
-        "another-mod": "*"
-    }
+    "mcb": [
+      {
+        "name": "Frpc Implementation",
+        "fillColor": -8759282,
+        "outlineColor": -29692
+      }
+    ]
+  }
 }
   

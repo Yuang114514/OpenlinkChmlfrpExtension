@@ -15,4 +15,9 @@ public class FabricPlatformHelper implements IPlatformHelper {
                 FabricLoader.getInstance().getModContainer("fabricloader").map(container -> container.getMetadata().getVersion().toString()).orElse("unknown"),
                 FabricLoader.getInstance().getModContainer("minecraft").map(container -> container.getMetadata().getVersion().toString()).orElse("unknown"));
     }
+    
+    @Override
+    public String getPlatform() {
+        return "Fabric " + FabricLoader.getInstance().getModContainer("fabricloader").map(container -> container.getMetadata().getVersion().toString()).orElse("unknown");
+    }
 }

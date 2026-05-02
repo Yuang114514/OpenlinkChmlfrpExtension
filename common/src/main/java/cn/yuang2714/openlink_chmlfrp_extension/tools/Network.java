@@ -115,7 +115,7 @@ public class Network {
                     else break;
                 }
                 
-                int value = Math.toIntExact(Math.round(Double.parseDouble(builder.toString())));
+                int value = Math.round(Float.parseFloat(builder.toString()));
                 logger.debug("Found ms. Parsed to {}", value);
                 return value;
             }

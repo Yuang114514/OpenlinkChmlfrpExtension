@@ -55,8 +55,14 @@ public class LoggingManagement {
                         logger.warn("Polling too frequently, slowing down...");
                         return new String[]{"slow_down"};
                     }
-                    case "expired_token" -> throw new Exception("Device code expired.");
-                    case "access_denied" -> throw new Exception("User denied the authorization request.");
+                    case "expired_token" -> {
+                        logger.error("Device code expired.");
+                        return new String[]{"expired_token"};
+                    }
+                    case "access_denied" -> {
+                        logger.error("User denied the authorization request.");
+                        return new String[]{"access_denied"};
+                    }
                     default -> throw new Exception("Unknown Error:" + error);
                 }
             }

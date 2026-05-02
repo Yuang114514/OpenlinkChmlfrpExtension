@@ -5,6 +5,7 @@ package cn.yuang2714.openlink_chmlfrp_extension;
  * Open source with MIT licence
  */
 
+import cn.yuang2714.openlink_chmlfrp_extension.platform.PlatformServices;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ public class OpenlinkChmlfrpExtension {
     
     public static void init() {
         LOGGER.info("""
+                Initializing OpenLink Chmlfrp Extension on {}.
                 
                 
                   ____                       _       _         _        ____   _                  _    ______                 ______           _                       _
@@ -31,7 +33,7 @@ public class OpenlinkChmlfrpExtension {
                  \\____/ | .__/  \\___||_| |_||______||_||_| |_||_|\\_\\   \\____/ |_|  |_||_| |_| |_||___||_|     |_|   | .__/   |______|/_/ \\_\\   \\__/ \\___||_| |_||____/|_| \\____/ |_| |_|
                         | |                                                                                         | |
                         |_|                                                                                         |_|
-                """);
+                """, PlatformServices.PLATFORM.getPlatform());
     }
     
     /*
@@ -54,7 +56,10 @@ public class OpenlinkChmlfrpExtension {
         ) {
             PREFERENCES.putLong("expires_in", PREFERENCES.getLong("expires_in", 0) + 5000);
             if (LoggingManagement.refreshToken()) LOGGER.info("Refreshed access token success.");
-            else LOGGER.error("Refreshed access token failed.");
+            else {
+                PREFERENCES.putBoolean("is_logged_in", false);
+                LOGGER.error("Refreshed access token failed.");
+            }
         }
     }
 }

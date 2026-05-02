@@ -34,5 +34,8 @@
   "gui.openlink_chmlfrp_extension.node_selection.panel_button_text": "Open Panel",
   "gui.openlink_chmlfrp_extension.node_selection.success": "Successfully received your selection!",
   "gui.openlink_chmlfrp_extension.node_selection.tip": "Select a node in the panel and enter its ID below. Auto selection is available.",
-  "text.openlink_chmlfrp_extension.none": ""
+  "text.openlink_chmlfrp_extension.none": "",
+  "modmenu.nameTranslation.modmenu": "OpenLink Chmlfrp Extension",
+  "modmenu.descriptionTranslation.modmenu": "An OpenLink addon for Chmlfrp. Allows you to create frp tunnels in Minecraft and link them to your Chmlfrp account.",
+  "modmenu.summaryTranslation.modmenu": "An OpenLink addon for Chmlfrp."
 }

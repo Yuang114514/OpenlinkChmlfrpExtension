@@ -7,4 +7,5 @@ package cn.yuang2714.openlink_chmlfrp_extension.platform;
 
 public interface IPlatformHelper {
     String genUA();
+    String getPlatform();
 }

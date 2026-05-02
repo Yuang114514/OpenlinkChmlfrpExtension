@@ -59,11 +59,8 @@ repositories {
 dependencies {
     compileOnly project(":common")
     compileOnly "org.jetbrains:annotations:24.0.0"
-    annotationProcessor "org.spongepowered:mixin:0.8.5-SNAPSHOT:processor"
 
     implementation "maven.modrinth:openlink-frpc-api:1.0.0-forge"
-
-    compileOnly files("run/mods/openlink-forge-1.20.1-1.1.1.jar")
 }
 
 jar {

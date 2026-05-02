@@ -28,7 +28,7 @@ public class OpenlinkChmlfrpExtensionForge {
         // project.
     
         // Use Forge to bootstrap the Common mod.
-        OpenlinkChmlfrpExtension.LOGGER.info("Hello Forge!");
+        //OpenlinkChmlfrpExtension.LOGGER.info("Hello Forge!");
         OpenlinkChmlfrpExtension.init();
     }
     
