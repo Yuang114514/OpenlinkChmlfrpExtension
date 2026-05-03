@@ -57,8 +57,11 @@ public class ChmlfrpFrpcImpl implements Frpc {
     }
 
     public Process createFrpcProcess(Path path, int i, @Nullable String s) throws Exception {
-        String token = OpenlinkChmlfrpExtension.PREFERENCES.get("short_token", "InvalidToken");
-        return FrpcManagement.runFrpc(path, ProxyManagement.getProxyIdByPort(String.valueOf(i), s), token);
+        return FrpcManagement.runFrpc(
+                path,
+                ProxyManagement.getProxyIdByPort(String.valueOf(i), s).get(0),
+                OpenlinkChmlfrpExtension.PREFERENCES.get("short_token", "InvalidToken")
+        );
     }
 
     public String createProxy(int i, @Nullable String s) throws Exception {
@@ -74,10 +77,10 @@ public class ChmlfrpFrpcImpl implements Frpc {
             frpcProcess.destroy();
             
             try {
-                ProxyManagement.deleteProxy(ProxyManagement.getProxyIdByPort(null, null));
+                ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(null, null));
             } catch (Exception e) {
-                OpenlinkChmlfrpExtension.LOGGER.error("Failed to delete proxy. Exception:{}", e.toString());
-                Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
+                OpenlinkChmlfrpExtension.LOGGER.error("Failed to delete proxy.", e);
+                //Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
             }
         }
     }

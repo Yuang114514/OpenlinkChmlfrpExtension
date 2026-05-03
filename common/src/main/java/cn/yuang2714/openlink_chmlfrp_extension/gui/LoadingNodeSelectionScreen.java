@@ -85,8 +85,8 @@ public class LoadingNodeSelectionScreen extends Screen {
             nodes = NodeUtil.genNodeList();
         } catch (Exception e) {
             isFailed = true;
-            logger.error("Failed to get node list. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to get node list.", e);
+            //Utils.printExceptionStackTrace(logger, e);
         }
     }
 }

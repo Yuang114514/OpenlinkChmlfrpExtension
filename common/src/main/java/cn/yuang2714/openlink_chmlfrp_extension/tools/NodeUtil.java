@@ -69,8 +69,8 @@ public class NodeUtil {
             if (!nodeList.isEmpty()) return nodeList;
             else throw new NullPointerException("Unable to get any node???");
         } catch (Exception e) {
-            logger.error("Failed to get node list. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to get node list.", e);
+            //Utils.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
@@ -96,8 +96,8 @@ public class NodeUtil {
                                 coordinates = URLs.exchangeLocation(node.location);
                             } catch (Exception e) {
                                 coordinates = Location.impossible();
-                                logger.warn("Failed to exchange location for node {} ({}), using impossible coordinates. Exception:{}", node.name, node.id, e.toString());
-                                Utils.printExceptionStackTrace(logger, e);
+                                logger.warn("Failed to exchange location for node {} ({}), using impossible coordinates.", node.name, node.id, e);
+                                //Utils.printExceptionStackTrace(logger, e);
                             }
                         } else {
                             coordinates = new Location(
@@ -126,8 +126,8 @@ public class NodeUtil {
                         logger.debug("Got details for node {} (id:{}): delay {}ms, coordinates {}, domain {}",
                                 node.name, node.id, delay, coordinates, domain);
                     } catch (Exception e) {
-                        logger.error("Failed to get details for node {} (id:{}), Skipping. Exception:{}", node.name, node.id, e.toString());
-                        Utils.printExceptionStackTrace(logger, e);
+                        logger.error("Failed to get details for node {} (id:{}), Skipping.", node.name, node.id, e);
+                        //Utils.printExceptionStackTrace(logger, e);
                     } finally {
                         latch.countDown();
                     }
@@ -142,8 +142,8 @@ public class NodeUtil {
             
             return advancedList;
         } catch (Exception e) {
-            logger.error("Failed to get advanced node list. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to get advanced node list.", e);
+            //Utils.printExceptionStackTrace(logger, e);
             throw e;
         }
     }

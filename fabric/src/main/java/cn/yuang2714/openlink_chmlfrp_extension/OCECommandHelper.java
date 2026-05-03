@@ -11,6 +11,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 
 public class OCECommandHelper {
@@ -18,7 +19,8 @@ public class OCECommandHelper {
         dispatcher.register(
                 ClientCommandManager.literal("oce")
                         .then(ClientCommandManager.literal("setProxyCreationMaxRetry")
-                                .executes(context -> {
+                                .executes(
+                                        context -> {
                                             context.getSource().sendFeedback(Component.translatable("chat.openlink_chmlfrp_extension.command.config_max_retry.read",
                                                     OCECommand.readProxyCreationMaxRetry()));
                                             return 1;
@@ -57,7 +59,8 @@ public class OCECommandHelper {
                         )
                         
                         .then(ClientCommandManager.literal("setDoAdvancedNodeSort")
-                                .executes(context -> {
+                                .executes(
+                                        context -> {
                                     context.getSource().sendFeedback(Component.translatable(
                                             "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read",
                                             OCECommand.readDoAdvancedNodeSort()
@@ -79,7 +82,30 @@ public class OCECommandHelper {
                                         )
                                 )
                         )
+                
+                        .then(ClientCommandManager.literal("clearProxy")
+                                .executes(
+                                        context -> {
+                                            if (OCECommand.clearProxy() == OCECommand.FAILURE) {
+                                                context.getSource().sendError(Component.translatable("chat.openlink_chmlfrp_extension.command.clear_proxy.fail").withStyle(ChatFormatting.RED));
+                                                return 0;
+                                            } else {
+                                                context.getSource().sendFeedback(Component.translatable("chat.openlink_chmlfrp_extension.command.clear_proxy.success"));
+                                                return 1;
+                                            }
+                                        }
+                                )
+                        )
+                        
+                        .then(ClientCommandManager.literal("trick")
+                                .executes(context -> {
+                                    Util.getPlatform().openUri("https://www.bilibili.com/video/BV1GJ411x7h7"); //你 被 骗 了！！！
+                                    context.getSource().sendFeedback(Component.literal("你 被 骗 了！！！").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.GOLD));
+                                    OpenlinkChmlfrpExtension.LOGGER.warn("User is tricked!");
+                                    return 1;
+                                })
+                        )
         );
-        OCECommand.logger.info("Registered Command.");
+        OCECommand.logger.info("Registered Command from Fabric.");
     }
 }

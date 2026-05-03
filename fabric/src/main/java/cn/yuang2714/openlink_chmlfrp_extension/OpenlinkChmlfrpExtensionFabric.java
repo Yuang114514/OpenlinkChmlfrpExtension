@@ -21,7 +21,7 @@ public class OpenlinkChmlfrpExtensionFabric implements ClientModInitializer {
         //OpenlinkChmlfrpExtension.LOGGER.info("Hello Fabric!");
         OpenlinkChmlfrpExtension.init();
         
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> OCECommandHelper.register(dispatcher));
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, context) -> OCECommandHelper.register(dispatcher));
         
         ClientTickEvents.END_CLIENT_TICK.register(instance -> OpenlinkChmlfrpExtension.clientTickCallback());
     }

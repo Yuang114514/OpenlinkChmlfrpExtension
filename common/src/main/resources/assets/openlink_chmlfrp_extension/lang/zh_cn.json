@@ -9,6 +9,9 @@
   "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read": "当前的 启用增强节点排序方式 为 %s",
   "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "成功将 启用增强节点排序方式 修改为 %s",
 
+  "chat.openlink_chmlfrp_extension.command.clear_proxy.fail": "清除隧道失败",
+  "chat.openlink_chmlfrp_extension.command.clear_proxy.success": "成功清除了你的隧道",
+
   "chat.openlink_chmlfrp_extension.creating_proxy.got_node": "[Openlink Chmlfrp Extension] 正在选择节点...... ID: %s",
   "chat.openlink_chmlfrp_extension.creating_proxy.ing": "[Openlink Chmlfrp Extension] 正在创建远程隧道......",
   "chat.openlink_chmlfrp_extension.creating_proxy.trying": "[Openlink Chmlfrp Extension] 正在尝试远程端口...... 第 %s/%s 次, 远程端口: %s",

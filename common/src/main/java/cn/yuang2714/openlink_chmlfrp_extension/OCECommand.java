@@ -7,6 +7,7 @@ package cn.yuang2714.openlink_chmlfrp_extension;
 
 import cn.yuang2714.openlink_chmlfrp_extension.tools.FrpcManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.ProxyManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
 import org.slf4j.Logger;
 
@@ -23,6 +24,7 @@ public class OCECommand {
         if (value <= 1) return FAILURE;
         OpenlinkChmlfrpExtension.PREFERENCES.putInt("config_max_retry", value);
         if (Utils.flushPreferences(logger, "changing settings")) return FAILURE;
+        logger.debug("Successfully set proxy creation max retry to {}", value);
         return SUCCESS;
     }
     
@@ -32,22 +34,38 @@ public class OCECommand {
             OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", LoggingManagement.refreshToken());
             LoggingManagement.reloadUserAddress();
             LoggingManagement.refreshUserInfo();
-            if (Utils.flushPreferences(logger, "changing settings")) return FAILURE;
+            if (!Utils.flushPreferences(logger, "changing settings")) return FAILURE;
+            logger.debug("Successfully reloaded user info");
             return SUCCESS;
         } catch (Exception e) {
-            logger.error("Failed to reload user info. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to reload user info.", e);
+            //Utils.printExceptionStackTrace(logger, e);
             return FAILURE;
         }
     }
     
     public static boolean readDoAdvancedNodeSort() {
-        return OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("advanced_node_sort", false);
+        boolean value = OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("advanced_node_sort", false);
+        logger.debug("Reading do advanced node sort: {}", value);
+        return value;
     }
     
     public static int setDoAdvancedNodeSort(boolean value) {
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("advanced_node_sort", value);
         if (Utils.flushPreferences(logger, "changing settings")) return FAILURE;
+        logger.debug("Successfully set do advanced node sort to {}", value);
         return SUCCESS;
+    }
+    
+    public static int clearProxy() {
+        try {
+            ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(null, null));
+            logger.debug("Successfully cleared proxy");
+            return SUCCESS;
+        } catch (Exception e) {
+            logger.error("Failed to clear proxy.", e);
+            //Utils.printExceptionStackTrace(logger, e);
+            return FAILURE;
+        }
     }
 }

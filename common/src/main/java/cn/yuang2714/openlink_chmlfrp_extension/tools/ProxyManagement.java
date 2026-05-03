@@ -18,12 +18,13 @@ import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class ProxyManagement {
     private static int caughtPort = -1;
-    private static int caughtProxyId = -1;
     static Logger logger = Utils.genLogger();
     
     @SuppressWarnings("BusyWait")
@@ -129,8 +130,8 @@ public class ProxyManagement {
                                 .toString()
                                 .replace("\"", "");
             } catch (Exception e) {
-                logger.info("Failed to create proxy with remote port {}. Maybe it's occupied. Retrying...", preferRemotePort);
-                Utils.printExceptionStackTrace(logger, e);
+                logger.info("Failed to create proxy with remote port {}. Maybe it's occupied.", preferRemotePort);
+                //Utils.printExceptionStackTrace(logger, e);
             }
             postQuery.remove("remoteport");
             preferRemotePort = randomer.nextInt(portRange[0], portRange[1]);
@@ -144,16 +145,22 @@ public class ProxyManagement {
         throw new Exception("Proxy Creation Failed with no possible remote port after some tries");
     }
 
-    public static int getProxyIdByPort(@Nullable String localPort, @Nullable String remotePort) throws Exception {
+    public static List<Integer> getProxyIdByPort(@Nullable String localPort, @Nullable String remotePort) throws Exception {
         JsonArray userProxies = JsonParser.parseString(Network.get(URLs.api + "tunnel", true))
                 .getAsJsonObject()
                 .get("data")
                 .getAsJsonArray();
 
+        //尝试使用caughtPort作为远程端口的回退方案，优先级低于传入的remotePort参数
         int possibleRemotePort = -1;
-        if (caughtPort != -1) possibleRemotePort = caughtPort;
+        if (caughtPort != -1) {
+            possibleRemotePort = caughtPort;
+            caughtPort = -1;
+        }
         if (remotePort != null && !remotePort.isBlank()) possibleRemotePort = Integer.parseInt(remotePort);
-
+        
+        //遍历用户代理列表，寻找匹配的代理ID
+        List<Integer> proxyIds = new ArrayList<>();
         for (JsonElement proxyAsElement : userProxies) {
             JsonObject proxy = proxyAsElement.getAsJsonObject();
 
@@ -161,15 +168,20 @@ public class ProxyManagement {
                     (localPort == null || proxy.get("nport").getAsInt() == Integer.parseInt(localPort)) &&
                     (possibleRemotePort == -1 || proxy.get("dorp").getAsInt() == possibleRemotePort) &&
                     proxy.get("name").toString().matches("\"openlink_mc_\\d*\"")
-            ) return caughtProxyId = proxy.get("id").getAsInt();
+            ) {
+                int id = proxy.get("id").getAsInt();
+                logger.debug("Found proxy with id {} for local port {} and remote port {}", id, proxy.get("nport").getAsInt(), proxy.get("dorp").getAsInt());
+                proxyIds.add(id);
+                if (localPort != null) return proxyIds; //确定的localPort代表确定的proxyId，直接返回
+            }
         }
+        if (!proxyIds.isEmpty()) return proxyIds;
 
-        if (caughtProxyId != -1) return caughtProxyId;
         throw new NullPointerException("Failed to get Proxy by id.");
     }
 
-    public static void deleteProxy(int id) throws Exception {
-        Network.post(
+    public static void clearProxy(List<Integer> ids) throws Exception {
+        for (int id : ids) Network.post(
                 URLs.api
                 + "delete_tunnel?tunnelid="
                 + id,

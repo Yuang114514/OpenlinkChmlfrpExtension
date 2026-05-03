@@ -30,8 +30,8 @@ public class LoggingManagement {
                 return new String[]{deviceCode, verificationUriComplete, expiresIn};
             else throw new NullPointerException("API response is missing required fields.");
         } catch (Exception e) {
-            logger.error("Failed to fetch device code. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to fetch device code.", e);
+            //Utils.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
@@ -74,8 +74,8 @@ public class LoggingManagement {
                 return new String[]{accessToken, refreshToken, expiresIn};
             else throw new NullPointerException("API response is missing required fields.");
         } catch (Exception e) {
-            logger.error("Failed to fetch access token. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to fetch access token.", e);
+            //Utils.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
@@ -154,8 +154,8 @@ public class LoggingManagement {
             OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", System.currentTimeMillis() + (apiResponse.get("expires_in").getAsLong() * 1000L) - 60000L);
             return true;
         } catch (Exception e) {
-            logger.error("Failed to refresh token. {}", e.toString());
-            Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
+            logger.error("Failed to refresh token.", e);
+            //Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
             return false;
         }
     }

@@ -10,6 +10,9 @@
   "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "Set doAdvancedNodeSort to %s",
   "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.fail": "Failed to set doAdvancedNodeSort.",
 
+  "chat.openlink_chmlfrp_extension.command.clear_proxy.fail": "Failed to clear your proxies.",
+  "chat.openlink_chmlfrp_extension.command.clear_proxy.success": "Successfully cleared your proxies.",
+
   "chat.openlink_chmlfrp_extension.creating_proxy.got_node": "[Openlink Chmlfrp Extension] Selecting Node... ID: %s, Name: %s.",
   "chat.openlink_chmlfrp_extension.creating_proxy.ing": "[Openlink Chmlfrp Extension] Creating Remote Proxy...",
   "chat.openlink_chmlfrp_extension.creating_proxy.trying": "[Openlink Chmlfrp Extension] Trying remote port... Attempt %s/%s, Remote Port: %s",

@@ -8,6 +8,7 @@ package cn.yuang2714.openlink_chmlfrp_extension;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
@@ -95,6 +96,29 @@ public class OpenlinkChmlfrpExtensionForge {
                                                 }
                                         )
                                 )
+                        )
+                        
+                        .then(Commands.literal("clearProxy")
+                                .executes(
+                                        context -> {
+                                            if (OCECommand.clearProxy() == OCECommand.FAILURE) {
+                                                context.getSource().sendFailure(Component.translatable("chat.openlink_chmlfrp_extension.command.clear_proxy.fail").withStyle(ChatFormatting.RED));
+                                                return 0;
+                                            } else {
+                                                context.getSource().sendSuccess(() -> Component.translatable("chat.openlink_chmlfrp_extension.command.clear_proxy.success"), true);
+                                                return 1;
+                                            }
+                                        }
+                                )
+                        )
+                        
+                        .then(Commands.literal("trick")
+                                .executes(context -> {
+                                    Util.getPlatform().openUri("https://www.bilibili.com/video/BV1GJ411x7h7"); //你 被 骗 了！！！
+                                    context.getSource().sendSuccess(() -> Component.literal("你 被 骗 了！！！").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.GOLD),true);
+                                    OpenlinkChmlfrpExtension.LOGGER.warn("User is tricked!");
+                                    return 1;
+                                })
                         )
         );
         OCECommand.logger.info("Registered Command.");

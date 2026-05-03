@@ -69,8 +69,8 @@ public class FrpcManagement {
 
             return version;
         } catch (Exception e) {
-            logger.error("Failed to check local frpc version. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to check local frpc version.", e);
+            //Utils.printExceptionStackTrace(logger, e);
             return "does not exist";
         }
     }
@@ -96,8 +96,8 @@ public class FrpcManagement {
             logger.info("Got remote latest frpc version: {}", version);
             return stringVersionToIntArray(version);
         } catch (Exception e) {
-            logger.error("Failed to check latest frpc version online. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to check latest frpc version online.", e);
+            //Utils.printExceptionStackTrace(logger, e);
             return null;
         }
     }
@@ -156,15 +156,15 @@ public class FrpcManagement {
             logger.info("Got update files: {}", Arrays.toString(urls.toArray()));
             return urls;
         } catch (Exception e) {
-            logger.error("Failed to fetch download link. Exception:{}", e.toString());
-            Utils.printExceptionStackTrace(logger, e);
+            logger.error("Failed to fetch download link.", e);
+            //Utils.printExceptionStackTrace(logger, e);
             return null;
         }
     }
 
     public static Process runFrpc(Path path, int proxyId, String token) throws Exception {
         Process frpcProcess = new ProcessBuilder(path.toFile().getAbsolutePath(), "-u", token, "-p", String.valueOf(proxyId)).redirectErrorStream(true).directory(path.toFile().getParentFile()).start();
-        logger.info("Running frpc with command: {} -u {} -p {}. Pid: {}", path.toFile().getAbsolutePath(), token, proxyId, frpcProcess.pid());
+        logger.info("Running frpc with command: {} -u {} -p {}. Pid: {}", path.toFile().getAbsolutePath(), token.replaceAll(".*", "***"), proxyId, frpcProcess.pid());
         return frpcProcess;
     }
 }
