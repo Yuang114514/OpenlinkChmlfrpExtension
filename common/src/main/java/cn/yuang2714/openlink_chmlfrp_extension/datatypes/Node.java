@@ -10,7 +10,17 @@ public class Node {
     public String name, description, location;
     public boolean ipv6, inChina;
 
-    public Node(int id, int group, int bandwidthUsage, int cpuUsage, String name, String description, String location, boolean ipv6, boolean inChina) {
+    public Node(
+            int id,
+            int group,
+            int bandwidthUsage,
+            int cpuUsage,
+            String name,
+            String description,
+            String location,
+            boolean ipv6,
+            boolean inChina
+    ) {
         this.id = id;
         this.group = group;
         this.bandwidthUsage = bandwidthUsage;

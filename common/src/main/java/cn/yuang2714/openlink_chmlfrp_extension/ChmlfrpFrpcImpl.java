@@ -17,6 +17,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 public class ChmlfrpFrpcImpl implements Frpc {
 
@@ -59,7 +61,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
     public Process createFrpcProcess(Path path, int i, @Nullable String s) throws Exception {
         return FrpcManagement.runFrpc(
                 path,
-                ProxyManagement.getProxyIdByPort(String.valueOf(i), s).get(0),
+                ProxyManagement.getProxyIdByPort(OptionalInt.of(i), Optional.ofNullable(s)).get(0),
                 OpenlinkChmlfrpExtension.PREFERENCES.get("short_token", "InvalidToken")
         );
     }
@@ -77,7 +79,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
             frpcProcess.destroy();
             
             try {
-                ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(null, null));
+                ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(OptionalInt.empty(), Optional.empty()));
             } catch (Exception e) {
                 OpenlinkChmlfrpExtension.LOGGER.error("Failed to delete proxy.", e);
                 //Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);

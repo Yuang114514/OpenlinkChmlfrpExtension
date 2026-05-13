@@ -11,6 +11,9 @@ import cn.yuang2714.openlink_chmlfrp_extension.tools.ProxyManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
 import org.slf4j.Logger;
 
+import java.util.Optional;
+import java.util.OptionalInt;
+
 public class OCECommand {
     public static final Logger logger = Utils.genLogger();
     public static final int FAILURE = -1;
@@ -59,7 +62,7 @@ public class OCECommand {
     
     public static int clearProxy() {
         try {
-            ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(null, null));
+            ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(OptionalInt.empty(), Optional.empty()));
             logger.debug("Successfully cleared proxy");
             return SUCCESS;
         } catch (Exception e) {

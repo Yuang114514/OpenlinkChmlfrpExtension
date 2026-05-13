@@ -6,6 +6,9 @@ package cn.yuang2714.openlink_chmlfrp_extension.gui;
  */
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.DeviceCode;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.IntervalledAccessToken;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.TokenIntervalFailedException;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,8 +24,9 @@ public class LoginScreen extends Screen {
     private boolean isDelaying = false;
     private boolean isLoggedIn = false;
     private int delayedTicks = 0;
-    private String[] tokens;
-    private String[] deviceCodes;
+    private IntervalledAccessToken tokens = null;
+    private DeviceCode deviceCode = null;
+    private Stats currentStat = Stats.WAITING;
 
     public LoginScreen(Screen lastScreen) {
         super(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.title"));
@@ -35,7 +39,7 @@ public class LoginScreen extends Screen {
         button =
                 Button.builder(
                         Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_0"),
-                        this::onPress
+                        this::onLoginButtonPress
                 )
                 .bounds(
                         width / 2 - 100,
@@ -52,7 +56,9 @@ public class LoginScreen extends Screen {
         graphics.drawString(
                 font,
                 Component.translatable("gui.openlink_chmlfrp_extension.login_screen.info"),
-                width / 2 - font.width(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.info")) / 2,
+                width / 2 - font.width(
+                        Component.translatable("gui.openlink_chmlfrp_extension.login_screen.info")
+                ) / 2,
                 height / 2 - 30,
                 0xFFFFFF
         );
@@ -63,6 +69,47 @@ public class LoginScreen extends Screen {
     @Override
     public void tick() {
         super.tick();
+        
+        switch (currentStat) {
+            case FAILED -> {
+                button.active = false;
+                button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                isDelaying = true;
+                return;
+            }
+            
+            case STARTING_TO_FETCH_DEVICE_CODE -> {
+                button.active = false;
+                button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_1"));
+                try {
+                    deviceCode = LoggingManagement.fetchDeviceCode();
+                } catch (Exception e) {
+                    button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                    isDelaying = true;
+                }
+                currentStat = Stats.FETCHING_DEVICE_CODE;
+                return;
+            }
+            
+            case FETCHING_DEVICE_CODE -> {
+                if (deviceCode != null) {
+                    Util.getPlatform().openUri(deviceCode.verificationUriComplete());
+                    button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_2"));
+                    currentStat = Stats.STARTING_INTERVAL_THREAD;
+                }
+                return;
+            }
+            
+            case STARTING_INTERVAL_THREAD -> {
+                button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_2"));
+                getTokenThread = new Thread(this::interval);
+                getTokenThread.setName("Token Interval Thread");
+                getTokenThread.start();
+                currentStat = Stats.WAITING_FOR_AUTHORIZATION;
+                return;
+            }
+        }
+        
         if (isDelaying) {
             delayedTicks++;
             if (delayedTicks >= 30) minecraft.setScreen(parentScreen);
@@ -87,19 +134,19 @@ public class LoginScreen extends Screen {
         minecraft.setScreen(parentScreen);
     }
 
-    private void onPress(Button button) {
+    private void onLoginButtonPress(Button button) {
+        currentStat = Stats.STARTING_TO_FETCH_DEVICE_CODE;
         button.active = false;
         button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_1"));
         try {
-            Thread.sleep(1000);
-            deviceCodes = LoggingManagement.fetchDeviceCode();
+            deviceCode = LoggingManagement.fetchDeviceCode();
         } catch (Exception e) {
             button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
             isDelaying = true;
             return;
         }
 
-        Util.getPlatform().openUri(deviceCodes[1]);
+        Util.getPlatform().openUri(deviceCode[1]);
         button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_2"));
 
         getTokenThread = new Thread(this::interval);
@@ -112,7 +159,33 @@ public class LoginScreen extends Screen {
         int delay = 5000;
         while (true) {
             try {
-                tokens = LoggingManagement.intervalToken(deviceCodes[0]);
+                tokens = LoggingManagement.intervalToken(deviceCode[0]);
+            } catch (TokenIntervalFailedException e) {
+                switch (e.reason) {
+                    case AUTHORIZATION_PENDING -> OpenlinkChmlfrpExtension.LOGGER.info("Authorization pending, waiting for user to authorize...");
+                    case SLOW_DOWN -> {
+                        OpenlinkChmlfrpExtension.LOGGER.warn("Polling too frequently, slowing down...");
+                        delay += 500;
+                    }
+                    case EXPIRED_TOKEN -> {
+                        OpenlinkChmlfrpExtension.LOGGER.error("Device code expired.");
+                        button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                        isDelaying = true;
+                        return;
+                    }
+                    case ACCESS_DENIED -> {
+                        OpenlinkChmlfrpExtension.LOGGER.error("User denied access.");
+                        button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                        isDelaying = true;
+                        return;
+                    }
+                    case UNKNOWN -> {
+                        OpenlinkChmlfrpExtension.LOGGER.error("Unknown error occurred during token interval.");
+                        button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
+                        isDelaying = true;
+                        return;
+                    }
+                }
             } catch (Exception e) {
                 button.setMessage(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.stat_fail"));
                 isDelaying = true;
@@ -141,5 +214,16 @@ public class LoginScreen extends Screen {
             OpenlinkChmlfrpExtension.LOGGER.info("Got Token");
             return;
         }
+    }
+    
+    private enum Stats {
+        WAITING,
+        STARTING_TO_FETCH_DEVICE_CODE,
+        FETCHING_DEVICE_CODE,
+        STARTING_INTERVAL_THREAD,
+        WAITING_FOR_AUTHORIZATION,
+        INTERVAL_TOKEN,
+        WAITING_FOR_RETURN,
+        FAILED
     }
 }

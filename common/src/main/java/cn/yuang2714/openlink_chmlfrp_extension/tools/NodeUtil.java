@@ -132,6 +132,7 @@ public class NodeUtil {
                         latch.countDown();
                     }
                 });
+                logger.debug("Submitted task to get details for node {} (id:{}) to thread pool.", node.name, node.id);
             }
             
             try {

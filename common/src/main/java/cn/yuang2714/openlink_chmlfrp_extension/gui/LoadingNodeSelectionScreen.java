@@ -53,7 +53,9 @@ public class LoadingNodeSelectionScreen extends Screen {
                 logger.info("Got generated node list. Starting selection Screen.");
                 Minecraft.getInstance().setScreen(new NodeSelectionScreen(parentScreen, nodes));
             } else {
-                status = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.list_exception").withStyle(ChatFormatting.RED);
+                status = Component.translatable(
+                        "gui.openlink_chmlfrp_extension.node_selection.list_exception")
+                        .withStyle(ChatFormatting.RED);
                 logger.info("Failed to get node list.");
                 isDelaying = true;
             }

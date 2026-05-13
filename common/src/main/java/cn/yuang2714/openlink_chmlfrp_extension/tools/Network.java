@@ -7,14 +7,17 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.platform.PlatformServices;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 public class Network {
     public static final String CONTENT_TYPE_JSON = "application/json";
@@ -46,22 +49,23 @@ public class Network {
         connection.setReadTimeout(10000);
         connection.setConnectTimeout(10000);
         
-        String response = connection.getResponseCode() == 200
-                ? new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8)
-                : new String(connection.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
+        InputStream responseStream = connection.getInputStream() == null ? connection.getErrorStream() : connection.getInputStream();
+        
+        String response = new String(responseStream.readAllBytes(), StandardCharsets.UTF_8);
         
         //logger.info("Get Request: {}", response);
 
         connection.disconnect();
+        responseStream.close();
 
         return response;
     }
 
-    public static String post(String url, @Nullable String body, String contentType, boolean isAuthenticated) throws Exception {
+    public static String post(String url, Optional<String> body, String contentType, boolean isAuthenticated) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) new URL(new URI(url).toASCIIString()).openConnection();
 
         connection.setRequestMethod("POST");
-        if (body != null) connection.setRequestProperty("Content-Type", contentType);
+        if (body.isPresent()) connection.setRequestProperty("Content-Type", contentType);
 
         if (isAuthenticated) {
             String accessToken;
@@ -76,18 +80,19 @@ public class Network {
         connection.setReadTimeout(10000);
         connection.setConnectTimeout(10000);
 
-        if (body != null) {
+        if (body.isPresent()) {
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = body.getBytes(StandardCharsets.UTF_8);
+                byte[] input = body.get().getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
         }
+        
+        InputStream responseStream = connection.getInputStream() == null ? connection.getErrorStream() : connection.getInputStream();
 
-        String response = connection.getResponseCode() == 200
-                ? new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8)
-                : new String(connection.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
+        String response = new String(responseStream.readAllBytes(), StandardCharsets.UTF_8);
 
         connection.disconnect();
+        responseStream.close();
         
         //logger.info("Post Request: {}", response);
 

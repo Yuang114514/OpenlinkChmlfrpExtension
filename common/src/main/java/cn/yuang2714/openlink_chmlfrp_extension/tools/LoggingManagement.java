@@ -6,28 +6,34 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
  */
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.DeviceCode;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.IntervalledAccessToken;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.TokenIntervalFailedException;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 
+import java.util.Optional;
+
 public class LoggingManagement {
     static Logger logger = Utils.genLogger();
 
-    public static String[] fetchDeviceCode() throws Exception {
+    public static DeviceCode fetchDeviceCode() throws Exception {
         try {
             JsonObject apiResponse = JsonParser.parseString(Network.post(
                     URLs.oauth2 + "device_authorization",
-                    "client_id=" + URLs.clientID + "&scope=offline_access%20chmlfrp_api",
+                    Optional.of("client_id=" + URLs.clientID + "&scope=offline_access%20chmlfrp_api"),
                     Network.CONTENT_TYPE_FORM,
                     false)).getAsJsonObject();
             String deviceCode = apiResponse.get("device_code").getAsString();
+            String userCode = apiResponse.get("user_code").getAsString();
             String verificationUriComplete = apiResponse.get("verification_uri_complete").getAsString();
             String expiresIn = String.valueOf(apiResponse.get("expires_in").getAsInt());
 
             logger.info("Got device code:{}, user code:{}", deviceCode, verificationUriComplete.split("=")[1]);
-            if (!deviceCode.isBlank() && !verificationUriComplete.isBlank() && !expiresIn.isBlank())
-                return new String[]{deviceCode, verificationUriComplete, expiresIn};
+            if (!deviceCode.isBlank() && !userCode.isBlank() && !verificationUriComplete.isBlank() && !expiresIn.isBlank())
+                return new DeviceCode(deviceCode, userCode, verificationUriComplete, expiresIn);
             else throw new NullPointerException("API response is missing required fields.");
         } catch (Exception e) {
             logger.error("Failed to fetch device code.", e);
@@ -36,34 +42,22 @@ public class LoggingManagement {
         }
     }
 
-    public static String[] intervalToken(String deviceCode) throws Exception {
+    public static IntervalledAccessToken intervalToken(String deviceCode) throws Exception {
         try {
             JsonObject apiResponse = JsonParser.parseString(Network.post(
                     URLs.oauth2 + "token",
-                    "client_id=" + URLs.clientID + "&grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=" + deviceCode,
+                    Optional.of("client_id=" + URLs.clientID + "&grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=" + deviceCode),
                     Network.CONTENT_TYPE_FORM,
                     false)).getAsJsonObject();
 
             if (apiResponse.has("error")) {
                 String error = apiResponse.get("error").getAsString();
                 switch (error) {
-                    case "authorization_pending" -> {
-                        logger.info("Authorization pending, waiting for user to authorize...");
-                        return new String[]{"authorization_pending"};
-                    }
-                    case "slow_down" -> {
-                        logger.warn("Polling too frequently, slowing down...");
-                        return new String[]{"slow_down"};
-                    }
-                    case "expired_token" -> {
-                        logger.error("Device code expired.");
-                        return new String[]{"expired_token"};
-                    }
-                    case "access_denied" -> {
-                        logger.error("User denied the authorization request.");
-                        return new String[]{"access_denied"};
-                    }
-                    default -> throw new Exception("Unknown Error:" + error);
+                    case "authorization_pending" -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.AUTHORIZATION_PENDING);
+                    case "slow_down" -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.SLOW_DOWN);
+                    case "expired_token" -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.EXPIRED_TOKEN);
+                    case "access_denied" -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.ACCESS_DENIED);
+                    default -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.UNKNOWN);
                 }
             }
             String accessToken = apiResponse.get("access_token").getAsString();
@@ -71,7 +65,7 @@ public class LoggingManagement {
             String expiresIn = String.valueOf(apiResponse.get("expires_in").getAsInt());
 
             if (!accessToken.isBlank() && !refreshToken.isBlank() && !expiresIn.isBlank())
-                return new String[]{accessToken, refreshToken, expiresIn};
+                return new IntervalledAccessToken(accessToken, refreshToken, Long.parseLong(expiresIn));
             else throw new NullPointerException("API response is missing required fields.");
         } catch (Exception e) {
             logger.error("Failed to fetch access token.", e);
@@ -80,10 +74,10 @@ public class LoggingManagement {
         }
     }
     
-    public static void login(String accessToken, String refreshToken, int expiresIn) throws Exception {
-        OpenlinkChmlfrpExtension.PREFERENCES.put("access_token", accessToken);
-        OpenlinkChmlfrpExtension.PREFERENCES.put("refresh_token", refreshToken);
-        OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", System.currentTimeMillis() + expiresIn);
+    public static void login(IntervalledAccessToken token) throws Exception {
+        OpenlinkChmlfrpExtension.PREFERENCES.put("access_token", token.accessToken());
+        OpenlinkChmlfrpExtension.PREFERENCES.put("refresh_token", token.refreshToken());
+        OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", System.currentTimeMillis() + token.expiresIn());
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", true);
         Utils.flushPreferences(logger, "logging in");
         refreshUserInfo();
@@ -133,7 +127,7 @@ public class LoggingManagement {
             JsonObject apiResponse = JsonParser.parseString(
                     Network.post(
                             URLs.oauth2 + "token",
-                            "grant_type=refresh_token&client_id=" + URLs.clientID + "&refresh_token=" + refreshToken,
+                            Optional.of("grant_type=refresh_token&client_id=" + URLs.clientID + "&refresh_token=" + refreshToken),
                             Network.CONTENT_TYPE_FORM,
                             false
                     )
