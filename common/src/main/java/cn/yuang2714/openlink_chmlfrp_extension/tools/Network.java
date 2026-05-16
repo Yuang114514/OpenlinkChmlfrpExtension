@@ -7,7 +7,6 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.platform.PlatformServices;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -17,7 +16,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
 public class Network {
     public static final String CONTENT_TYPE_JSON = "application/json";

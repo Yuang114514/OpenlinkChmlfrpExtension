@@ -14,8 +14,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 
-import java.util.Optional;
-
 public class LoggingManagement {
     static Logger logger = Utils.genLogger();
 
