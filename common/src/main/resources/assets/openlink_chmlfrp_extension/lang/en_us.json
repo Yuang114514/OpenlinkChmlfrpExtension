@@ -25,6 +25,7 @@
   "gui.openlink_chmlfrp_extension.login_screen.stat_1": "Preparing...",
   "gui.openlink_chmlfrp_extension.login_screen.stat_2": "Panel is open. Waiting for you to login...",
   "gui.openlink_chmlfrp_extension.login_screen.stat_fail": "Failed to login. Try again.",
+  "gui.openlink_chmlfrp_extension.login_screen.stat_expired": "Login expired. Please login again.",
   "gui.openlink_chmlfrp_extension.login_screen.stat_success": "Login Success",
   "gui.openlink_chmlfrp_extension.login_screen.title": "Login to Chmlfrp",
 

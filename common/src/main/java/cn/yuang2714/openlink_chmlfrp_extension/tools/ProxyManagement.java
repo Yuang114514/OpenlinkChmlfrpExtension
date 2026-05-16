@@ -113,7 +113,7 @@ public class ProxyManagement {
                         preferRemotePort
                 ).withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
                 
-                String apiResponse = Network.post(URLs.api + "create_tunnel", Optional.of(postQuery.toString()), Network.CONTENT_TYPE_JSON, true);
+                String apiResponse = Network.post(URLs.api + "create_tunnel", postQuery.toString(), Network.CONTENT_TYPE_JSON, true);
                 logger.debug("API Response: {}", apiResponse);
                 return preferNodeApiInfo.get("ip")
                         .toString()
@@ -142,7 +142,7 @@ public class ProxyManagement {
         throw new Exception("Proxy Creation Failed with no possible remote port after some tries");
     }
 
-    public static List<Integer> getProxyIdByPort(OptionalInt localPort, Optional<String> remotePort) throws Exception {
+    public static List<Integer> getProxyIdByPort(@Nullable Integer localPort, @Nullable String remotePort) throws Exception {
         JsonArray userProxies = JsonParser.parseString(Network.get(URLs.api + "tunnel", true))
                 .getAsJsonObject()
                 .get("data")
@@ -154,7 +154,7 @@ public class ProxyManagement {
             possibleRemotePort = caughtPort;
             caughtPort = -1;
         }
-        if (remotePort.isPresent()) possibleRemotePort = Integer.parseInt(remotePort.get());
+        if (remotePort != null) possibleRemotePort = Integer.parseInt(remotePort);
         
         //遍历用户代理列表，寻找匹配的代理ID
         List<Integer> proxyIds = new ArrayList<>();
@@ -163,13 +163,13 @@ public class ProxyManagement {
 
             if (
                     proxy.get("name").toString().matches("\"openlink_mc_\\d*\"") &&
-                    (localPort.isEmpty() || proxy.get("nport").getAsInt() == localPort.getAsInt()) &&
+                    (localPort == null || proxy.get("nport").getAsInt() == localPort) &&
                     (possibleRemotePort == -1 || proxy.get("dorp").getAsInt() == possibleRemotePort)
             ) {
                 int id = proxy.get("id").getAsInt();
                 logger.debug("Found proxy with id {} for local port {} and remote port {}", id, proxy.get("nport").getAsInt(), proxy.get("dorp").getAsInt());
                 proxyIds.add(id);
-                if (localPort.isPresent()) return proxyIds; //确定的localPort代表确定的proxyId，直接返回
+                if (localPort != null) return proxyIds; //确定的localPort代表确定的proxyId，直接返回
             }
         }
         if (!proxyIds.isEmpty()) return proxyIds;
@@ -182,7 +182,7 @@ public class ProxyManagement {
                 URLs.api
                 + "delete_tunnel?tunnelid="
                 + id,
-                Optional.empty(),
+                null,
                 Network.CONTENT_TYPE_JSON,
                 true);
     }

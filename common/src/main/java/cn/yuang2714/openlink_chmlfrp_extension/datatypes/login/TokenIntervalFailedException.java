@@ -19,4 +19,9 @@ public class TokenIntervalFailedException extends RuntimeException {
         ACCESS_DENIED,
         UNKNOWN
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " (reason: " + reason + ")";
+    }
 }

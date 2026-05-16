@@ -8,6 +8,7 @@
 
   "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read": "当前的 启用增强节点排序方式 为 %s",
   "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success": "成功将 启用增强节点排序方式 修改为 %s",
+  "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.fail": "修改 启用增强节点排序方式 失败",
 
   "chat.openlink_chmlfrp_extension.command.clear_proxy.fail": "清除隧道失败",
   "chat.openlink_chmlfrp_extension.command.clear_proxy.success": "成功清除了你的隧道",
@@ -24,6 +25,7 @@
   "gui.openlink_chmlfrp_extension.login_screen.stat_1": "准备中......",
   "gui.openlink_chmlfrp_extension.login_screen.stat_2": "面板已打开。等待你登录......",
   "gui.openlink_chmlfrp_extension.login_screen.stat_fail": "登录失败。再试一次。",
+  "gui.openlink_chmlfrp_extension.login_screen.stat_expired": "登录已过期。请重新登录。",
   "gui.openlink_chmlfrp_extension.login_screen.stat_success": "登录成功",
   "gui.openlink_chmlfrp_extension.login_screen.title": "登录到Chmlfrp",
 
@@ -50,4 +52,6 @@
   "modmenu.nameTranslation.openlink_chmlfrp_extension": "OpenLink: Chmlfrp扩展",
   "modmenu.descriptionTranslation.openlink_chmlfrp_extension": "为OpenLink开发的Chmlfrp客户端。允许你在Minecraft中创建frp隧道，并将它们链接到Chmlfrp。",
   "modmenu.summaryTranslation.openlink_chmlfrp_extension": "OpenLink的Chmlfrp扩展。"
+
+
 }

@@ -23,7 +23,7 @@ public class LoggingManagement {
         try {
             JsonObject apiResponse = JsonParser.parseString(Network.post(
                     URLs.oauth2 + "device_authorization",
-                    Optional.of("client_id=" + URLs.clientID + "&scope=offline_access%20chmlfrp_api"),
+                    "client_id=" + URLs.clientID + "&scope=offline_access%20chmlfrp_api",
                     Network.CONTENT_TYPE_FORM,
                     false)).getAsJsonObject();
             String deviceCode = apiResponse.get("device_code").getAsString();
@@ -46,27 +46,36 @@ public class LoggingManagement {
         try {
             JsonObject apiResponse = JsonParser.parseString(Network.post(
                     URLs.oauth2 + "token",
-                    Optional.of("client_id=" + URLs.clientID + "&grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=" + deviceCode),
+                    "client_id=" +
+                            URLs.clientID +
+                            "&grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=" +
+                            deviceCode,
                     Network.CONTENT_TYPE_FORM,
                     false)).getAsJsonObject();
-
+            
             if (apiResponse.has("error")) {
                 String error = apiResponse.get("error").getAsString();
                 switch (error) {
-                    case "authorization_pending" -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.AUTHORIZATION_PENDING);
-                    case "slow_down" -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.SLOW_DOWN);
-                    case "expired_token" -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.EXPIRED_TOKEN);
-                    case "access_denied" -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.ACCESS_DENIED);
+                    case "authorization_pending" ->
+                            throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.AUTHORIZATION_PENDING);
+                    case "slow_down" ->
+                            throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.SLOW_DOWN);
+                    case "expired_token" ->
+                            throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.EXPIRED_TOKEN);
+                    case "access_denied" ->
+                            throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.ACCESS_DENIED);
                     default -> throw new TokenIntervalFailedException(TokenIntervalFailedException.Cause.UNKNOWN);
                 }
             }
             String accessToken = apiResponse.get("access_token").getAsString();
             String refreshToken = apiResponse.get("refresh_token").getAsString();
             String expiresIn = String.valueOf(apiResponse.get("expires_in").getAsInt());
-
-            if (!accessToken.isBlank() && !refreshToken.isBlank() && !expiresIn.isBlank())
+            
+            if (! accessToken.isBlank() && ! refreshToken.isBlank() && ! expiresIn.isBlank())
                 return new IntervalledAccessToken(accessToken, refreshToken, Long.parseLong(expiresIn));
             else throw new NullPointerException("API response is missing required fields.");
+        } catch (TokenIntervalFailedException e) {
+            throw e;
         } catch (Exception e) {
             logger.error("Failed to fetch access token.", e);
             //Utils.printExceptionStackTrace(logger, e);
@@ -119,7 +128,7 @@ public class LoggingManagement {
         String refreshToken;
         refreshToken = OpenlinkChmlfrpExtension.PREFERENCES.get("refresh_token", "UNCHECKED");
         if (refreshToken.equals("UNCHECKED")) {
-            logger.error("Failed to get token in preferences.");
+            logger.warn("Failed to get token in preferences.");
             return false;
         }
 
@@ -127,7 +136,7 @@ public class LoggingManagement {
             JsonObject apiResponse = JsonParser.parseString(
                     Network.post(
                             URLs.oauth2 + "token",
-                            Optional.of("grant_type=refresh_token&client_id=" + URLs.clientID + "&refresh_token=" + refreshToken),
+                            "grant_type=refresh_token&client_id=" + URLs.clientID + "&refresh_token=" + refreshToken,
                             Network.CONTENT_TYPE_FORM,
                             false
                     )

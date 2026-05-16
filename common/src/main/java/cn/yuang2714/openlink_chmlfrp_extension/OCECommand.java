@@ -62,7 +62,7 @@ public class OCECommand {
     
     public static int clearProxy() {
         try {
-            ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(OptionalInt.empty(), Optional.empty()));
+            ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(null, null));
             logger.debug("Successfully cleared proxy");
             return SUCCESS;
         } catch (Exception e) {

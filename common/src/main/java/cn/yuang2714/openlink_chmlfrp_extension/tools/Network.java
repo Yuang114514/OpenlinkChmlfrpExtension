@@ -61,11 +61,11 @@ public class Network {
         return response;
     }
 
-    public static String post(String url, Optional<String> body, String contentType, boolean isAuthenticated) throws Exception {
+    public static String post(String url, @Nullable String body, String contentType, boolean isAuthenticated) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) new URL(new URI(url).toASCIIString()).openConnection();
 
         connection.setRequestMethod("POST");
-        if (body.isPresent()) connection.setRequestProperty("Content-Type", contentType);
+        if (body != null) connection.setRequestProperty("Content-Type", contentType);
 
         if (isAuthenticated) {
             String accessToken;
@@ -80,21 +80,21 @@ public class Network {
         connection.setReadTimeout(10000);
         connection.setConnectTimeout(10000);
 
-        if (body.isPresent()) {
-            try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = body.get().getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
-            }
-        }
+        if (body != null) try (OutputStream os = connection.getOutputStream()) { os.write(body.getBytes(StandardCharsets.UTF_8)); }
+        logger.info("Post Request: URI:{}, Body:{}", url, body);
         
-        InputStream responseStream = connection.getInputStream() == null ? connection.getErrorStream() : connection.getInputStream();
-
+        int responseCode = connection.getResponseCode();
+        InputStream responseStream = responseCode >= 400
+                ? connection.getErrorStream()
+                : connection.getInputStream();
+        
+        
         String response = new String(responseStream.readAllBytes(), StandardCharsets.UTF_8);
 
         connection.disconnect();
         responseStream.close();
         
-        //logger.info("Post Request: {}", response);
+        logger.info("Post Request: URI:{}, Body:{}, Response Code:{} Response:{}", url, body, responseCode, response);
 
         return response;
     }
