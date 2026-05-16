@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class ProxyManagement {
     private static int caughtPort = -1;
-    static Logger logger = Utils.genLogger();
+    static Logger logger = Utility.genLogger();
     
     @SuppressWarnings("BusyWait")
     public static String createProxy(int localPort, @Nullable String remotePort) throws Exception {
@@ -130,7 +130,7 @@ public class ProxyManagement {
                                 .replace("\"", "");
             } catch (Exception e) {
                 logger.info("Failed to create proxy with remote port {}. Maybe it's occupied.", preferRemotePort);
-                //Utils.printExceptionStackTrace(logger, e);
+                //Utility.printExceptionStackTrace(logger, e);
             }
             postQuery.remove("remoteport");
             preferRemotePort = randomer.nextInt(portRange[0], portRange[1]);

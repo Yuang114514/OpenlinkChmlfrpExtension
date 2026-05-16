@@ -20,7 +20,7 @@ import java.util.List;
 public class FrpcManagement {
     static String[] userEnv = new String[2]; //[0]是系统环境，[1]是架构
     static int[] frpcVersion = new int[3];
-    static Logger logger = Utils.genLogger();
+    static Logger logger = Utility.genLogger();
 
     public static void initUserEnv() throws Exception {
         //用户信息获取
@@ -70,7 +70,7 @@ public class FrpcManagement {
             return version;
         } catch (Exception e) {
             logger.error("Failed to check local frpc version.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             return "does not exist";
         }
     }
@@ -97,7 +97,7 @@ public class FrpcManagement {
             return stringVersionToIntArray(version);
         } catch (Exception e) {
             logger.error("Failed to check latest frpc version online.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             return null;
         }
     }
@@ -157,7 +157,7 @@ public class FrpcManagement {
             return urls;
         } catch (Exception e) {
             logger.error("Failed to fetch download link.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             return null;
         }
     }

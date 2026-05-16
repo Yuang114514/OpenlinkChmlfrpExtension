@@ -41,7 +41,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
             OpenlinkChmlfrpExtension.LOGGER.warn("Failed to reload your info. maybe you haven't logged in.");
         }
         Network.setUpCookieManager();
-        Utils.flushPreferences(OpenlinkChmlfrpExtension.LOGGER, "initialization");
+        Utility.flushPreferences(OpenlinkChmlfrpExtension.LOGGER, "initialization");
     }
 
     public String id() {
@@ -80,7 +80,7 @@ public class ChmlfrpFrpcImpl implements Frpc {
                 ProxyManagement.clearProxy(ProxyManagement.getProxyIdByPort(null, null));
             } catch (Exception e) {
                 OpenlinkChmlfrpExtension.LOGGER.error("Failed to delete proxy.", e);
-                //Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
+                //Utility.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
             }
         }
     }

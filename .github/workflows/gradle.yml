@@ -2,9 +2,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "master", "main" ]
-  pull_request:
-    branches: [ "master", "main" ]
+    branches: [ "1.20.1" ]
 
 jobs:
   build:
@@ -32,16 +30,31 @@ jobs:
         run: chmod +x ./gradlew
 
       # 构建模组 - 添加必要的参数
-      - name: Build with Gradle Wrapper
-        run: ./gradlew jar
+      - name: Build Fabric with Gradle Wrapper
+        run: ./gradlew :fabric:remapJar
         env:
           # 设置内存限制以防止 OOM
           GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
 
-      # 可选：上传构建产物
+      # 上传构建产物
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: forge-mod-build
-          path: build/libs/
+          name: mod-build
+          path: fabric/build/libs/
+          retention-days: 5
+
+      # 构建模组 - 添加必要的参数
+      - name: Build Forge with Gradle Wrapper
+        run: ./gradlew :forge:remapJar
+        env:
+          # 设置内存限制以防止 OOM
+          GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
+
+      # 上传构建产物
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mod-build
+          path: fabric/build/libs/
           retention-days: 5

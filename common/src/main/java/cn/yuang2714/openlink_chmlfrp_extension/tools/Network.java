@@ -22,7 +22,7 @@ public class Network {
     public static final String CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
     public static String USER_AGENT;
     static CookieManager manager;
-    private static final Logger logger = Utils.genLogger();
+    private static final Logger logger = Utility.genLogger();
 
     public static void setUpCookieManager() {
         USER_AGENT = PlatformServices.PLATFORM.genUA();

@@ -7,7 +7,8 @@ package cn.yuang2714.openlink_chmlfrp_extension.gui;
 
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.NodeUtil;
-import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.Utility;
+import fun.moystudio.openlink.logic.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,12 +25,12 @@ public class LoadingNodeSelectionScreen extends Screen {
     private Thread requestThread;
     private boolean isFailed = false;
     private Component status = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.loading");
-    private final Logger logger = Utils.genLogger();
+    private final Logger logger = Utility.genLogger();
     private boolean isDelaying = false;
     private int delayed = 0;
 
     public LoadingNodeSelectionScreen(Screen parentScreen) {
-        super(Component.translatable("gui.openlink_chmlfrp_extension.node_selection.loading"));
+        super(Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.loading"));
         this.parentScreen = parentScreen;
     }
 
@@ -53,7 +54,7 @@ public class LoadingNodeSelectionScreen extends Screen {
                 logger.info("Got generated node list. Starting selection Screen.");
                 Minecraft.getInstance().setScreen(new NodeSelectionScreen(parentScreen, nodes));
             } else {
-                status = Component.translatable(
+                status = Utils.translatableText(
                         "gui.openlink_chmlfrp_extension.node_selection.list_exception")
                         .withStyle(ChatFormatting.RED);
                 logger.info("Failed to get node list.");
@@ -88,7 +89,7 @@ public class LoadingNodeSelectionScreen extends Screen {
         } catch (Exception e) {
             isFailed = true;
             logger.error("Failed to get node list.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
         }
     }
 }

@@ -15,7 +15,7 @@ import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 
 public class LoggingManagement {
-    static Logger logger = Utils.genLogger();
+    static Logger logger = Utility.genLogger();
 
     public static DeviceCode fetchDeviceCode() throws Exception {
         try {
@@ -35,7 +35,7 @@ public class LoggingManagement {
             else throw new NullPointerException("API response is missing required fields.");
         } catch (Exception e) {
             logger.error("Failed to fetch device code.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
@@ -76,7 +76,7 @@ public class LoggingManagement {
             throw e;
         } catch (Exception e) {
             logger.error("Failed to fetch access token.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
@@ -86,7 +86,7 @@ public class LoggingManagement {
         OpenlinkChmlfrpExtension.PREFERENCES.put("refresh_token", token.refreshToken());
         OpenlinkChmlfrpExtension.PREFERENCES.putLong("expires_in", System.currentTimeMillis() + token.expiresIn());
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", true);
-        Utils.flushPreferences(logger, "logging in");
+        Utility.flushPreferences(logger, "logging in");
         refreshUserInfo();
     }
 
@@ -95,7 +95,7 @@ public class LoggingManagement {
         OpenlinkChmlfrpExtension.PREFERENCES.remove("access_token");
         OpenlinkChmlfrpExtension.PREFERENCES.remove("refresh_token");
         OpenlinkChmlfrpExtension.PREFERENCES.remove("short_token");
-        Utils.flushPreferences(logger, "logging out");
+        Utility.flushPreferences(logger, "logging out");
     }
     
     public static void refreshUserInfo() throws Exception {
@@ -108,7 +108,7 @@ public class LoggingManagement {
          OpenlinkChmlfrpExtension.PREFERENCES.put("short_token", apiResponseJsonData.get("usertoken").getAsString());
          OpenlinkChmlfrpExtension.PREFERENCES.putInt("max_tunnel_count", apiResponseJsonData.get("tunnel").getAsInt());
          OpenlinkChmlfrpExtension.PREFERENCES.putInt("current_tunnel_count", apiResponseJsonData.get("tunnelCount").getAsInt());
-         Utils.flushPreferences(logger, "refreshing user info");
+         Utility.flushPreferences(logger, "refreshing user info");
     }
     
     public static void reloadUserAddress() throws Exception {
@@ -156,7 +156,7 @@ public class LoggingManagement {
             return true;
         } catch (Exception e) {
             logger.error("Failed to refresh token.", e);
-            //Utils.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
+            //Utility.printExceptionStackTrace(OpenlinkChmlfrpExtension.LOGGER, e);
             return false;
         }
     }

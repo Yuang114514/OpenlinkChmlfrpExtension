@@ -10,7 +10,7 @@ import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Utils {
+public class Utility {
     private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
     
 //    public static void printExceptionStackTrace(Logger logger, Exception e) {

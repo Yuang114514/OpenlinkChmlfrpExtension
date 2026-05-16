@@ -9,7 +9,7 @@ import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.DeviceCode;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.IntervalledAccessToken;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.TokenIntervalFailedException;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
-import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.Utility;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -29,7 +29,7 @@ public class LoginScreen extends Screen {
     private DeviceCode deviceCode = null;
     private Stats currentStat = Stats.WAITING;
     
-    private final Logger logger = Utils.genLogger();
+    private final Logger logger = Utility.genLogger();
 
     public LoginScreen(Screen lastScreen) {
         super(Component.translatable("gui.openlink_chmlfrp_extension.login_screen.title"));

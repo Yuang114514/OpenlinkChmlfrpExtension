@@ -8,11 +8,11 @@ package cn.yuang2714.openlink_chmlfrp_extension;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.FrpcManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.ProxyManagement;
-import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.Utility;
 import org.slf4j.Logger;
 
 public class OCECommand {
-    public static final Logger logger = Utils.genLogger();
+    public static final Logger logger = Utility.genLogger();
     public static final int FAILURE = -1;
     public static final int SUCCESS = 1;
     
@@ -23,7 +23,7 @@ public class OCECommand {
     public static int setProxyCreationMaxRetry(int value) {
         if (value <= 1) return FAILURE;
         OpenlinkChmlfrpExtension.PREFERENCES.putInt("config_max_retry", value);
-        if (Utils.flushPreferences(logger, "changing settings")) return FAILURE;
+        if (Utility.flushPreferences(logger, "changing settings")) return FAILURE;
         logger.debug("Successfully set proxy creation max retry to {}", value);
         return SUCCESS;
     }
@@ -34,12 +34,12 @@ public class OCECommand {
             OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", LoggingManagement.refreshToken());
             LoggingManagement.reloadUserAddress();
             LoggingManagement.refreshUserInfo();
-            if (!Utils.flushPreferences(logger, "changing settings")) return FAILURE;
+            if (! Utility.flushPreferences(logger, "changing settings")) return FAILURE;
             logger.debug("Successfully reloaded user info");
             return SUCCESS;
         } catch (Exception e) {
             logger.error("Failed to reload user info.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             return FAILURE;
         }
     }
@@ -52,7 +52,7 @@ public class OCECommand {
     
     public static int setDoAdvancedNodeSort(boolean value) {
         OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("advanced_node_sort", value);
-        if (Utils.flushPreferences(logger, "changing settings")) return FAILURE;
+        if (Utility.flushPreferences(logger, "changing settings")) return FAILURE;
         logger.debug("Successfully set do advanced node sort to {}", value);
         return SUCCESS;
     }
@@ -64,7 +64,7 @@ public class OCECommand {
             return SUCCESS;
         } catch (Exception e) {
             logger.error("Failed to clear proxy.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             return FAILURE;
         }
     }

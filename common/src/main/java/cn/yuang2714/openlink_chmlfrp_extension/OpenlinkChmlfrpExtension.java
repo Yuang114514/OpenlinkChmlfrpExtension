@@ -7,7 +7,7 @@ package cn.yuang2714.openlink_chmlfrp_extension;
 
 import cn.yuang2714.openlink_chmlfrp_extension.platform.PlatformServices;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
-import cn.yuang2714.openlink_chmlfrp_extension.tools.Utils;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.Utility;
 import org.slf4j.Logger;
 
 import java.util.prefs.Preferences;
@@ -17,7 +17,7 @@ public class OpenlinkChmlfrpExtension {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "openlink_chmlfrp_extension";
     // Directly reference a slf4j logger
-    public static final Logger LOGGER = Utils.genLogger();
+    public static final Logger LOGGER = Utility.genLogger();
     public static Preferences PREFERENCES = Preferences.userNodeForPackage(OpenlinkChmlfrpExtension.class);
     
     public static void init() {

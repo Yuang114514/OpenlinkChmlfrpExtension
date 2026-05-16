@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class NodeUtil {
-    static Logger logger = Utils.genLogger();
+    static Logger logger = Utility.genLogger();
 
     public static List<Node> genNodeList() throws Exception {
         try {
@@ -70,7 +70,7 @@ public class NodeUtil {
             else throw new NullPointerException("Unable to get any node???");
         } catch (Exception e) {
             logger.error("Failed to get node list.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
@@ -97,7 +97,7 @@ public class NodeUtil {
                             } catch (Exception e) {
                                 coordinates = Location.impossible();
                                 logger.warn("Failed to exchange location for node {} ({}), using impossible coordinates.", node.name, node.id, e);
-                                //Utils.printExceptionStackTrace(logger, e);
+                                //Utility.printExceptionStackTrace(logger, e);
                             }
                         } else {
                             coordinates = new Location(
@@ -127,7 +127,7 @@ public class NodeUtil {
                                 node.name, node.id, delay, coordinates, domain);
                     } catch (Exception e) {
                         logger.error("Failed to get details for node {} (id:{}), Skipping.", node.name, node.id, e);
-                        //Utils.printExceptionStackTrace(logger, e);
+                        //Utility.printExceptionStackTrace(logger, e);
                     } finally {
                         latch.countDown();
                     }
@@ -144,7 +144,7 @@ public class NodeUtil {
             return advancedList;
         } catch (Exception e) {
             logger.error("Failed to get advanced node list.", e);
-            //Utils.printExceptionStackTrace(logger, e);
+            //Utility.printExceptionStackTrace(logger, e);
             throw e;
         }
     }
@@ -201,7 +201,7 @@ public class NodeUtil {
                         OpenlinkChmlfrpExtension.PREFERENCES.getDouble("lat", 0)
                 );
                 
-                if (Utils.calculateDistance(n1.coordinates, userLocation) < Utils.calculateDistance(n2.coordinates, userLocation)) return -1;
+                if (Utility.calculateDistance(n1.coordinates, userLocation) < Utility.calculateDistance(n2.coordinates, userLocation)) return -1;
                 else return 1;
             }
             
