@@ -8,14 +8,13 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
-import fun.moystudio.openlink.logic.Utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fun.moystudio.openlink.logic.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
