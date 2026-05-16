@@ -24,7 +24,7 @@ public class LoadingNodeSelectionScreen extends Screen {
     private List<Node> nodes = null;
     private Thread requestThread;
     private boolean isFailed = false;
-    private Component status = Component.translatable("gui.openlink_chmlfrp_extension.node_selection.loading");
+    private Component status = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.loading");
     private final Logger logger = Utility.genLogger();
     private boolean isDelaying = false;
     private int delayed = 0;

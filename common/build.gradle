@@ -31,7 +31,7 @@ repositories {
 
 dependencies {
     compileOnly "maven.modrinth:openlink-frpc-api:1.0.0-forge"
-    compileOnly "maven.modrinth:openlink:1.1.1-forge"
+    compileOnly "maven.modrinth:openlink:g3Welozc"
     compileOnly "org.jetbrains:annotations:24.0.0"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 }

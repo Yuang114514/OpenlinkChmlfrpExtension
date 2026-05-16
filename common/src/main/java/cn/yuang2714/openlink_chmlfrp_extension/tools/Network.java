@@ -79,7 +79,7 @@ public class Network {
         connection.setConnectTimeout(10000);
 
         if (body != null) try (OutputStream os = connection.getOutputStream()) { os.write(body.getBytes(StandardCharsets.UTF_8)); }
-        logger.info("Post Request: URI:{}, Body:{}", url, body);
+        //logger.info("Post Request: URI:{}, Body:{}", url, body);
         
         int responseCode = connection.getResponseCode();
         InputStream responseStream = responseCode >= 400
@@ -92,7 +92,7 @@ public class Network {
         connection.disconnect();
         responseStream.close();
         
-        logger.info("Post Request: URI:{}, Body:{}, Response Code:{} Response:{}", url, body, responseCode, response);
+        //logger.info("Post Request: URI:{}, Body:{}, Response Code:{} Response:{}", url, body, responseCode, response);
 
         return response;
     }

@@ -8,6 +8,7 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
+import fun.moystudio.openlink.logic.Utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -29,14 +30,14 @@ public class ProxyManagement {
     @SuppressWarnings("BusyWait")
     public static String createProxy(int localPort, @Nullable String remotePort) throws Exception {
         logger.info("Creating proxy...");
-        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("chat.openlink_chmlfrp_extension.creating_proxy.ing").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+        Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText("chat.openlink_chmlfrp_extension.creating_proxy.ing").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
         
         LoggingManagement.refreshUserInfo();
         if (
                 OpenlinkChmlfrpExtension.PREFERENCES.getInt("current_tunnel_count", 0) + 1 >
                 OpenlinkChmlfrpExtension.PREFERENCES.getInt("max_tunnel_count", 0)
         ) {
-            Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(
+            Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText(
                     "chat.openlink_chmlfrp_extension.creating_proxy.maximum_tunnel_count_reached"
             ).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
             throw new IllegalArgumentException("Maximum tunnel count reached. Please delete some tunnels before creating new ones.");
@@ -74,7 +75,7 @@ public class ProxyManagement {
         }
         if (preferNodeName.equals("Not Selected"))
             throw new NullPointerException("[Openlink Chmlfrp Extension] Node not found in got node list.");
-        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(
+        Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText(
                 "chat.openlink_chmlfrp_extension.creating_proxy.got_node",
                 preferNodeId,
                 preferNodeName
@@ -108,7 +109,7 @@ public class ProxyManagement {
             caughtPort = preferRemotePort;
             try {
                 logger.info("Trying to create proxy. Attempt {}, Remote port:{}", j+1, preferRemotePort);
-                Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(
+                Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText(
                         "chat.openlink_chmlfrp_extension.creating_proxy.trying",
                         j+1,
                         OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5),
@@ -137,7 +138,7 @@ public class ProxyManagement {
             Thread.sleep(1000);
         }
 
-        Minecraft.getInstance().gui.getChat().addMessage(Component.translatable(
+        Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText(
                 "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found",
                 OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5)
         ).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
@@ -152,12 +153,16 @@ public class ProxyManagement {
 
         //尝试使用caughtPort作为远程端口的回退方案，优先级低于传入的remotePort参数
         int possibleRemotePort = -1;
-        if (caughtPort != -1) {
-            possibleRemotePort = caughtPort;
-            caughtPort = -1;
+        try {
+            if (remotePort != null) possibleRemotePort = Integer.parseInt(remotePort);
+        } catch (NumberFormatException e) {
+            if (caughtPort != -1) {
+                possibleRemotePort = caughtPort;
+                caughtPort = -1;
+            }
         }
-        if (remotePort != null) possibleRemotePort = Integer.parseInt(remotePort);
         
+        logger.info("Searching for proxy IDs by Local port: {}, Remote port: {}", localPort, possibleRemotePort);
         //遍历用户代理列表，寻找匹配的代理ID
         List<Integer> proxyIds = new ArrayList<>();
         for (JsonElement proxyAsElement : userProxies) {
@@ -174,18 +179,22 @@ public class ProxyManagement {
                 if (localPort != null) return proxyIds; //确定的localPort代表确定的proxyId，直接返回
             }
         }
+        logger.info("Finished searching proxy IDs by port. Found {} possible matches.", proxyIds.size());
         if (!proxyIds.isEmpty()) return proxyIds;
 
         throw new NullPointerException("Failed to get Proxy by id.");
     }
 
     public static void clearProxy(List<Integer> ids) throws Exception {
-        for (int id : ids) Network.post(
-                URLs.api
-                + "delete_tunnel?tunnelid="
-                + id,
-                null,
-                Network.CONTENT_TYPE_JSON,
-                true);
+        for (int id : ids) {
+            logger.info("Deleting proxy with id {}...", id);
+            Network.post(
+                    URLs.api
+                            + "delete_tunnel?tunnelid="
+                            + id,
+                    null,
+                    Network.CONTENT_TYPE_JSON,
+                    true);
+        }
     }
 }

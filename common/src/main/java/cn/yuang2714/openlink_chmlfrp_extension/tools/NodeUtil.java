@@ -134,12 +134,15 @@ public class NodeUtil {
                 });
                 logger.debug("Submitted task to get details for node {} (id:{}) to thread pool.", node.name, node.id);
             }
+            logger.info("Submitted {} tasks to thread pool to get details for nodes", baseList.size());
             
             try {
                 latch.await();
             } finally {
                 pool.shutdown();
             }
+            
+            logger.info("Got details for {} nodes. Ignored {} nodes.", advancedList.size(), baseList.size() - advancedList.size());
             
             return advancedList;
         } catch (Exception e) {
