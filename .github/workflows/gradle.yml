@@ -48,8 +48,9 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: mod-builds
+          name: mod-builds.zip
           path: |
             fabric/build/libs/*.jar
             forge/build/libs/*.jar
           archive: true
+          compression-level: 6
