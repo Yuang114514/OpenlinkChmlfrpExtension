@@ -48,7 +48,8 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7
         with:
+          name: mod-builds
           path: |
             fabric/build/libs/*.jar
             forge/build/libs/*.jar
-          archive: false
+          archive: true
