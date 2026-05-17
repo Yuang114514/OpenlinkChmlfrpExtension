@@ -54,3 +54,9 @@ jobs:
             forge/build/libs/*.jar
           archive: true
           compression-level: 6
+
+      - name: Set output paths
+        id: set-outputs
+        run: |
+          echo "fabric-jar=fabric/build/libs/*.jar" >> $GITHUB_OUTPUT
+          echo "forge-jar=forge/build/libs/*.jar" >> $GITHUB_OUTPUT

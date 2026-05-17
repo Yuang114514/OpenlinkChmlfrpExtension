@@ -10,9 +10,6 @@ on:
 
 # 所有 jobs 的集合
 jobs:
-  build:
-    uses: ./.github/workflows/gradle.yml
-
   # 定义一个名为 'release' 的任务
   release:
     # 指定运行环境为最新版的 Ubuntu
@@ -33,28 +30,67 @@ jobs:
           # 获取所有历史记录和标签，这对于自动生成变更日志很重要
           fetch-depth: 0
 
-      # 2. 构建项目
-#      - name: Build project
-#        uses: ./.github/workflows/gradle.yml@1.20.1
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 配置 Gradle 缓存以加速构建
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4.0.0
+        with:
+          # 如果使用特定 Gradle 版本，可以取消注释下面这行
+          gradle-version: '8.11'
+
+      # 授予 Gradle Wrapper 执行权限（Linux 系统需要）
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # 构建模组 - 添加必要的参数
+      - name: Build Fabric with Gradle Wrapper
+        run: ./gradlew :fabric:remapJar
+        env:
+          # 设置内存限制以防止 OOM
+          GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
+
+      # 构建模组 - 添加必要的参数
+      - name: Build Forge with Gradle Wrapper
+        run: ./gradlew :forge:jar
+        env:
+          # 设置内存限制以防止 OOM
+          GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
+
+      # 上传构建产物
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: mod-builds.zip
+          path: |
+            fabric/build/libs/*.jar
+            forge/build/libs/*.jar
+          archive: true
+          compression-level: 6
 
       # 3. 创建 GitHub Release
       # 这里使用官方提供的 action
-      - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v2
-        with:
-          # 自动从之前的标签和当前标签之间的提交中生成发行说明
-          generate_release_notes: true
-          # 为这个 Release 创建一个讨论帖，可选值：discussions, releases, none
-          #discussion_category_name: 'Announcements'
-          # 如果有构建出的二进制文件，可以通过这个参数指定路径来上传
-          # 支持单个文件或通配符，如：path/to/asset.zip, dist/*.exe
-          files: |
-            fabric/build/libs/*.jar
-            forge/build/libs/*.jar
-        env:
-          # 使用 GITHUB_TOKEN 进行身份验证，GitHub 会自动提供
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Create GitHub Release
+#        id: create_release
+#        uses: softprops/action-gh-release@v2
+#        with:
+#          # 自动从之前的标签和当前标签之间的提交中生成发行说明
+#          generate_release_notes: true
+#          # 为这个 Release 创建一个讨论帖，可选值：discussions, releases, none
+#          #discussion_category_name: 'Announcements'
+#          # 如果有构建出的二进制文件，可以通过这个参数指定路径来上传
+#          # 支持单个文件或通配符，如：path/to/asset.zip, dist/*.exe
+#          files: |
+#            fabric/build/libs/*.jar
+#            forge/build/libs/*.jar
+#        env:
+#          # 使用 GITHUB_TOKEN 进行身份验证，GitHub 会自动提供
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # 4. 发布到Modrinth和Curse forge
       - name: Publish to Modrinth and CurseForge
