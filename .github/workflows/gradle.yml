@@ -36,25 +36,18 @@ jobs:
           # 设置内存限制以防止 OOM
           GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
 
-      # 上传构建产物
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: mod-build
-          path: fabric/build/libs/
-          retention-days: 5
-
       # 构建模组 - 添加必要的参数
       - name: Build Forge with Gradle Wrapper
-        run: ./gradlew :forge:remapJar
+        run: ./gradlew :forge:jar
         env:
           # 设置内存限制以防止 OOM
           GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
 
       # 上传构建产物
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: mod-build
-          path: fabric/build/libs/
-          retention-days: 5
+          path: |
+            fabric/build/libs/*.jar
+            forge/build/libs/*.jar
+          archive: false
