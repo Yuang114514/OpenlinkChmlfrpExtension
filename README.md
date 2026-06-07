@@ -1,3 +1,4 @@
+[English] | [[简体中文]](https://github.com/Yuang114514/OpenlinkChmlfrpExtension/blob/portal/README_CN.md)
 # Openlink Chmlfrp Extension
 An OpenLink addon for Chmlfrp
 ### Based on OpenLink's Frpc Interface
