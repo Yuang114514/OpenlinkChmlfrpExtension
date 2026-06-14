@@ -40,16 +40,13 @@ jobs:
       # 配置 Gradle 缓存以加速构建
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4.0.0
-        with:
-          # 如果使用特定 Gradle 版本，可以取消注释下面这行
-          gradle-version: '8.11'
 
       # 授予 Gradle Wrapper 执行权限（Linux 系统需要）
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
       # 构建模组 - 添加必要的参数
-      - name: Build Fabric with Gradle Wrapper
+      - name: Build with Gradle Wrapper
         run: ./gradlew build
         env:
           # 设置内存限制以防止 OOM
