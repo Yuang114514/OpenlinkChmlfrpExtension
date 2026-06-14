@@ -50,14 +50,7 @@ jobs:
 
       # 构建模组 - 添加必要的参数
       - name: Build Fabric with Gradle Wrapper
-        run: ./gradlew :fabric:remapJar
-        env:
-          # 设置内存限制以防止 OOM
-          GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
-
-      # 构建模组 - 添加必要的参数
-      - name: Build Forge with Gradle Wrapper
-        run: ./gradlew :forge:jar
+        run: ./gradlew build
         env:
           # 设置内存限制以防止 OOM
           GRADLE_OPTS: -Xmx2g -Dorg.gradle.daemon=false
@@ -102,6 +95,15 @@ jobs:
           curseforge-id: 1473954
           curseforge-token: ${{ secrets.CF_TOKEN }}
 
+          changelog-file: CHANGELOG.md
+
           files: |
             fabric/build/libs/*.jar
+            !fabric/build/libs/*dev-shadow.jar
+            !fabric/build/libs/*sources.jar
             forge/build/libs/*.jar
+            !forge/build/libs/*dev-shadow.jar
+            !forge/build/libs/*sources.jar
+            quilt/build/libs/*.jar
+            !quilt/build/libs/*dev-shadow.jar
+            !quilt/build/libs/*sources.jar
