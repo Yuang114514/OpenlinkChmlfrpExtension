@@ -1,31 +1,31 @@
 modLoader = "javafml" #mandatory
-loaderVersion = "${forge_loader_version_range}" #mandatory This is typically bumped every Minecraft version by Forge. See https://files.minecraftforge.net/ for a list of versions.
-license = "${license}" # Review your options at https://choosealicense.com/.
+loaderVersion = "[47,)" #mandatory This is typically bumped every Minecraft version by Forge. See https://files.minecraftforge.net/ for a list of versions.
+license = "MIT" # Review your options at https://choosealicense.com/.
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
-modId = "${mod_id}" #mandatory
+modId = "openlink_chmlfrp_extension" #mandatory
 version = "${version}" #mandatory
-displayName = "${mod_name}" #mandatory
+displayName = "OpenLink Chmlfrp Extension" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional (see https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/)
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional (displayed in the mod UI)
 logoFile = "icon.png" #optional (needs to be in the root of your mod jar (root of your 'resources' folder))
-authors = "${mod_author}" #optional
-description = '''${description}''' #mandatory (Supports multiline text)
-[[dependencies.${mod_id}]] #optional
+authors = "Yuang2714" #optional
+description = '''An OpenLink addon for Chmlfrp.''' #mandatory (Supports multiline text)
+[[dependencies.openlink_chmlfrp_extension]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
 versionRange = "[47,)" #mandatory
 ordering = "NONE" # The order that this dependency should load in relation to your mod, required to be either 'BEFORE' or 'AFTER' if the dependency is not mandatory
 side = "CLIENT" # Side this dependency is applied on - 'BOTH', 'CLIENT' or 'SERVER'
 
-[[dependencies.${mod_id}]]
+[[dependencies.openlink_chmlfrp_extension]]
 modId = "minecraft"
 mandatory = true
-versionRange = "${minecraft_version_range}"
+versionRange = "[1.20.1, 1.20.4]"
 ordering = "NONE"
 side = "CLIENT"
 
-[[dependencies.${mod_id}]]
+[[dependencies.openlink_chmlfrp_extension]]
 modId = "openlink"
 mandatory = true
 versionRange = "[1.1.0,)"

@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "id": "openlink_chmlfrp_extension",
   "version": "${version}",
-  "name": "${mod_name}",
-  "description": "${description}",
+  "name": "OpenLink Chmlfrp Extension",
+  "description": "An OpenLink addon for Chmlfrp.",
   "authors": [
-      "${mod_author}"
+      "Yuang2714"
   ],
-  "license": "${license}",
+  "license": "MIT",
   "icon": "icon.png",
   "environment": "client",
   "entrypoints": {
       "client": [
-        "cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionFabric"
+        "cn.yuang2714.openlink_chmlfrp_extension.fabric.OpenlinkChmlfrpExtensionFabric"
       ]
   },
   "depends": {

@@ -1,4 +1,4 @@
-package cn.yuang2714.openlink_chmlfrp_extension.platform;
+package cn.yuang2714.openlink_chmlfrp_extension.forge.platform;
 
 /*
  * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
@@ -6,6 +6,10 @@ package cn.yuang2714.openlink_chmlfrp_extension.platform;
  */
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.ConfigProvider;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.ConfigProvider.Key;
+import cn.yuang2714.openlink_chmlfrp_extension.forge.ModConfig;
+import cn.yuang2714.openlink_chmlfrp_extension.platform.IPlatformHelper;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.versions.forge.ForgeVersion;
 
@@ -22,5 +26,19 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public String getPlatform() {
         return "Forge " + ForgeVersion.getVersion();
+    }
+    
+    @Override
+    public ConfigProvider getConfigProvider() {
+        return new ConfigProvider(
+                new Key<>(
+                        ModConfig.HOLDER.doAdvancedNodeSort::get,
+                        ModConfig.HOLDER.doAdvancedNodeSort::set
+                ),
+                new Key<>(
+                        ModConfig.HOLDER.proxyCreationMaxRetryCount::get,
+                        ModConfig.HOLDER.proxyCreationMaxRetryCount::set
+                )
+        );
     }
 }

@@ -7,12 +7,12 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
+import cn.yuang2714.openlink_chmlfrp_extension.platform.PlatformServices;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import fun.moystudio.openlink.logic.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.Nullable;
@@ -29,14 +29,14 @@ public class ProxyManagement {
     @SuppressWarnings("BusyWait")
     public static String createProxy(int localPort, @Nullable String remotePort) throws Exception {
         logger.info("Creating proxy...");
-        Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText("chat.openlink_chmlfrp_extension.creating_proxy.ing").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+        Minecraft.getInstance().gui.getChat().addMessage(Utility.translatableText("chat.openlink_chmlfrp_extension.creating_proxy.ing").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
         
         LoggingManagement.refreshUserInfo();
         if (
                 OpenlinkChmlfrpExtension.PREFERENCES.getInt("current_tunnel_count", 0) + 1 >
                 OpenlinkChmlfrpExtension.PREFERENCES.getInt("max_tunnel_count", 0)
         ) {
-            Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText(
+            Minecraft.getInstance().gui.getChat().addMessage(Utility.translatableText(
                     "chat.openlink_chmlfrp_extension.creating_proxy.maximum_tunnel_count_reached"
             ).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
             throw new IllegalArgumentException("Maximum tunnel count reached. Please delete some tunnels before creating new ones.");
@@ -53,7 +53,7 @@ public class ProxyManagement {
         int preferNodeId = OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1);
         String preferNodeName = "Not Selected";
         List<Node> nodes;
-        boolean isAdvanced = OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("advanced_node_sort", false);
+        boolean isAdvanced = PlatformServices.CONFIG_PROVIDER.doAdvancedNodeSort().getter().get();
         try {
             nodes = NodeUtil.genNodeList();
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class ProxyManagement {
         }
         if (preferNodeName.equals("Not Selected"))
             throw new NullPointerException("[Openlink Chmlfrp Extension] Node not found in got node list.");
-        Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText(
+        Minecraft.getInstance().gui.getChat().addMessage(Utility.translatableText(
                 "chat.openlink_chmlfrp_extension.creating_proxy.got_node",
                 preferNodeId,
                 preferNodeName
@@ -103,15 +103,15 @@ public class ProxyManagement {
             preferRemotePort = randomer.nextInt(portRange[0], portRange[1]);
         }
         
-        for (int j = 0; j < OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5); j++) {
+        for (int j = 0; j < PlatformServices.CONFIG_PROVIDER.proxyCreationMaxRetryCount().getter().get(); j++) {
             postQuery.addProperty("remoteport", preferRemotePort);
             caughtPort = preferRemotePort;
             try {
                 logger.info("Trying to create proxy. Attempt {}, Remote port:{}", j+1, preferRemotePort);
-                Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText(
+                Minecraft.getInstance().gui.getChat().addMessage(Utility.translatableText(
                         "chat.openlink_chmlfrp_extension.creating_proxy.trying",
                         j+1,
-                        OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5),
+                        PlatformServices.CONFIG_PROVIDER.proxyCreationMaxRetryCount().getter().get(),
                         preferRemotePort
                 ).withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
                 
@@ -137,9 +137,9 @@ public class ProxyManagement {
             Thread.sleep(1000);
         }
 
-        Minecraft.getInstance().gui.getChat().addMessage(Utils.translatableText(
+        Minecraft.getInstance().gui.getChat().addMessage(Utility.translatableText(
                 "chat.openlink_chmlfrp_extension.creating_proxy.port_not_found",
-                OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5)
+                PlatformServices.CONFIG_PROVIDER.proxyCreationMaxRetryCount().getter().get()
         ).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
         throw new Exception("Proxy Creation Failed with no possible remote port after some tries");
     }

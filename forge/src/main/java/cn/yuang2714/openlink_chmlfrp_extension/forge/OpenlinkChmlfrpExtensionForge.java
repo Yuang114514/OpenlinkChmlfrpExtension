@@ -1,13 +1,15 @@
-package cn.yuang2714.openlink_chmlfrp_extension;
+package cn.yuang2714.openlink_chmlfrp_extension.forge;
 
 /*
  * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
  * Open source with MIT licence
  */
 
+import cn.yuang2714.openlink_chmlfrp_extension.OCECommand;
+import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.Utility;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import fun.moystudio.openlink.logic.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.commands.Commands;
@@ -19,8 +21,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod(OpenlinkChmlfrpExtension.MODID)
 @Mod.EventBusSubscriber
 public class OpenlinkChmlfrpExtensionForge {
-    
     public OpenlinkChmlfrpExtensionForge() {
+        
     
         // This method is invoked by the Forge mod loader when it is ready
         // to load your mod. You can access Forge and Common code in this
@@ -37,7 +39,7 @@ public class OpenlinkChmlfrpExtensionForge {
                 Commands.literal("oce")
                         .then(Commands.literal("setProxyCreationMaxRetry")
                                 .executes(context -> {
-                                            context.getSource().sendSuccess(() -> Utils.translatableText("chat.openlink_chmlfrp_extension.command.config_max_retry.read",
+                                            context.getSource().sendSuccess(() -> Utility.translatableText("chat.openlink_chmlfrp_extension.command.config_max_retry.read",
                                                     OCECommand.readProxyCreationMaxRetry()), true);
                                             return 1;
                                         }
@@ -49,10 +51,10 @@ public class OpenlinkChmlfrpExtensionForge {
                                                     int value = context.getArgument("value", int.class);
                                                     
                                                     if (OCECommand.setProxyCreationMaxRetry(value) == OCECommand.FAILURE) {
-                                                        context.getSource().sendFailure(Utils.translatableText("chat.openlink_chmlfrp_extension.command.config_max_retry.fail").withStyle(ChatFormatting.RED));
+                                                        context.getSource().sendFailure(Utility.translatableText("chat.openlink_chmlfrp_extension.command.config_max_retry.fail").withStyle(ChatFormatting.RED));
                                                         return 0;
                                                     } else {
-                                                        context.getSource().sendSuccess(() -> Utils.translatableText("chat.openlink_chmlfrp_extension.command.config_max_retry.success", value), true);
+                                                        context.getSource().sendSuccess(() -> Utility.translatableText("chat.openlink_chmlfrp_extension.command.config_max_retry.success", value), true);
                                                         return 1;
                                                     }
                                                 }
@@ -64,10 +66,10 @@ public class OpenlinkChmlfrpExtensionForge {
                                 .executes(
                                         context -> {
                                             if (OCECommand.reloadUserInfo() == OCECommand.FAILURE) {
-                                                context.getSource().sendFailure(Utils.translatableText("chat.openlink_chmlfrp_extension.command.reload_user_info.fail").withStyle(ChatFormatting.RED));
+                                                context.getSource().sendFailure(Utility.translatableText("chat.openlink_chmlfrp_extension.command.reload_user_info.fail").withStyle(ChatFormatting.RED));
                                                 return 0;
                                             } else {
-                                                context.getSource().sendSuccess(() -> Utils.translatableText("chat.openlink_chmlfrp_extension.command.reload_user_info.success"), true);
+                                                context.getSource().sendSuccess(() -> Utility.translatableText("chat.openlink_chmlfrp_extension.command.reload_user_info.success"), true);
                                                 return 1;
                                             }
                                         }
@@ -76,7 +78,7 @@ public class OpenlinkChmlfrpExtensionForge {
                         
                         .then(Commands.literal("setDoAdvancedNodeSort")
                                 .executes(context -> {
-                                    context.getSource().sendSuccess(() -> Utils.translatableText(
+                                    context.getSource().sendSuccess(() -> Utility.translatableText(
                                             "chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.read",
                                             OCECommand.readDoAdvancedNodeSort()
                                     ), true);
@@ -87,10 +89,10 @@ public class OpenlinkChmlfrpExtensionForge {
                                                 context -> {
                                                     boolean value = context.getArgument("value", boolean.class);
                                                     if (OCECommand.setDoAdvancedNodeSort(value) == OCECommand.FAILURE) {
-                                                        context.getSource().sendFailure(Utils.translatableText("chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.fail").withStyle(ChatFormatting.RED));
+                                                        context.getSource().sendFailure(Utility.translatableText("chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.fail").withStyle(ChatFormatting.RED));
                                                         return 0;
                                                     } else {
-                                                        context.getSource().sendSuccess(() -> Utils.translatableText("chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success", value), true);
+                                                        context.getSource().sendSuccess(() -> Utility.translatableText("chat.openlink_chmlfrp_extension.command.config_advanced_node_sort.success", value), true);
                                                         return 1;
                                                     }
                                                 }
@@ -102,10 +104,10 @@ public class OpenlinkChmlfrpExtensionForge {
                                 .executes(
                                         context -> {
                                             if (OCECommand.clearProxy() == OCECommand.FAILURE) {
-                                                context.getSource().sendFailure(Utils.translatableText("chat.openlink_chmlfrp_extension.command.clear_proxy.fail").withStyle(ChatFormatting.RED));
+                                                context.getSource().sendFailure(Utility.translatableText("chat.openlink_chmlfrp_extension.command.clear_proxy.fail").withStyle(ChatFormatting.RED));
                                                 return 0;
                                             } else {
-                                                context.getSource().sendSuccess(() -> Utils.translatableText("chat.openlink_chmlfrp_extension.command.clear_proxy.success"), true);
+                                                context.getSource().sendSuccess(() -> Utility.translatableText("chat.openlink_chmlfrp_extension.command.clear_proxy.success"), true);
                                                 return 1;
                                             }
                                         }
@@ -115,7 +117,7 @@ public class OpenlinkChmlfrpExtensionForge {
                         .then(Commands.literal("trick")
                                 .executes(context -> {
                                     Util.getPlatform().openUri("https://www.bilibili.com/video/BV1GJ411x7h7"); //你 被 骗 了！！！
-                                    context.getSource().sendSuccess(() -> Utils.literalText("你 被 骗 了！！！").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.GOLD),true);
+                                    context.getSource().sendSuccess(() -> Utility.literalText("你 被 骗 了！！！").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.GOLD),true);
                                     OpenlinkChmlfrpExtension.LOGGER.warn("User is tricked!");
                                     return 1;
                                 })

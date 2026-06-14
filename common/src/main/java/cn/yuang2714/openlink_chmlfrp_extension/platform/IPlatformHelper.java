@@ -5,7 +5,10 @@ package cn.yuang2714.openlink_chmlfrp_extension.platform;
  * Open source with MIT licence
  */
 
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.ConfigProvider;
+
 public interface IPlatformHelper {
     String genUA();
     String getPlatform();
+    ConfigProvider getConfigProvider();
 }

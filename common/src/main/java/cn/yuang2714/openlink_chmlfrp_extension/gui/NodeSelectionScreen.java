@@ -8,7 +8,7 @@ package cn.yuang2714.openlink_chmlfrp_extension.gui;
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Node;
 import cn.yuang2714.openlink_chmlfrp_extension.statics.URLs;
-import fun.moystudio.openlink.logic.Utils;
+import cn.yuang2714.openlink_chmlfrp_extension.tools.Utility;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,11 +27,11 @@ public class NodeSelectionScreen extends Screen {
     private boolean startDelay;
     private int delayed = 0;
     private final List<Node> nodeList;
-    private Component nodeDescription_name = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.name","");
-    private Component nodeDescription_description = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.description","");
-    private Component nodeDescription_location = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.location","");
-    private Component nodeDescription_bandwidthUsage = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage","");
-    private Component nodeDescription_cpuUsage = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage","");
+    private Component nodeDescription_name = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.name","");
+    private Component nodeDescription_description = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.description","");
+    private Component nodeDescription_location = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.location","");
+    private Component nodeDescription_bandwidthUsage = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage","");
+    private Component nodeDescription_cpuUsage = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage","");
     private int START_Y;
     private int START_X;
     //第一行：自动选择按钮+面板按钮+节点输入框，40像素一个单位，单独留空
@@ -41,7 +41,7 @@ public class NodeSelectionScreen extends Screen {
     //+--------+  +--------+  +----+
 
     public NodeSelectionScreen(Screen lastScreen, List<Node> nodes) {
-        super(Utils.translatableText("gui.openlink.nodeselectionscreentitle"));
+        super(Utility.translatableText("gui.openlink.nodeselectionscreentitle"));
         parentScreen = lastScreen;
         nodeList = nodes;
     }
@@ -59,7 +59,7 @@ public class NodeSelectionScreen extends Screen {
                 START_Y + 1,
                 40 -2,
                 20 -2,
-                Utils.translatableText("text.openlink_chmlfrp_extension.none")
+                Utility.translatableText("text.openlink_chmlfrp_extension.none")
         );
         idBox.setValue(String.valueOf(OpenlinkChmlfrpExtension.PREFERENCES.getInt("last_node", -1)));
         idBox.setFilter(text -> {
@@ -74,7 +74,7 @@ public class NodeSelectionScreen extends Screen {
         addRenderableWidget(idBox);
 
         Button panelButton = Button.builder(
-                        Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.panel_button_text"),
+                        Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.panel_button_text"),
                         button -> Util.getPlatform().openUri(URLs.nodes))
                 .bounds(START_X + 82, //80+(4/2)
                         START_Y,
@@ -84,7 +84,7 @@ public class NodeSelectionScreen extends Screen {
         addRenderableWidget(panelButton);
 
         Button autoSelectButton = Button.builder(
-                        Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.auto_button_text"),
+                        Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.auto_button_text"),
                         button -> idBox.setValue("-1"))
                 .bounds(START_X,
                         START_Y,
@@ -94,7 +94,7 @@ public class NodeSelectionScreen extends Screen {
         addRenderableWidget(autoSelectButton);
 
         doneButton = Button.builder(
-                Utils.translatableText("gui.done"),
+                Utility.translatableText("gui.done"),
                         this::onDoneButtonPress)
                 .bounds(START_X,
                         START_Y + 98, //20 + 4 + 70 + 4 + 20
@@ -128,8 +128,8 @@ public class NodeSelectionScreen extends Screen {
         graphics.drawString(font, title, width / 2 - font.width(title) / 2, 20, 0xFFFFFF);
         graphics.drawString(
                 font,
-                Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.tip"),
-                width / 2 - font.width(Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.tip")) / 2,
+                Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.tip"),
+                width / 2 - font.width(Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.tip")) / 2,
                 height / 2 - 75,
                 0xFFFFFF
         );
@@ -137,7 +137,7 @@ public class NodeSelectionScreen extends Screen {
         //绘制节点信息
         graphics.drawString(
                 font,
-                Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.title"),
+                Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.title"),
                 START_X + 5,
                 START_Y + 29, //20 + 4 + 5
                 0xFFFFFF
@@ -216,19 +216,19 @@ public class NodeSelectionScreen extends Screen {
     }
 
     private void onDoneButtonPress(Button button) {
-        doneButton.setMessage(Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.ing"));
+        doneButton.setMessage(Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.ing"));
         doneButton.active = false;
 
         String selection = idBox.getValue();
         if (selection.isBlank()) {
-            doneButton.setMessage(Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.fail"));
+            doneButton.setMessage(Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.fail"));
             doneButton.active = true;
             return;
         }
         int selectedId = Integer.parseInt(selection);
 
         if (selectedId == -1) {
-            doneButton.setMessage(Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.auto"));
+            doneButton.setMessage(Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.auto"));
             OpenlinkChmlfrpExtension.PREFERENCES.putInt("last_node", -1);
             startDelay = true;
             return;
@@ -237,32 +237,32 @@ public class NodeSelectionScreen extends Screen {
         for (Node nodeInList : nodeList) {
             if (nodeInList.id == selectedId) {
                 OpenlinkChmlfrpExtension.PREFERENCES.putInt("last_node", selectedId);
-                doneButton.setMessage(Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.success"));
+                doneButton.setMessage(Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.success"));
                 startDelay = true;
                 return;
             }
         }
 
-        doneButton.setMessage(Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.fail"));
+        doneButton.setMessage(Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.fail"));
         doneButton.active = true;
     }
 
     private void idBoxResponder(String text) {
         try {
-            nodeDescription_name = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.name", "");
-            nodeDescription_description = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.description", "");
-            nodeDescription_location = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.location", "");
-            nodeDescription_bandwidthUsage = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage", "");
-            nodeDescription_cpuUsage = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage", "");
+            nodeDescription_name = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.name", "");
+            nodeDescription_description = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.description", "");
+            nodeDescription_location = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.location", "");
+            nodeDescription_bandwidthUsage = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage", "");
+            nodeDescription_cpuUsage = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage", "");
             int enteredId = Integer.parseInt(text);
             nodeList.forEach(entered -> {
                 if (enteredId != -1 && entered.id == enteredId) {
-                    nodeDescription_name = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.name", entered.name);
-                    nodeDescription_description = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.description",
+                    nodeDescription_name = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.name", entered.name);
+                    nodeDescription_description = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.description",
                             entered.description.length() > 12 ? entered.description.substring(0, 13) + "..." : entered.description);
-                    nodeDescription_location = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.location", entered.location);
-                    nodeDescription_bandwidthUsage = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage", String.valueOf(entered.bandwidthUsage));
-                    nodeDescription_cpuUsage = Utils.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage", String.valueOf(entered.cpuUsage));
+                    nodeDescription_location = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.location", entered.location);
+                    nodeDescription_bandwidthUsage = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.bandwidth_usage", String.valueOf(entered.bandwidthUsage));
+                    nodeDescription_cpuUsage = Utility.translatableText("gui.openlink_chmlfrp_extension.node_selection.node_info.cpu_usage", String.valueOf(entered.cpuUsage));
                 }
             });
         } catch (NumberFormatException ignored) {

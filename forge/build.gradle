@@ -4,7 +4,7 @@ plugins {
 
 loom {
     forge {
-        mixinConfig "openlink_chmlfrp_extension.mixins.json"
+//        mixinConfig "openlink_chmlfrp_extension.mixins.json"
     }
 }
 

@@ -7,6 +7,8 @@ package cn.yuang2714.openlink_chmlfrp_extension.tools;
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.Location;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,14 +32,12 @@ public class Utility {
 //        logger.error(builder.toString());
 //    }
 
-    public static boolean flushPreferences(Logger logger, String step) {
+    public static void flushPreferences(Logger logger, String step) {
         try {
             OpenlinkChmlfrpExtension.PREFERENCES.flush();
-            return true;
         } catch (Exception e) {
             logger.error("Failed to save in preferences on {} . Exception:{}", step.trim(), e);
             //printExceptionStackTrace(logger, e);
-            return false;
         }
     }
     
@@ -55,5 +55,13 @@ public class Utility {
         double latDistance = a.lat - b.lat;
         double lonDistance = a.lon - b.lon;
         return Math.sqrt((latDistance * latDistance) + (lonDistance * lonDistance));
+    }
+    
+    public static MutableComponent translatableText(String text, Object... args) {
+        return Component.translatable(text, args);
+    }
+    
+    public static MutableComponent literalText(String text) {
+        return Component.literal(text);
     }
 }

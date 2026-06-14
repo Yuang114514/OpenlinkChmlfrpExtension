@@ -5,6 +5,7 @@ package cn.yuang2714.openlink_chmlfrp_extension;
  * Open source with MIT licence
  */
 
+import cn.yuang2714.openlink_chmlfrp_extension.platform.PlatformServices;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.FrpcManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.ProxyManagement;
@@ -17,13 +18,12 @@ public class OCECommand {
     public static final int SUCCESS = 1;
     
     public static int readProxyCreationMaxRetry() {
-        return OpenlinkChmlfrpExtension.PREFERENCES.getInt("config_max_retry", 5);
+        return PlatformServices.CONFIG_PROVIDER.proxyCreationMaxRetryCount().getter().get();
     }
     
     public static int setProxyCreationMaxRetry(int value) {
         if (value <= 1) return FAILURE;
-        OpenlinkChmlfrpExtension.PREFERENCES.putInt("config_max_retry", value);
-        if (Utility.flushPreferences(logger, "changing settings")) return FAILURE;
+        PlatformServices.CONFIG_PROVIDER.proxyCreationMaxRetryCount().setter().set(value);
         logger.debug("Successfully set proxy creation max retry to {}", value);
         return SUCCESS;
     }
@@ -34,7 +34,6 @@ public class OCECommand {
             OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("is_logged_in", LoggingManagement.refreshToken());
             LoggingManagement.reloadUserAddress();
             LoggingManagement.refreshUserInfo();
-            if (! Utility.flushPreferences(logger, "changing settings")) return FAILURE;
             logger.debug("Successfully reloaded user info");
             return SUCCESS;
         } catch (Exception e) {
@@ -45,14 +44,11 @@ public class OCECommand {
     }
     
     public static boolean readDoAdvancedNodeSort() {
-        boolean value = OpenlinkChmlfrpExtension.PREFERENCES.getBoolean("advanced_node_sort", false);
-        logger.debug("Reading do advanced node sort: {}", value);
-        return value;
+        return PlatformServices.CONFIG_PROVIDER.doAdvancedNodeSort().getter().get();
     }
     
     public static int setDoAdvancedNodeSort(boolean value) {
-        OpenlinkChmlfrpExtension.PREFERENCES.putBoolean("advanced_node_sort", value);
-        if (Utility.flushPreferences(logger, "changing settings")) return FAILURE;
+        PlatformServices.CONFIG_PROVIDER.doAdvancedNodeSort().setter().set(value);
         logger.debug("Successfully set do advanced node sort to {}", value);
         return SUCCESS;
     }

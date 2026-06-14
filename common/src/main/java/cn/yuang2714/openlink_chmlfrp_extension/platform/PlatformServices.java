@@ -6,6 +6,7 @@ package cn.yuang2714.openlink_chmlfrp_extension.platform;
  */
 
 import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
+import cn.yuang2714.openlink_chmlfrp_extension.datatypes.ConfigProvider;
 
 import java.util.ServiceLoader;
 
@@ -18,6 +19,8 @@ public class PlatformServices {
     // For example this can be used to check if the code is running on Forge vs Fabric, or to ask the modloader if another
     // mod is loaded.
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
+    
+    public static final ConfigProvider CONFIG_PROVIDER = PLATFORM.getConfigProvider();
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

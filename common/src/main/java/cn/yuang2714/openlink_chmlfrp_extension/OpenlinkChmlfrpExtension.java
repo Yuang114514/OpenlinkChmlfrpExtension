@@ -16,7 +16,7 @@ public class OpenlinkChmlfrpExtension {
 
     // Define mod id in a common place for everything to reference
     public static final String MODID = "openlink_chmlfrp_extension";
-    // Directly reference a slf4j logger
+    // Directly reference a SLF4J logger
     public static final Logger LOGGER = Utility.genLogger();
     public static Preferences PREFERENCES = Preferences.userNodeForPackage(OpenlinkChmlfrpExtension.class);
     

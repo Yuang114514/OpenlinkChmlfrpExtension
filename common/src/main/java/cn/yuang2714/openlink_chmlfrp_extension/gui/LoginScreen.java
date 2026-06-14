@@ -10,7 +10,6 @@ import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.IntervalledAccess
 import cn.yuang2714.openlink_chmlfrp_extension.datatypes.login.TokenIntervalFailedException;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.LoggingManagement;
 import cn.yuang2714.openlink_chmlfrp_extension.tools.Utility;
-import fun.moystudio.openlink.logic.Utils;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -22,7 +21,7 @@ import org.slf4j.Logger;
 public class LoginScreen extends Screen {
     private final Screen parentScreen;
     private Button loginButton;
-    private Component statusMessage = Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.info");
+    private Component statusMessage = Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.info");
     
     private Thread thread;
     
@@ -33,7 +32,7 @@ public class LoginScreen extends Screen {
     private final Logger logger = Utility.genLogger();
 
     public LoginScreen(Screen lastScreen) {
-        super(Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.title"));
+        super(Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.title"));
         parentScreen = lastScreen;
     }
 
@@ -42,7 +41,7 @@ public class LoginScreen extends Screen {
         super.init();
         loginButton =
                 Button.builder(
-                        Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_0"),
+                        Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_0"),
                         (btn) -> currentStat = Stats.STARTING_TO_FETCH_DEVICE_CODE
                 )
                 .bounds(
@@ -82,19 +81,19 @@ public class LoginScreen extends Screen {
         switch (currentStat) {
             case FAILED -> {
                 loginButton.active = true;
-                statusMessage = Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_fail");
+                statusMessage = Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_fail");
                 currentStat = Stats.STARTING_RETURN;
             }
             
             case EXPIRED -> {
                 loginButton.active = true;
-                statusMessage = Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_expired");
+                statusMessage = Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_expired");
                 currentStat = Stats.STARTING_RETURN;
             }
             
             case STARTING_TO_FETCH_DEVICE_CODE -> {
                 loginButton.active = false;
-                statusMessage = Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_1");
+                statusMessage = Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_1");
                 
                 thread = new Thread(() -> {
                     try {
@@ -115,13 +114,13 @@ public class LoginScreen extends Screen {
                     thread = null;
                     
                     Util.getPlatform().openUri(deviceCode.verificationUriComplete());
-                    statusMessage = Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_2");
+                    statusMessage = Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_2");
                     currentStat = Stats.STARTING_INTERVAL_THREAD;
                 }
             }
             
             case STARTING_INTERVAL_THREAD -> {
-                statusMessage = Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_2");
+                statusMessage = Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_2");
                 thread = new Thread(this::interval);
                 thread.setName("Token Interval Thread");
                 thread.start();
@@ -145,7 +144,7 @@ public class LoginScreen extends Screen {
                             return;
                         }
                         
-                        statusMessage = Utils.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_success");
+                        statusMessage = Utility.translatableText("gui.openlink_chmlfrp_extension.login_screen.stat_success");
                         currentStat = Stats.STARTING_RETURN;
                     });
                     thread.setName("Login Thread");
@@ -156,7 +155,7 @@ public class LoginScreen extends Screen {
             case STARTING_RETURN -> {
                 removeWidget(loginButton);
                 loginButton = Button.builder(
-                                Utils.translatableText("gui.back"),
+                                Utility.translatableText("gui.back"),
                                 (btn) -> onClose()
                         )
                         .bounds(

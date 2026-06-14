@@ -1,10 +1,11 @@
-package cn.yuang2714.openlink_chmlfrp_extension;
+package cn.yuang2714.openlink_chmlfrp_extension.fabric;
 
 /*
  * Copyright (c) Yuang2714(鬝豭鶬鶬) 2026
  * Open source with MIT licence
  */
 
+import cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtension;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;

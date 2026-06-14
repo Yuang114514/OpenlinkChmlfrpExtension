@@ -6,16 +6,16 @@
     "version": "${version}",
     "metadata": {
       "name": "OpenLink Chmlfrp Extension",
-      "description": "This is an example description! Tell everyone what your mod is about!",
+      "description": "An OpenLink addon for Chmlfrp.",
       "contributors": {
-        "Me!": "Author"
+        "Yuang2714": "Author"
       },
       "icon": "assets/openlink_chmlfrp_extension/icon.png"
     },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
-      "init": [
-        "cn.yuang2714.openlink_chmlfrp_extension.quilt.ExampleModQuilt"
+      "client": [
+        "cn.yuang2714.openlink_chmlfrp_extension.OpenlinkChmlfrpExtensionQuilt"
       ]
     },
     "depends": [
@@ -30,10 +30,11 @@
       {
         "id": "minecraft",
         "version": ">=1.20.1"
+      },
+      {
+        "id": "openlink",
+        "version": ">=1.0.0"
       }
     ]
-  },
-  "mixin": [
-    "openlink_chmlfrp_extension.mixins.json"
-  ]
+  }
 }
