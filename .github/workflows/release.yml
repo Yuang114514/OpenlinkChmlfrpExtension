@@ -83,7 +83,7 @@ jobs:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # 4. 发布到Modrinth和Curse forge
-      - name: Publish to Modrinth and CurseForge
+      - name: Publish Fabric to Modrinth and CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: 4Zpid2TB
@@ -96,11 +96,31 @@ jobs:
 
           files: |
             fabric/build/libs/*.jar
-            !fabric/build/libs/*dev-shadow.jar
-            !fabric/build/libs/*sources.jar
+
+      - name: Publish Forge to Modrinth and CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: 4Zpid2TB
+          modrinth-token: ${{ secrets.MR_TOKEN }}
+
+          curseforge-id: 1473954
+          curseforge-token: ${{ secrets.CF_TOKEN }}
+
+          changelog-file: CHANGELOG.md
+
+          files: |
             forge/build/libs/*.jar
-            !forge/build/libs/*dev-shadow.jar
-            !forge/build/libs/*sources.jar
+
+      - name: Publish Quilt to Modrinth and CurseForge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: 4Zpid2TB
+          modrinth-token: ${{ secrets.MR_TOKEN }}
+
+          curseforge-id: 1473954
+          curseforge-token: ${{ secrets.CF_TOKEN }}
+
+          changelog-file: CHANGELOG.md
+
+          files: |
             quilt/build/libs/*.jar
-            !quilt/build/libs/*dev-shadow.jar
-            !quilt/build/libs/*sources.jar
