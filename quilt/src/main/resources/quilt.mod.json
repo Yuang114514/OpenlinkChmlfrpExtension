@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "${group}",
+    "id": "openlink_chmlfrp_extension",
+    "version": "${version}",
+    "metadata": {
+      "name": "OpenLink Chmlfrp Extension",
+      "description": "This is an example description! Tell everyone what your mod is about!",
+      "contributors": {
+        "Me!": "Author"
+      },
+      "icon": "assets/openlink_chmlfrp_extension/icon.png"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": [
+        "cn.yuang2714.openlink_chmlfrp_extension.quilt.ExampleModQuilt"
+      ]
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "version": "*"
+      },
+      {
+        "id": "quilt_base",
+        "version": "*"
+      },
+      {
+        "id": "minecraft",
+        "version": ">=1.20.1"
+      }
+    ]
+  },
+  "mixin": [
+    "openlink_chmlfrp_extension.mixins.json"
+  ]
+}
