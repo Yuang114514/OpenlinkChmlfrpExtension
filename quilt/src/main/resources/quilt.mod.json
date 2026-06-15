@@ -29,7 +29,7 @@
       },
       {
         "id": "minecraft",
-        "version": ">=1.20.1"
+        "version": ">=1.20.1 <=1.20.4"
       },
       {
         "id": "openlink",
